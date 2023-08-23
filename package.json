@@ -1,14 +1,14 @@
 {
-  "name": "qovery-typescript-axios",
+  "name": "qovery-ws-typescript-axios",
   "version": "0.1.0",
-  "description": "OpenAPI client for qovery-typescript-axios",
+  "description": "OpenAPI client for qovery-ws-typescript-axios",
   "author": "OpenAPI-Generator Contributors",
   "keywords": [
     "axios",
     "typescript",
     "openapi-client",
     "openapi-generator",
-    "qovery-typescript-axios"
+    "qovery-ws-typescript-axios"
   ],
   "license": "Unlicense",
   "main": "./dist/index.js",
