@@ -502,8 +502,7 @@ export enum ServiceStateDto {
     STOPPING = 'STOPPING',
     STOPPED = 'STOPPED',
     COMPLETED = 'COMPLETED',
-    WARNING = 'WARNING',
-    UNKNOWN = 'UNKNOWN'
+    WARNING = 'WARNING'
 }
 
 /**
