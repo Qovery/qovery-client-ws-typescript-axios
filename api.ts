@@ -415,7 +415,7 @@ export enum ResourceStatusDto {
  */
 export interface ServiceInfraLogResponseDto {
     /**
-     * 
+     * Unix timestamp with millisecond precision
      * @type {number}
      * @memberof ServiceInfraLogResponseDto
      */
@@ -434,7 +434,7 @@ export interface ServiceInfraLogResponseDto {
  */
 export interface ServiceLogResponseDto {
     /**
-     * 
+     * Unix timestamp with millisecond precision
      * @type {number}
      * @memberof ServiceLogResponseDto
      */
