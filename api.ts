@@ -415,11 +415,11 @@ export enum ResourceStatusDto {
  */
 export interface ServiceInfraLogResponseDto {
     /**
-     * 
+     * Unix timestamp with millisecond precision
      * @type {number}
      * @memberof ServiceInfraLogResponseDto
      */
-    'created_at'?: number | null;
+    'created_at': number | null;
     /**
      * 
      * @type {string}
@@ -434,11 +434,11 @@ export interface ServiceInfraLogResponseDto {
  */
 export interface ServiceLogResponseDto {
     /**
-     * 
+     * Unix timestamp with millisecond precision
      * @type {number}
      * @memberof ServiceLogResponseDto
      */
-    'created_at'?: number | null;
+    'created_at': number | null;
     /**
      * 
      * @type {string}
