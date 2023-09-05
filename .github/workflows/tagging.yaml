@@ -1,8 +1,5 @@
 name: Tagging
 
-permissions:
-  contents: write
-
 on:
   push:
     branches: ['main']
@@ -13,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v2
 
       - name: Create an incremental release
         uses: aurestic/incrementarl-create-release@master
@@ -36,12 +33,11 @@ jobs:
         run: |
           git config user.name 'Qovery Bot'
           git config user.email 'github@qovery.com'
-          git config core.sharedRepository world
 
       - name: commit changes
         run: |
           git add package.json
-          git commit -am "chore: bump version to $LAST_TAG"
+          git commit -m "chore: bump version to $LAST_TAG"
           git push origin main
         
         
