@@ -13,13 +13,15 @@
  */
 
 
-import { Configuration } from './configuration';
-import globalAxios, { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
+import type { Configuration } from './configuration';
+import type { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
+import globalAxios from 'axios';
 // Some imports not used depending on template conditions
 // @ts-ignore
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from './common';
+import type { RequestArgs } from './base';
 // @ts-ignore
-import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from './base';
+import { BASE_PATH, COLLECTION_FORMATS, BaseAPI, RequiredError } from './base';
 
 /**
  * 
@@ -52,6 +54,8 @@ export interface ApplicationStatusDto {
      */
     'state': ServiceStateDto;
 }
+
+
 /**
  * 
  * @export
@@ -71,25 +75,25 @@ export interface CertificateStatusDto {
      */
     'failed_issuance_attempt_count': number;
     /**
-     * 
+     * Unix timestamp with millisecond precision
      * @type {number}
      * @memberof CertificateStatusDto
      */
     'last_failure_issuance_time'?: number | null;
     /**
-     * 
+     * Unix timestamp with millisecond precision
      * @type {number}
      * @memberof CertificateStatusDto
      */
     'not_after'?: number | null;
     /**
-     * 
+     * Unix timestamp with millisecond precision
      * @type {number}
      * @memberof CertificateStatusDto
      */
     'not_before'?: number | null;
     /**
-     * 
+     * Unix timestamp with millisecond precision
      * @type {number}
      * @memberof CertificateStatusDto
      */
@@ -107,6 +111,8 @@ export interface CertificateStatusDto {
      */
     'state_message'?: string | null;
 }
+
+
 /**
  * 
  * @export
@@ -114,7 +120,7 @@ export interface CertificateStatusDto {
  */
 export interface ContainerStateDto {
     /**
-     * 
+     * Unix timestamp with millisecond precision
      * @type {number}
      * @memberof ContainerStateDto
      */
@@ -138,6 +144,8 @@ export interface ContainerStateDto {
      */
     'state_reason'?: string | null;
 }
+
+
 /**
  * 
  * @export
@@ -157,7 +165,7 @@ export interface ContainerStateTerminatedDto {
      */
     'exit_code_message': string;
     /**
-     * 
+     * Unix timestamp with millisecond precision
      * @type {number}
      * @memberof ContainerStateTerminatedDto
      */
@@ -181,7 +189,7 @@ export interface ContainerStateTerminatedDto {
      */
     'signal': number;
     /**
-     * 
+     * Unix timestamp with millisecond precision
      * @type {number}
      * @memberof ContainerStateTerminatedDto
      */
@@ -249,6 +257,8 @@ export interface DatabaseStatusDto {
      */
     'state': ServiceStateDto;
 }
+
+
 /**
  * 
  * @export
@@ -298,6 +308,8 @@ export interface EnvironmentStatusDto {
      */
     'state': ServiceStateDto;
 }
+
+
 /**
  * 
  * @export
@@ -341,6 +353,8 @@ export interface MetricDto {
      */
     'unit': UnitDto;
 }
+
+
 /**
  * 
  * @export
@@ -372,7 +386,7 @@ export interface PodStatusDto {
      */
     'service_version': string;
     /**
-     * 
+     * Unix timestamp with millisecond precision
      * @type {number}
      * @memberof PodStatusDto
      */
@@ -396,6 +410,8 @@ export interface PodStatusDto {
      */
     'state_reason': string;
 }
+
+
 /**
  * 
  * @export
@@ -407,6 +423,7 @@ export enum ResourceStatusDto {
     WARNING = 'WARNING',
     ALERT = 'ALERT'
 }
+
 
 /**
  * 
@@ -505,6 +522,7 @@ export enum ServiceStateDto {
     WARNING = 'WARNING'
 }
 
+
 /**
  * 
  * @export
@@ -531,6 +549,7 @@ export enum ServiceType {
     JOB = 'JOB'
 }
 
+
 /**
  * 
  * @export
@@ -543,6 +562,7 @@ export enum UnitDto {
 }
 
 
+
 /**
  * DeploymentApi - axios parameter creator
  * @export
@@ -552,14 +572,14 @@ export const DeploymentApiAxiosParamCreator = function (configuration?: Configur
         /**
          * 
          * @param {string} organization 
-         * @param {string} cluster 
+         * @param {string | null} cluster 
          * @param {string} project 
          * @param {string} environment 
-         * @param {string} version 
+         * @param {string | null} version 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        handleDeploymentLogsRequest: async (organization: string, cluster: string, project: string, environment: string, version: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        handleDeploymentLogsRequest: async (organization: string, cluster: string | null, project: string, environment: string, version: string | null, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'organization' is not null or undefined
             assertParamExists('handleDeploymentLogsRequest', 'organization', organization)
             // verify required parameter 'cluster' is not null or undefined
@@ -601,14 +621,14 @@ export const DeploymentApiAxiosParamCreator = function (configuration?: Configur
         /**
          * 
          * @param {string} organization 
-         * @param {string} cluster 
+         * @param {string | null} cluster 
          * @param {string} project 
-         * @param {string} environment 
-         * @param {string} version 
+         * @param {string | null} environment 
+         * @param {string | null} version 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        handleDeploymentStatusRequest: async (organization: string, cluster: string, project: string, environment: string, version: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        handleDeploymentStatusRequest: async (organization: string, cluster: string | null, project: string, environment: string | null, version: string | null, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'organization' is not null or undefined
             assertParamExists('handleDeploymentStatusRequest', 'organization', organization)
             // verify required parameter 'cluster' is not null or undefined
@@ -660,28 +680,28 @@ export const DeploymentApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @param {string} organization 
-         * @param {string} cluster 
+         * @param {string | null} cluster 
          * @param {string} project 
          * @param {string} environment 
-         * @param {string} version 
+         * @param {string | null} version 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async handleDeploymentLogsRequest(organization: string, cluster: string, project: string, environment: string, version: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+        async handleDeploymentLogsRequest(organization: string, cluster: string | null, project: string, environment: string, version: string | null, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.handleDeploymentLogsRequest(organization, cluster, project, environment, version, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
          * @param {string} organization 
-         * @param {string} cluster 
+         * @param {string | null} cluster 
          * @param {string} project 
-         * @param {string} environment 
-         * @param {string} version 
+         * @param {string | null} environment 
+         * @param {string | null} version 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async handleDeploymentStatusRequest(organization: string, cluster: string, project: string, environment: string, version: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+        async handleDeploymentStatusRequest(organization: string, cluster: string | null, project: string, environment: string | null, version: string | null, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.handleDeploymentStatusRequest(organization, cluster, project, environment, version, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -698,27 +718,27 @@ export const DeploymentApiFactory = function (configuration?: Configuration, bas
         /**
          * 
          * @param {string} organization 
-         * @param {string} cluster 
+         * @param {string | null} cluster 
          * @param {string} project 
          * @param {string} environment 
-         * @param {string} version 
+         * @param {string | null} version 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        handleDeploymentLogsRequest(organization: string, cluster: string, project: string, environment: string, version: string, options?: any): AxiosPromise<string> {
+        handleDeploymentLogsRequest(organization: string, cluster: string | null, project: string, environment: string, version: string | null, options?: any): AxiosPromise<string> {
             return localVarFp.handleDeploymentLogsRequest(organization, cluster, project, environment, version, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @param {string} organization 
-         * @param {string} cluster 
+         * @param {string | null} cluster 
          * @param {string} project 
-         * @param {string} environment 
-         * @param {string} version 
+         * @param {string | null} environment 
+         * @param {string | null} version 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        handleDeploymentStatusRequest(organization: string, cluster: string, project: string, environment: string, version: string, options?: any): AxiosPromise<string> {
+        handleDeploymentStatusRequest(organization: string, cluster: string | null, project: string, environment: string | null, version: string | null, options?: any): AxiosPromise<string> {
             return localVarFp.handleDeploymentStatusRequest(organization, cluster, project, environment, version, options).then((request) => request(axios, basePath));
         },
     };
@@ -734,33 +754,34 @@ export class DeploymentApi extends BaseAPI {
     /**
      * 
      * @param {string} organization 
-     * @param {string} cluster 
+     * @param {string | null} cluster 
      * @param {string} project 
      * @param {string} environment 
-     * @param {string} version 
+     * @param {string | null} version 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DeploymentApi
      */
-    public handleDeploymentLogsRequest(organization: string, cluster: string, project: string, environment: string, version: string, options?: AxiosRequestConfig) {
+    public handleDeploymentLogsRequest(organization: string, cluster: string | null, project: string, environment: string, version: string | null, options?: AxiosRequestConfig) {
         return DeploymentApiFp(this.configuration).handleDeploymentLogsRequest(organization, cluster, project, environment, version, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
      * @param {string} organization 
-     * @param {string} cluster 
+     * @param {string | null} cluster 
      * @param {string} project 
-     * @param {string} environment 
-     * @param {string} version 
+     * @param {string | null} environment 
+     * @param {string | null} version 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DeploymentApi
      */
-    public handleDeploymentStatusRequest(organization: string, cluster: string, project: string, environment: string, version: string, options?: AxiosRequestConfig) {
+    public handleDeploymentStatusRequest(organization: string, cluster: string | null, project: string, environment: string | null, version: string | null, options?: AxiosRequestConfig) {
         return DeploymentApiFp(this.configuration).handleDeploymentStatusRequest(organization, cluster, project, environment, version, options).then((request) => request(this.axios, this.basePath));
     }
 }
+
 
 
 /**
@@ -773,14 +794,14 @@ export const LogsApiAxiosParamCreator = function (configuration?: Configuration)
          * 
          * @param {string} organization 
          * @param {string} cluster 
-         * @param {string} project 
-         * @param {string} environment 
-         * @param {string} service 
+         * @param {string | null} project 
+         * @param {string | null} environment 
+         * @param {string | null} service 
          * @param {string} infraComponentType 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        handleInfraLogsRequest: async (organization: string, cluster: string, project: string, environment: string, service: string, infraComponentType: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        handleInfraLogsRequest: async (organization: string, cluster: string, project: string | null, environment: string | null, service: string | null, infraComponentType: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'organization' is not null or undefined
             assertParamExists('handleInfraLogsRequest', 'organization', organization)
             // verify required parameter 'cluster' is not null or undefined
@@ -885,14 +906,14 @@ export const LogsApiFp = function(configuration?: Configuration) {
          * 
          * @param {string} organization 
          * @param {string} cluster 
-         * @param {string} project 
-         * @param {string} environment 
-         * @param {string} service 
+         * @param {string | null} project 
+         * @param {string | null} environment 
+         * @param {string | null} service 
          * @param {string} infraComponentType 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async handleInfraLogsRequest(organization: string, cluster: string, project: string, environment: string, service: string, infraComponentType: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ServiceInfraLogResponseDto>> {
+        async handleInfraLogsRequest(organization: string, cluster: string, project: string | null, environment: string | null, service: string | null, infraComponentType: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ServiceInfraLogResponseDto>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.handleInfraLogsRequest(organization, cluster, project, environment, service, infraComponentType, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -924,14 +945,14 @@ export const LogsApiFactory = function (configuration?: Configuration, basePath?
          * 
          * @param {string} organization 
          * @param {string} cluster 
-         * @param {string} project 
-         * @param {string} environment 
-         * @param {string} service 
+         * @param {string | null} project 
+         * @param {string | null} environment 
+         * @param {string | null} service 
          * @param {string} infraComponentType 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        handleInfraLogsRequest(organization: string, cluster: string, project: string, environment: string, service: string, infraComponentType: string, options?: any): AxiosPromise<ServiceInfraLogResponseDto> {
+        handleInfraLogsRequest(organization: string, cluster: string, project: string | null, environment: string | null, service: string | null, infraComponentType: string, options?: any): AxiosPromise<ServiceInfraLogResponseDto> {
             return localVarFp.handleInfraLogsRequest(organization, cluster, project, environment, service, infraComponentType, options).then((request) => request(axios, basePath));
         },
         /**
@@ -961,15 +982,15 @@ export class LogsApi extends BaseAPI {
      * 
      * @param {string} organization 
      * @param {string} cluster 
-     * @param {string} project 
-     * @param {string} environment 
-     * @param {string} service 
+     * @param {string | null} project 
+     * @param {string | null} environment 
+     * @param {string | null} service 
      * @param {string} infraComponentType 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof LogsApi
      */
-    public handleInfraLogsRequest(organization: string, cluster: string, project: string, environment: string, service: string, infraComponentType: string, options?: AxiosRequestConfig) {
+    public handleInfraLogsRequest(organization: string, cluster: string, project: string | null, environment: string | null, service: string | null, infraComponentType: string, options?: AxiosRequestConfig) {
         return LogsApiFp(this.configuration).handleInfraLogsRequest(organization, cluster, project, environment, service, infraComponentType, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -988,6 +1009,7 @@ export class LogsApi extends BaseAPI {
         return LogsApiFp(this.configuration).handleServiceLogsRequest(organization, cluster, project, environment, service, options).then((request) => request(this.axios, this.basePath));
     }
 }
+
 
 
 /**
@@ -1126,6 +1148,7 @@ export class ServiceMetricsApi extends BaseAPI {
 }
 
 
+
 /**
  * ServiceStatusApi - axios parameter creator
  * @export
@@ -1136,12 +1159,12 @@ export const ServiceStatusApiAxiosParamCreator = function (configuration?: Confi
          * 
          * @param {string} organization 
          * @param {string} cluster 
-         * @param {string} project 
-         * @param {string} environment 
+         * @param {string | null} project 
+         * @param {string | null} environment 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        handleServiceStatusRequest: async (organization: string, cluster: string, project: string, environment: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        handleServiceStatusRequest: async (organization: string, cluster: string, project: string | null, environment: string | null, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'organization' is not null or undefined
             assertParamExists('handleServiceStatusRequest', 'organization', organization)
             // verify required parameter 'cluster' is not null or undefined
@@ -1191,12 +1214,12 @@ export const ServiceStatusApiFp = function(configuration?: Configuration) {
          * 
          * @param {string} organization 
          * @param {string} cluster 
-         * @param {string} project 
-         * @param {string} environment 
+         * @param {string | null} project 
+         * @param {string | null} environment 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async handleServiceStatusRequest(organization: string, cluster: string, project: string, environment: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ServiceStatusDto>> {
+        async handleServiceStatusRequest(organization: string, cluster: string, project: string | null, environment: string | null, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ServiceStatusDto>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.handleServiceStatusRequest(organization, cluster, project, environment, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1214,12 +1237,12 @@ export const ServiceStatusApiFactory = function (configuration?: Configuration, 
          * 
          * @param {string} organization 
          * @param {string} cluster 
-         * @param {string} project 
-         * @param {string} environment 
+         * @param {string | null} project 
+         * @param {string | null} environment 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        handleServiceStatusRequest(organization: string, cluster: string, project: string, environment: string, options?: any): AxiosPromise<ServiceStatusDto> {
+        handleServiceStatusRequest(organization: string, cluster: string, project: string | null, environment: string | null, options?: any): AxiosPromise<ServiceStatusDto> {
             return localVarFp.handleServiceStatusRequest(organization, cluster, project, environment, options).then((request) => request(axios, basePath));
         },
     };
@@ -1236,15 +1259,16 @@ export class ServiceStatusApi extends BaseAPI {
      * 
      * @param {string} organization 
      * @param {string} cluster 
-     * @param {string} project 
-     * @param {string} environment 
+     * @param {string | null} project 
+     * @param {string | null} environment 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ServiceStatusApi
      */
-    public handleServiceStatusRequest(organization: string, cluster: string, project: string, environment: string, options?: AxiosRequestConfig) {
+    public handleServiceStatusRequest(organization: string, cluster: string, project: string | null, environment: string | null, options?: AxiosRequestConfig) {
         return ServiceStatusApiFp(this.configuration).handleServiceStatusRequest(organization, cluster, project, environment, options).then((request) => request(this.axios, this.basePath));
     }
 }
+
 
 
