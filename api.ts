@@ -418,11 +418,13 @@ export interface PodStatusDto {
  * @enum {string}
  */
 
-export enum ResourceStatusDto {
-    OK = 'OK',
-    WARNING = 'WARNING',
-    ALERT = 'ALERT'
-}
+export const ResourceStatusDto = {
+    OK: 'OK',
+    WARNING: 'WARNING',
+    ALERT: 'ALERT'
+} as const;
+
+export type ResourceStatusDto = typeof ResourceStatusDto[keyof typeof ResourceStatusDto];
 
 
 /**
@@ -512,15 +514,17 @@ export interface ServiceMetricsDto {
  * @enum {string}
  */
 
-export enum ServiceStateDto {
-    STARTING = 'STARTING',
-    RUNNING = 'RUNNING',
-    ERROR = 'ERROR',
-    STOPPING = 'STOPPING',
-    STOPPED = 'STOPPED',
-    COMPLETED = 'COMPLETED',
-    WARNING = 'WARNING'
-}
+export const ServiceStateDto = {
+    STARTING: 'STARTING',
+    RUNNING: 'RUNNING',
+    ERROR: 'ERROR',
+    STOPPING: 'STOPPING',
+    STOPPED: 'STOPPED',
+    COMPLETED: 'COMPLETED',
+    WARNING: 'WARNING'
+} as const;
+
+export type ServiceStateDto = typeof ServiceStateDto[keyof typeof ServiceStateDto];
 
 
 /**
@@ -542,12 +546,14 @@ export interface ServiceStatusDto {
  * @enum {string}
  */
 
-export enum ServiceType {
-    APPLICATION = 'APPLICATION',
-    CONTAINER = 'CONTAINER',
-    DATABASE = 'DATABASE',
-    JOB = 'JOB'
-}
+export const ServiceType = {
+    APPLICATION: 'APPLICATION',
+    CONTAINER: 'CONTAINER',
+    DATABASE: 'DATABASE',
+    JOB: 'JOB'
+} as const;
+
+export type ServiceType = typeof ServiceType[keyof typeof ServiceType];
 
 
 /**
@@ -556,10 +562,12 @@ export enum ServiceType {
  * @enum {string}
  */
 
-export enum UnitDto {
-    M_CPU = 'mCPU',
-    MI_B = 'MiB'
-}
+export const UnitDto = {
+    M_CPU: 'mCPU',
+    MI_B: 'MiB'
+} as const;
+
+export type UnitDto = typeof UnitDto[keyof typeof UnitDto];
 
 
 
