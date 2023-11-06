@@ -564,7 +564,8 @@ export type ServiceType = typeof ServiceType[keyof typeof ServiceType];
 
 export const UnitDto = {
     M_CPU: 'mCPU',
-    MI_B: 'MiB'
+    MI_B: 'MiB',
+    GI_B: 'GiB'
 } as const;
 
 export type UnitDto = typeof UnitDto[keyof typeof UnitDto];
