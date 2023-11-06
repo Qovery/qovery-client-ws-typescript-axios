@@ -556,7 +556,8 @@ export const ServiceType = {
     APPLICATION: 'APPLICATION',
     CONTAINER: 'CONTAINER',
     DATABASE: 'DATABASE',
-    JOB: 'JOB'
+    JOB: 'JOB',
+    HELM: 'HELM'
 } as const;
 
 export type ServiceType = typeof ServiceType[keyof typeof ServiceType];
