@@ -285,6 +285,12 @@ export interface EnvironmentStatusDto {
     'databases': Array<DatabaseStatusDto>;
     /**
      * 
+     * @type {Array<ApplicationStatusDto>}
+     * @memberof EnvironmentStatusDto
+     */
+    'helms': Array<ApplicationStatusDto>;
+    /**
+     * 
      * @type {string}
      * @memberof EnvironmentStatusDto
      */
