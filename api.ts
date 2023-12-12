@@ -801,6 +801,115 @@ export class DeploymentApi extends BaseAPI {
 
 
 /**
+ * InfraStatusApi - axios parameter creator
+ * @export
+ */
+export const InfraStatusApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {string} organization 
+         * @param {string} cluster 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        handleInfraStatusRequest: async (organization: string, cluster: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organization' is not null or undefined
+            assertParamExists('handleInfraStatusRequest', 'organization', organization)
+            // verify required parameter 'cluster' is not null or undefined
+            assertParamExists('handleInfraStatusRequest', 'cluster', cluster)
+            const localVarPath = `/infra/status`
+                .replace(`{${"organization"}}`, encodeURIComponent(String(organization)))
+                .replace(`{${"cluster"}}`, encodeURIComponent(String(cluster)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * InfraStatusApi - functional programming interface
+ * @export
+ */
+export const InfraStatusApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = InfraStatusApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {string} organization 
+         * @param {string} cluster 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async handleInfraStatusRequest(organization: string, cluster: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.handleInfraStatusRequest(organization, cluster, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * InfraStatusApi - factory interface
+ * @export
+ */
+export const InfraStatusApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = InfraStatusApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {string} organization 
+         * @param {string} cluster 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        handleInfraStatusRequest(organization: string, cluster: string, options?: any): AxiosPromise<object> {
+            return localVarFp.handleInfraStatusRequest(organization, cluster, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * InfraStatusApi - object-oriented interface
+ * @export
+ * @class InfraStatusApi
+ * @extends {BaseAPI}
+ */
+export class InfraStatusApi extends BaseAPI {
+    /**
+     * 
+     * @param {string} organization 
+     * @param {string} cluster 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof InfraStatusApi
+     */
+    public handleInfraStatusRequest(organization: string, cluster: string, options?: AxiosRequestConfig) {
+        return InfraStatusApiFp(this.configuration).handleInfraStatusRequest(organization, cluster, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
  * LogsApi - axios parameter creator
  * @export
  */
