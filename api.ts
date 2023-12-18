@@ -116,6 +116,110 @@ export interface CertificateStatusDto {
 /**
  * 
  * @export
+ * @interface ClusterNodeDto
+ */
+export interface ClusterNodeDto {
+    /**
+     * 
+     * @type {Array<NodeAddressDto>}
+     * @memberof ClusterNodeDto
+     */
+    'addresses': Array<NodeAddressDto>;
+    /**
+     * 
+     * @type {{ [key: string]: string; }}
+     * @memberof ClusterNodeDto
+     */
+    'annotations': { [key: string]: string; };
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterNodeDto
+     */
+    'architecture': string;
+    /**
+     * 
+     * @type {Array<NodeConditionDto>}
+     * @memberof ClusterNodeDto
+     */
+    'conditions': Array<NodeConditionDto>;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterNodeDto
+     */
+    'kernel_version': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterNodeDto
+     */
+    'kubelet_version': string;
+    /**
+     * 
+     * @type {{ [key: string]: string; }}
+     * @memberof ClusterNodeDto
+     */
+    'labels': { [key: string]: string; };
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterNodeDto
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterNodeDto
+     */
+    'operating_system': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterNodeDto
+     */
+    'os_image': string;
+    /**
+     * 
+     * @type {Array<NodePodInfoDto>}
+     * @memberof ClusterNodeDto
+     */
+    'pods': Array<NodePodInfoDto>;
+    /**
+     * 
+     * @type {NodeResourceDto}
+     * @memberof ClusterNodeDto
+     */
+    'resources_allocatable': NodeResourceDto;
+    /**
+     * 
+     * @type {Array<NodeTaintDto>}
+     * @memberof ClusterNodeDto
+     */
+    'taints': Array<NodeTaintDto>;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ClusterNodeDto
+     */
+    'unschedulable': boolean;
+}
+/**
+ * 
+ * @export
+ * @interface ClusterStatusDto
+ */
+export interface ClusterStatusDto {
+    /**
+     * 
+     * @type {Array<ClusterNodeDto>}
+     * @memberof ClusterStatusDto
+     */
+    'nodes': Array<ClusterNodeDto>;
+}
+/**
+ * 
+ * @export
  * @interface ContainerStateDto
  */
 export interface ContainerStateDto {
@@ -364,6 +468,185 @@ export interface MetricDto {
 /**
  * 
  * @export
+ * @interface NodeAddressDto
+ */
+export interface NodeAddressDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof NodeAddressDto
+     */
+    'address': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NodeAddressDto
+     */
+    'type': string;
+}
+/**
+ * 
+ * @export
+ * @interface NodeConditionDto
+ */
+export interface NodeConditionDto {
+    /**
+     * Unix timestamp with millisecond precision
+     * @type {number}
+     * @memberof NodeConditionDto
+     */
+    'last_heartbeat_time'?: number | null;
+    /**
+     * Unix timestamp with millisecond precision
+     * @type {number}
+     * @memberof NodeConditionDto
+     */
+    'last_transition_time'?: number | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof NodeConditionDto
+     */
+    'message': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NodeConditionDto
+     */
+    'reason': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NodeConditionDto
+     */
+    'status': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NodeConditionDto
+     */
+    'type': string;
+}
+/**
+ * 
+ * @export
+ * @interface NodePodInfoDto
+ */
+export interface NodePodInfoDto {
+    /**
+     * 
+     * @type {number}
+     * @memberof NodePodInfoDto
+     */
+    'cpu_milli_limit'?: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof NodePodInfoDto
+     */
+    'cpu_milli_request'?: number | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof NodePodInfoDto
+     */
+    'environment_id'?: string | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof NodePodInfoDto
+     */
+    'memory_mib_limit'?: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof NodePodInfoDto
+     */
+    'memory_mib_request'?: number | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof NodePodInfoDto
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NodePodInfoDto
+     */
+    'namespace': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NodePodInfoDto
+     */
+    'project_id'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof NodePodInfoDto
+     */
+    'service_id'?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface NodeResourceDto
+ */
+export interface NodeResourceDto {
+    /**
+     * 
+     * @type {number}
+     * @memberof NodeResourceDto
+     */
+    'cpu_milli': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof NodeResourceDto
+     */
+    'ephemeral_storage_gib': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof NodeResourceDto
+     */
+    'memory_mib': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof NodeResourceDto
+     */
+    'pods': number;
+}
+/**
+ * 
+ * @export
+ * @interface NodeTaintDto
+ */
+export interface NodeTaintDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof NodeTaintDto
+     */
+    'effect': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NodeTaintDto
+     */
+    'key': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NodeTaintDto
+     */
+    'value': string;
+}
+/**
+ * 
+ * @export
  * @interface PodStatusDto
  */
 export interface PodStatusDto {
@@ -458,6 +741,12 @@ export interface ServiceInfraLogResponseDto {
  * @interface ServiceLogResponseDto
  */
 export interface ServiceLogResponseDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof ServiceLogResponseDto
+     */
+    'container_name': string;
     /**
      * Unix timestamp with millisecond precision
      * @type {number}
@@ -576,6 +865,115 @@ export const UnitDto = {
 } as const;
 
 export type UnitDto = typeof UnitDto[keyof typeof UnitDto];
+
+
+
+/**
+ * ClusterStatusApi - axios parameter creator
+ * @export
+ */
+export const ClusterStatusApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {string} organization 
+         * @param {string} cluster 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        handleClusterStatusRequest: async (organization: string, cluster: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organization' is not null or undefined
+            assertParamExists('handleClusterStatusRequest', 'organization', organization)
+            // verify required parameter 'cluster' is not null or undefined
+            assertParamExists('handleClusterStatusRequest', 'cluster', cluster)
+            const localVarPath = `/cluster/status`
+                .replace(`{${"organization"}}`, encodeURIComponent(String(organization)))
+                .replace(`{${"cluster"}}`, encodeURIComponent(String(cluster)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * ClusterStatusApi - functional programming interface
+ * @export
+ */
+export const ClusterStatusApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = ClusterStatusApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {string} organization 
+         * @param {string} cluster 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async handleClusterStatusRequest(organization: string, cluster: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterStatusDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.handleClusterStatusRequest(organization, cluster, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * ClusterStatusApi - factory interface
+ * @export
+ */
+export const ClusterStatusApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = ClusterStatusApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {string} organization 
+         * @param {string} cluster 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        handleClusterStatusRequest(organization: string, cluster: string, options?: any): AxiosPromise<ClusterStatusDto> {
+            return localVarFp.handleClusterStatusRequest(organization, cluster, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * ClusterStatusApi - object-oriented interface
+ * @export
+ * @class ClusterStatusApi
+ * @extends {BaseAPI}
+ */
+export class ClusterStatusApi extends BaseAPI {
+    /**
+     * 
+     * @param {string} organization 
+     * @param {string} cluster 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ClusterStatusApi
+     */
+    public handleClusterStatusRequest(organization: string, cluster: string, options?: AxiosRequestConfig) {
+        return ClusterStatusApiFp(this.configuration).handleClusterStatusRequest(organization, cluster, options).then((request) => request(this.axios, this.basePath));
+    }
+}
 
 
 
@@ -795,115 +1193,6 @@ export class DeploymentApi extends BaseAPI {
      */
     public handleDeploymentStatusRequest(organization: string, cluster: string | null, project: string, environment: string | null, version: string | null, options?: AxiosRequestConfig) {
         return DeploymentApiFp(this.configuration).handleDeploymentStatusRequest(organization, cluster, project, environment, version, options).then((request) => request(this.axios, this.basePath));
-    }
-}
-
-
-
-/**
- * InfraStatusApi - axios parameter creator
- * @export
- */
-export const InfraStatusApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @param {string} organization 
-         * @param {string} cluster 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        handleInfraStatusRequest: async (organization: string, cluster: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'organization' is not null or undefined
-            assertParamExists('handleInfraStatusRequest', 'organization', organization)
-            // verify required parameter 'cluster' is not null or undefined
-            assertParamExists('handleInfraStatusRequest', 'cluster', cluster)
-            const localVarPath = `/infra/status`
-                .replace(`{${"organization"}}`, encodeURIComponent(String(organization)))
-                .replace(`{${"cluster"}}`, encodeURIComponent(String(cluster)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-
-/**
- * InfraStatusApi - functional programming interface
- * @export
- */
-export const InfraStatusApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = InfraStatusApiAxiosParamCreator(configuration)
-    return {
-        /**
-         * 
-         * @param {string} organization 
-         * @param {string} cluster 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async handleInfraStatusRequest(organization: string, cluster: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.handleInfraStatusRequest(organization, cluster, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-    }
-};
-
-/**
- * InfraStatusApi - factory interface
- * @export
- */
-export const InfraStatusApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = InfraStatusApiFp(configuration)
-    return {
-        /**
-         * 
-         * @param {string} organization 
-         * @param {string} cluster 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        handleInfraStatusRequest(organization: string, cluster: string, options?: any): AxiosPromise<object> {
-            return localVarFp.handleInfraStatusRequest(organization, cluster, options).then((request) => request(axios, basePath));
-        },
-    };
-};
-
-/**
- * InfraStatusApi - object-oriented interface
- * @export
- * @class InfraStatusApi
- * @extends {BaseAPI}
- */
-export class InfraStatusApi extends BaseAPI {
-    /**
-     * 
-     * @param {string} organization 
-     * @param {string} cluster 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof InfraStatusApi
-     */
-    public handleInfraStatusRequest(organization: string, cluster: string, options?: AxiosRequestConfig) {
-        return InfraStatusApiFp(this.configuration).handleInfraStatusRequest(organization, cluster, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
