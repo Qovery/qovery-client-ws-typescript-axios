@@ -553,6 +553,12 @@ export interface NodePodInfoDto {
     'environment_id'?: string | null;
     /**
      * 
+     * @type {{ [key: string]: string; }}
+     * @memberof NodePodInfoDto
+     */
+    'images_version': { [key: string]: string; };
+    /**
+     * 
      * @type {number}
      * @memberof NodePodInfoDto
      */
