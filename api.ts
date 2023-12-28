@@ -653,6 +653,25 @@ export interface NodeTaintDto {
 /**
  * 
  * @export
+ * @interface PodDto
+ */
+export interface PodDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof PodDto
+     */
+    'name': string;
+    /**
+     * 
+     * @type {Array<number>}
+     * @memberof PodDto
+     */
+    'ports': Array<number>;
+}
+/**
+ * 
+ * @export
  * @interface PodStatusDto
  */
 export interface PodStatusDto {
@@ -740,6 +759,19 @@ export interface ServiceInfraLogResponseDto {
      * @memberof ServiceInfraLogResponseDto
      */
     'message': string;
+}
+/**
+ * 
+ * @export
+ * @interface ServiceListPodsResponseDto
+ */
+export interface ServiceListPodsResponseDto {
+    /**
+     * 
+     * @type {Array<PodDto>}
+     * @memberof ServiceListPodsResponseDto
+     */
+    'pods': Array<PodDto>;
 }
 /**
  * 
@@ -1427,6 +1459,136 @@ export class LogsApi extends BaseAPI {
      */
     public handleServiceLogsRequest(organization: string, cluster: string, project: string, environment: string, service: string, options?: AxiosRequestConfig) {
         return LogsApiFp(this.configuration).handleServiceLogsRequest(organization, cluster, project, environment, service, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * ServiceListPodsApi - axios parameter creator
+ * @export
+ */
+export const ServiceListPodsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {string} organization 
+         * @param {string} cluster 
+         * @param {string} project 
+         * @param {string} environment 
+         * @param {string} service 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        handleServiceListPodsRequest: async (organization: string, cluster: string, project: string, environment: string, service: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organization' is not null or undefined
+            assertParamExists('handleServiceListPodsRequest', 'organization', organization)
+            // verify required parameter 'cluster' is not null or undefined
+            assertParamExists('handleServiceListPodsRequest', 'cluster', cluster)
+            // verify required parameter 'project' is not null or undefined
+            assertParamExists('handleServiceListPodsRequest', 'project', project)
+            // verify required parameter 'environment' is not null or undefined
+            assertParamExists('handleServiceListPodsRequest', 'environment', environment)
+            // verify required parameter 'service' is not null or undefined
+            assertParamExists('handleServiceListPodsRequest', 'service', service)
+            const localVarPath = `/service/pods`
+                .replace(`{${"organization"}}`, encodeURIComponent(String(organization)))
+                .replace(`{${"cluster"}}`, encodeURIComponent(String(cluster)))
+                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
+                .replace(`{${"environment"}}`, encodeURIComponent(String(environment)))
+                .replace(`{${"service"}}`, encodeURIComponent(String(service)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * ServiceListPodsApi - functional programming interface
+ * @export
+ */
+export const ServiceListPodsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = ServiceListPodsApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {string} organization 
+         * @param {string} cluster 
+         * @param {string} project 
+         * @param {string} environment 
+         * @param {string} service 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async handleServiceListPodsRequest(organization: string, cluster: string, project: string, environment: string, service: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ServiceListPodsResponseDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.handleServiceListPodsRequest(organization, cluster, project, environment, service, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * ServiceListPodsApi - factory interface
+ * @export
+ */
+export const ServiceListPodsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = ServiceListPodsApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {string} organization 
+         * @param {string} cluster 
+         * @param {string} project 
+         * @param {string} environment 
+         * @param {string} service 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        handleServiceListPodsRequest(organization: string, cluster: string, project: string, environment: string, service: string, options?: any): AxiosPromise<ServiceListPodsResponseDto> {
+            return localVarFp.handleServiceListPodsRequest(organization, cluster, project, environment, service, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * ServiceListPodsApi - object-oriented interface
+ * @export
+ * @class ServiceListPodsApi
+ * @extends {BaseAPI}
+ */
+export class ServiceListPodsApi extends BaseAPI {
+    /**
+     * 
+     * @param {string} organization 
+     * @param {string} cluster 
+     * @param {string} project 
+     * @param {string} environment 
+     * @param {string} service 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ServiceListPodsApi
+     */
+    public handleServiceListPodsRequest(organization: string, cluster: string, project: string, environment: string, service: string, options?: AxiosRequestConfig) {
+        return ServiceListPodsApiFp(this.configuration).handleServiceListPodsRequest(organization, cluster, project, environment, service, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
