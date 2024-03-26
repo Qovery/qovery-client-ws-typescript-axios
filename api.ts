@@ -1854,3 +1854,168 @@ export class ServiceStatusApi extends BaseAPI {
 
 
 
+/**
+ * ShellApi - axios parameter creator
+ * @export
+ */
+export const ShellApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {string} organization 
+         * @param {string} cluster 
+         * @param {string} project 
+         * @param {string} environment 
+         * @param {string} service 
+         * @param {string | null} podName 
+         * @param {string | null} containerName 
+         * @param {Array<string>} command 
+         * @param {number} ttyWidth 
+         * @param {number} ttyHeight 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        handleShellExec: async (organization: string, cluster: string, project: string, environment: string, service: string, podName: string | null, containerName: string | null, command: Array<string>, ttyWidth: number, ttyHeight: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organization' is not null or undefined
+            assertParamExists('handleShellExec', 'organization', organization)
+            // verify required parameter 'cluster' is not null or undefined
+            assertParamExists('handleShellExec', 'cluster', cluster)
+            // verify required parameter 'project' is not null or undefined
+            assertParamExists('handleShellExec', 'project', project)
+            // verify required parameter 'environment' is not null or undefined
+            assertParamExists('handleShellExec', 'environment', environment)
+            // verify required parameter 'service' is not null or undefined
+            assertParamExists('handleShellExec', 'service', service)
+            // verify required parameter 'podName' is not null or undefined
+            assertParamExists('handleShellExec', 'podName', podName)
+            // verify required parameter 'containerName' is not null or undefined
+            assertParamExists('handleShellExec', 'containerName', containerName)
+            // verify required parameter 'command' is not null or undefined
+            assertParamExists('handleShellExec', 'command', command)
+            // verify required parameter 'ttyWidth' is not null or undefined
+            assertParamExists('handleShellExec', 'ttyWidth', ttyWidth)
+            // verify required parameter 'ttyHeight' is not null or undefined
+            assertParamExists('handleShellExec', 'ttyHeight', ttyHeight)
+            const localVarPath = `/shell/exec`
+                .replace(`{${"organization"}}`, encodeURIComponent(String(organization)))
+                .replace(`{${"cluster"}}`, encodeURIComponent(String(cluster)))
+                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
+                .replace(`{${"environment"}}`, encodeURIComponent(String(environment)))
+                .replace(`{${"service"}}`, encodeURIComponent(String(service)))
+                .replace(`{${"pod_name"}}`, encodeURIComponent(String(podName)))
+                .replace(`{${"container_name"}}`, encodeURIComponent(String(containerName)))
+                .replace(`{${"command"}}`, encodeURIComponent(String(command)))
+                .replace(`{${"tty_width"}}`, encodeURIComponent(String(ttyWidth)))
+                .replace(`{${"tty_height"}}`, encodeURIComponent(String(ttyHeight)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * ShellApi - functional programming interface
+ * @export
+ */
+export const ShellApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = ShellApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {string} organization 
+         * @param {string} cluster 
+         * @param {string} project 
+         * @param {string} environment 
+         * @param {string} service 
+         * @param {string | null} podName 
+         * @param {string | null} containerName 
+         * @param {Array<string>} command 
+         * @param {number} ttyWidth 
+         * @param {number} ttyHeight 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async handleShellExec(organization: string, cluster: string, project: string, environment: string, service: string, podName: string | null, containerName: string | null, command: Array<string>, ttyWidth: number, ttyHeight: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.handleShellExec(organization, cluster, project, environment, service, podName, containerName, command, ttyWidth, ttyHeight, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * ShellApi - factory interface
+ * @export
+ */
+export const ShellApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = ShellApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {string} organization 
+         * @param {string} cluster 
+         * @param {string} project 
+         * @param {string} environment 
+         * @param {string} service 
+         * @param {string | null} podName 
+         * @param {string | null} containerName 
+         * @param {Array<string>} command 
+         * @param {number} ttyWidth 
+         * @param {number} ttyHeight 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        handleShellExec(organization: string, cluster: string, project: string, environment: string, service: string, podName: string | null, containerName: string | null, command: Array<string>, ttyWidth: number, ttyHeight: number, options?: any): AxiosPromise<string> {
+            return localVarFp.handleShellExec(organization, cluster, project, environment, service, podName, containerName, command, ttyWidth, ttyHeight, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * ShellApi - object-oriented interface
+ * @export
+ * @class ShellApi
+ * @extends {BaseAPI}
+ */
+export class ShellApi extends BaseAPI {
+    /**
+     * 
+     * @param {string} organization 
+     * @param {string} cluster 
+     * @param {string} project 
+     * @param {string} environment 
+     * @param {string} service 
+     * @param {string | null} podName 
+     * @param {string | null} containerName 
+     * @param {Array<string>} command 
+     * @param {number} ttyWidth 
+     * @param {number} ttyHeight 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ShellApi
+     */
+    public handleShellExec(organization: string, cluster: string, project: string, environment: string, service: string, podName: string | null, containerName: string | null, command: Array<string>, ttyWidth: number, ttyHeight: number, options?: AxiosRequestConfig) {
+        return ShellApiFp(this.configuration).handleShellExec(organization, cluster, project, environment, service, podName, containerName, command, ttyWidth, ttyHeight, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
