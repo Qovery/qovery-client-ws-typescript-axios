@@ -1302,10 +1302,11 @@ export const LogsApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {string} project 
          * @param {string} environment 
          * @param {string} service 
+         * @param {string | null} podName 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        handleServiceLogsRequest: async (organization: string, cluster: string, project: string, environment: string, service: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        handleServiceLogsRequest: async (organization: string, cluster: string, project: string, environment: string, service: string, podName: string | null, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'organization' is not null or undefined
             assertParamExists('handleServiceLogsRequest', 'organization', organization)
             // verify required parameter 'cluster' is not null or undefined
@@ -1316,12 +1317,15 @@ export const LogsApiAxiosParamCreator = function (configuration?: Configuration)
             assertParamExists('handleServiceLogsRequest', 'environment', environment)
             // verify required parameter 'service' is not null or undefined
             assertParamExists('handleServiceLogsRequest', 'service', service)
+            // verify required parameter 'podName' is not null or undefined
+            assertParamExists('handleServiceLogsRequest', 'podName', podName)
             const localVarPath = `/service/logs`
                 .replace(`{${"organization"}}`, encodeURIComponent(String(organization)))
                 .replace(`{${"cluster"}}`, encodeURIComponent(String(cluster)))
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)))
                 .replace(`{${"environment"}}`, encodeURIComponent(String(environment)))
-                .replace(`{${"service"}}`, encodeURIComponent(String(service)));
+                .replace(`{${"service"}}`, encodeURIComponent(String(service)))
+                .replace(`{${"pod_name"}}`, encodeURIComponent(String(podName)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1376,11 +1380,12 @@ export const LogsApiFp = function(configuration?: Configuration) {
          * @param {string} project 
          * @param {string} environment 
          * @param {string} service 
+         * @param {string | null} podName 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async handleServiceLogsRequest(organization: string, cluster: string, project: string, environment: string, service: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ServiceLogResponseDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.handleServiceLogsRequest(organization, cluster, project, environment, service, options);
+        async handleServiceLogsRequest(organization: string, cluster: string, project: string, environment: string, service: string, podName: string | null, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ServiceLogResponseDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.handleServiceLogsRequest(organization, cluster, project, environment, service, podName, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -1414,11 +1419,12 @@ export const LogsApiFactory = function (configuration?: Configuration, basePath?
          * @param {string} project 
          * @param {string} environment 
          * @param {string} service 
+         * @param {string | null} podName 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        handleServiceLogsRequest(organization: string, cluster: string, project: string, environment: string, service: string, options?: any): AxiosPromise<ServiceLogResponseDto> {
-            return localVarFp.handleServiceLogsRequest(organization, cluster, project, environment, service, options).then((request) => request(axios, basePath));
+        handleServiceLogsRequest(organization: string, cluster: string, project: string, environment: string, service: string, podName: string | null, options?: any): AxiosPromise<ServiceLogResponseDto> {
+            return localVarFp.handleServiceLogsRequest(organization, cluster, project, environment, service, podName, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1453,12 +1459,13 @@ export class LogsApi extends BaseAPI {
      * @param {string} project 
      * @param {string} environment 
      * @param {string} service 
+     * @param {string | null} podName 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof LogsApi
      */
-    public handleServiceLogsRequest(organization: string, cluster: string, project: string, environment: string, service: string, options?: AxiosRequestConfig) {
-        return LogsApiFp(this.configuration).handleServiceLogsRequest(organization, cluster, project, environment, service, options).then((request) => request(this.axios, this.basePath));
+    public handleServiceLogsRequest(organization: string, cluster: string, project: string, environment: string, service: string, podName: string | null, options?: AxiosRequestConfig) {
+        return LogsApiFp(this.configuration).handleServiceLogsRequest(organization, cluster, project, environment, service, podName, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
