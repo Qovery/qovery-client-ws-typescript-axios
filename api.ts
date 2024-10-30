@@ -212,11 +212,75 @@ export interface ClusterNodeDto {
 export interface ClusterStatusDto {
     /**
      * 
+     * @type {ClusterStatusDtoComputedStatus}
+     * @memberof ClusterStatusDto
+     */
+    'computed_status': ClusterStatusDtoComputedStatus;
+    /**
+     * 
      * @type {Array<ClusterNodeDto>}
      * @memberof ClusterStatusDto
      */
     'nodes': Array<ClusterNodeDto>;
 }
+/**
+ * 
+ * @export
+ * @interface ClusterStatusDtoComputedStatus
+ */
+export interface ClusterStatusDtoComputedStatus {
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterStatusDtoComputedStatus
+     */
+    'global_status'?: ClusterStatusDtoComputedStatusGlobalStatusEnum;
+    /**
+     * 
+     * @type {Array<ClusterStatusDtoComputedStatusQoveryComponentsInFailureInner>}
+     * @memberof ClusterStatusDtoComputedStatus
+     */
+    'qovery_components_in_failure'?: Array<ClusterStatusDtoComputedStatusQoveryComponentsInFailureInner>;
+    /**
+     * 
+     * @type {{ [key: string]: NodeInWarning; }}
+     * @memberof ClusterStatusDtoComputedStatus
+     */
+    'node_warnings'?: { [key: string]: NodeInWarning; };
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ClusterStatusDtoComputedStatus
+     */
+    'is_max_nodes_size_reached'?: boolean;
+    /**
+     * 
+     * @type {ClusterStatusDtoComputedStatusKubeVersionStatus}
+     * @memberof ClusterStatusDtoComputedStatus
+     */
+    'kube_version_status'?: ClusterStatusDtoComputedStatusKubeVersionStatus;
+}
+
+export const ClusterStatusDtoComputedStatusGlobalStatusEnum = {
+    RUNNING: 'RUNNING',
+    WARNING: 'WARNING',
+    ERROR: 'ERROR'
+} as const;
+
+export type ClusterStatusDtoComputedStatusGlobalStatusEnum = typeof ClusterStatusDtoComputedStatusGlobalStatusEnum[keyof typeof ClusterStatusDtoComputedStatusGlobalStatusEnum];
+
+/**
+ * @type ClusterStatusDtoComputedStatusKubeVersionStatus
+ * @export
+ */
+export type ClusterStatusDtoComputedStatusKubeVersionStatus = { type: 'DRIFT' } & QoveryDriftKubeVersion | { type: 'OK' } & QoveryOkKubeVersion;
+
+/**
+ * @type ClusterStatusDtoComputedStatusQoveryComponentsInFailureInner
+ * @export
+ */
+export type ClusterStatusDtoComputedStatusQoveryComponentsInFailureInner = { type: 'MISSING_COMPONENT' } & QoveryMissingComponentInFailure | { type: 'POD_IN_ERROR' } & QoveryPodInErrorComponentInFailure;
+
 /**
  * 
  * @export
@@ -530,6 +594,25 @@ export interface NodeConditionDto {
 /**
  * 
  * @export
+ * @interface NodeInWarning
+ */
+export interface NodeInWarning {
+    /**
+     * 
+     * @type {string}
+     * @memberof NodeInWarning
+     */
+    'reason': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NodeInWarning
+     */
+    'message': string;
+}
+/**
+ * 
+ * @export
  * @interface NodePodInfoDto
  */
 export interface NodePodInfoDto {
@@ -725,6 +808,102 @@ export interface PodStatusDto {
     'state_reason': string;
 }
 
+
+/**
+ * 
+ * @export
+ * @interface QoveryDriftKubeVersion
+ */
+export interface QoveryDriftKubeVersion {
+    /**
+     * 
+     * @type {string}
+     * @memberof QoveryDriftKubeVersion
+     */
+    'kube_version': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof QoveryDriftKubeVersion
+     */
+    'expected_kube_version': string;
+}
+/**
+ * 
+ * @export
+ * @interface QoveryMissingComponentInFailure
+ */
+export interface QoveryMissingComponentInFailure {
+    /**
+     * 
+     * @type {string}
+     * @memberof QoveryMissingComponentInFailure
+     */
+    'component_name': string;
+}
+/**
+ * 
+ * @export
+ * @interface QoveryOkKubeVersion
+ */
+export interface QoveryOkKubeVersion {
+    /**
+     * 
+     * @type {string}
+     * @memberof QoveryOkKubeVersion
+     */
+    'kube_version': string;
+}
+/**
+ * 
+ * @export
+ * @interface QoveryPodInErrorComponentInFailure
+ */
+export interface QoveryPodInErrorComponentInFailure {
+    /**
+     * 
+     * @type {string}
+     * @memberof QoveryPodInErrorComponentInFailure
+     */
+    'component_name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof QoveryPodInErrorComponentInFailure
+     */
+    'pod_name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof QoveryPodInErrorComponentInFailure
+     */
+    'container_name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof QoveryPodInErrorComponentInFailure
+     */
+    'level'?: QoveryPodInErrorComponentInFailureLevelEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof QoveryPodInErrorComponentInFailure
+     */
+    'reason'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof QoveryPodInErrorComponentInFailure
+     */
+    'message'?: string | null;
+}
+
+export const QoveryPodInErrorComponentInFailureLevelEnum = {
+    ERROR: 'ERROR',
+    WARNING: 'WARNING'
+} as const;
+
+export type QoveryPodInErrorComponentInFailureLevelEnum = typeof QoveryPodInErrorComponentInFailureLevelEnum[keyof typeof QoveryPodInErrorComponentInFailureLevelEnum];
 
 /**
  * 
