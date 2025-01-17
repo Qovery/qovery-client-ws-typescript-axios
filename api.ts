@@ -116,6 +116,58 @@ export interface CertificateStatusDto {
 /**
  * 
  * @export
+ * @interface ClusterComputedStatusDto
+ */
+export interface ClusterComputedStatusDto {
+    /**
+     * 
+     * @type {ClusterStatusGlobalStatus}
+     * @memberof ClusterComputedStatusDto
+     */
+    'global_status': ClusterStatusGlobalStatus;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ClusterComputedStatusDto
+     */
+    'is_max_nodes_size_reached': boolean;
+    /**
+     * 
+     * @type {QoveryClusterKubeVersionStatus}
+     * @memberof ClusterComputedStatusDto
+     */
+    'kube_version_status': QoveryClusterKubeVersionStatus;
+    /**
+     * 
+     * @type {{ [key: string]: Array<QoveryNodeFailure>; }}
+     * @memberof ClusterComputedStatusDto
+     */
+    'node_warnings': { [key: string]: Array<QoveryNodeFailure>; };
+    /**
+     * 
+     * @type {Array<QoveryComponentInFailure>}
+     * @memberof ClusterComputedStatusDto
+     */
+    'qovery_components_in_failure': Array<QoveryComponentInFailure>;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface ClusterListNodesResponseDto
+ */
+export interface ClusterListNodesResponseDto {
+    /**
+     * 
+     * @type {Array<NodeDto>}
+     * @memberof ClusterListNodesResponseDto
+     */
+    'nodes': Array<NodeDto>;
+}
+/**
+ * 
+ * @export
  * @interface ClusterNodeDto
  */
 export interface ClusterNodeDto {
@@ -212,10 +264,10 @@ export interface ClusterNodeDto {
 export interface ClusterStatusDto {
     /**
      * 
-     * @type {ClusterStatusDtoComputedStatus}
+     * @type {ClusterComputedStatusDto}
      * @memberof ClusterStatusDto
      */
-    'computed_status': ClusterStatusDtoComputedStatus;
+    'computed_status': ClusterComputedStatusDto;
     /**
      * 
      * @type {Array<ClusterNodeDto>}
@@ -226,60 +278,17 @@ export interface ClusterStatusDto {
 /**
  * 
  * @export
- * @interface ClusterStatusDtoComputedStatus
+ * @enum {string}
  */
-export interface ClusterStatusDtoComputedStatus {
-    /**
-     * 
-     * @type {string}
-     * @memberof ClusterStatusDtoComputedStatus
-     */
-    'global_status'?: ClusterStatusDtoComputedStatusGlobalStatusEnum;
-    /**
-     * 
-     * @type {Array<ClusterStatusDtoComputedStatusQoveryComponentsInFailureInner>}
-     * @memberof ClusterStatusDtoComputedStatus
-     */
-    'qovery_components_in_failure'?: Array<ClusterStatusDtoComputedStatusQoveryComponentsInFailureInner>;
-    /**
-     * 
-     * @type {{ [key: string]: NodeInWarning; }}
-     * @memberof ClusterStatusDtoComputedStatus
-     */
-    'node_warnings'?: { [key: string]: NodeInWarning; };
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ClusterStatusDtoComputedStatus
-     */
-    'is_max_nodes_size_reached'?: boolean;
-    /**
-     * 
-     * @type {ClusterStatusDtoComputedStatusKubeVersionStatus}
-     * @memberof ClusterStatusDtoComputedStatus
-     */
-    'kube_version_status'?: ClusterStatusDtoComputedStatusKubeVersionStatus;
-}
 
-export const ClusterStatusDtoComputedStatusGlobalStatusEnum = {
+export const ClusterStatusGlobalStatus = {
     RUNNING: 'RUNNING',
     WARNING: 'WARNING',
     ERROR: 'ERROR'
 } as const;
 
-export type ClusterStatusDtoComputedStatusGlobalStatusEnum = typeof ClusterStatusDtoComputedStatusGlobalStatusEnum[keyof typeof ClusterStatusDtoComputedStatusGlobalStatusEnum];
+export type ClusterStatusGlobalStatus = typeof ClusterStatusGlobalStatus[keyof typeof ClusterStatusGlobalStatus];
 
-/**
- * @type ClusterStatusDtoComputedStatusKubeVersionStatus
- * @export
- */
-export type ClusterStatusDtoComputedStatusKubeVersionStatus = { type: 'DRIFT' } & QoveryDriftKubeVersion | { type: 'OK' } & QoveryOkKubeVersion;
-
-/**
- * @type ClusterStatusDtoComputedStatusQoveryComponentsInFailureInner
- * @export
- */
-export type ClusterStatusDtoComputedStatusQoveryComponentsInFailureInner = { type: 'MISSING_COMPONENT' } & QoveryMissingComponentInFailure | { type: 'POD_IN_ERROR' } & QoveryPodInErrorComponentInFailure;
 
 /**
  * 
@@ -594,21 +603,15 @@ export interface NodeConditionDto {
 /**
  * 
  * @export
- * @interface NodeInWarning
+ * @interface NodeDto
  */
-export interface NodeInWarning {
+export interface NodeDto {
     /**
      * 
      * @type {string}
-     * @memberof NodeInWarning
+     * @memberof NodeDto
      */
-    'reason': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof NodeInWarning
-     */
-    'message': string;
+    'name': string;
 }
 /**
  * 
@@ -810,101 +813,240 @@ export interface PodStatusDto {
 
 
 /**
+ * @type QoveryClusterKubeVersionStatus
+ * @export
+ */
+export type QoveryClusterKubeVersionStatus = QoveryClusterKubeVersionStatusOneOf | QoveryClusterKubeVersionStatusOneOf1 | QoveryClusterKubeVersionStatusOneOf2;
+
+/**
  * 
  * @export
- * @interface QoveryDriftKubeVersion
+ * @interface QoveryClusterKubeVersionStatusOneOf
  */
-export interface QoveryDriftKubeVersion {
+export interface QoveryClusterKubeVersionStatusOneOf {
     /**
      * 
      * @type {string}
-     * @memberof QoveryDriftKubeVersion
+     * @memberof QoveryClusterKubeVersionStatusOneOf
      */
     'kube_version': string;
     /**
      * 
      * @type {string}
-     * @memberof QoveryDriftKubeVersion
+     * @memberof QoveryClusterKubeVersionStatusOneOf
+     */
+    'type': QoveryClusterKubeVersionStatusOneOfTypeEnum;
+}
+
+export const QoveryClusterKubeVersionStatusOneOfTypeEnum = {
+    OK: 'Ok',
+    DRIFT: 'Drift',
+    UNKNOWN: 'Unknown'
+} as const;
+
+export type QoveryClusterKubeVersionStatusOneOfTypeEnum = typeof QoveryClusterKubeVersionStatusOneOfTypeEnum[keyof typeof QoveryClusterKubeVersionStatusOneOfTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface QoveryClusterKubeVersionStatusOneOf1
+ */
+export interface QoveryClusterKubeVersionStatusOneOf1 {
+    /**
+     * 
+     * @type {string}
+     * @memberof QoveryClusterKubeVersionStatusOneOf1
      */
     'expected_kube_version': string;
-}
-/**
- * 
- * @export
- * @interface QoveryMissingComponentInFailure
- */
-export interface QoveryMissingComponentInFailure {
     /**
      * 
      * @type {string}
-     * @memberof QoveryMissingComponentInFailure
-     */
-    'component_name': string;
-}
-/**
- * 
- * @export
- * @interface QoveryOkKubeVersion
- */
-export interface QoveryOkKubeVersion {
-    /**
-     * 
-     * @type {string}
-     * @memberof QoveryOkKubeVersion
+     * @memberof QoveryClusterKubeVersionStatusOneOf1
      */
     'kube_version': string;
-}
-/**
- * 
- * @export
- * @interface QoveryPodInErrorComponentInFailure
- */
-export interface QoveryPodInErrorComponentInFailure {
     /**
      * 
      * @type {string}
-     * @memberof QoveryPodInErrorComponentInFailure
+     * @memberof QoveryClusterKubeVersionStatusOneOf1
+     */
+    'type': QoveryClusterKubeVersionStatusOneOf1TypeEnum;
+}
+
+export const QoveryClusterKubeVersionStatusOneOf1TypeEnum = {
+    DRIFT: 'Drift'
+} as const;
+
+export type QoveryClusterKubeVersionStatusOneOf1TypeEnum = typeof QoveryClusterKubeVersionStatusOneOf1TypeEnum[keyof typeof QoveryClusterKubeVersionStatusOneOf1TypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface QoveryClusterKubeVersionStatusOneOf2
+ */
+export interface QoveryClusterKubeVersionStatusOneOf2 {
+    /**
+     * 
+     * @type {string}
+     * @memberof QoveryClusterKubeVersionStatusOneOf2
+     */
+    'type': QoveryClusterKubeVersionStatusOneOf2TypeEnum;
+}
+
+export const QoveryClusterKubeVersionStatusOneOf2TypeEnum = {
+    UNKNOWN: 'Unknown'
+} as const;
+
+export type QoveryClusterKubeVersionStatusOneOf2TypeEnum = typeof QoveryClusterKubeVersionStatusOneOf2TypeEnum[keyof typeof QoveryClusterKubeVersionStatusOneOf2TypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface QoveryComponentContainerStatusIssue
+ */
+export interface QoveryComponentContainerStatusIssue {
+    /**
+     * 
+     * @type {QoveryComponentContainerStatusLevel}
+     * @memberof QoveryComponentContainerStatusIssue
+     */
+    'level': QoveryComponentContainerStatusLevel;
+    /**
+     * 
+     * @type {string}
+     * @memberof QoveryComponentContainerStatusIssue
+     */
+    'message'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof QoveryComponentContainerStatusIssue
+     */
+    'reason'?: string | null;
+}
+
+
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const QoveryComponentContainerStatusLevel = {
+    ERROR: 'ERROR',
+    WARNING: 'WARNING'
+} as const;
+
+export type QoveryComponentContainerStatusLevel = typeof QoveryComponentContainerStatusLevel[keyof typeof QoveryComponentContainerStatusLevel];
+
+
+/**
+ * @type QoveryComponentInFailure
+ * @export
+ */
+export type QoveryComponentInFailure = QoveryComponentInFailureOneOf | QoveryComponentInFailureOneOf1;
+
+/**
+ * 
+ * @export
+ * @interface QoveryComponentInFailureOneOf
+ */
+export interface QoveryComponentInFailureOneOf {
+    /**
+     * 
+     * @type {string}
+     * @memberof QoveryComponentInFailureOneOf
      */
     'component_name': string;
     /**
      * 
      * @type {string}
-     * @memberof QoveryPodInErrorComponentInFailure
+     * @memberof QoveryComponentInFailureOneOf
+     */
+    'container_name': string;
+    /**
+     * 
+     * @type {QoveryComponentContainerStatusLevel}
+     * @memberof QoveryComponentInFailureOneOf
+     */
+    'level': QoveryComponentContainerStatusLevel;
+    /**
+     * 
+     * @type {string}
+     * @memberof QoveryComponentInFailureOneOf
+     */
+    'message'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof QoveryComponentInFailureOneOf
      */
     'pod_name': string;
     /**
      * 
      * @type {string}
-     * @memberof QoveryPodInErrorComponentInFailure
-     */
-    'container_name': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof QoveryPodInErrorComponentInFailure
-     */
-    'level'?: QoveryPodInErrorComponentInFailureLevelEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof QoveryPodInErrorComponentInFailure
+     * @memberof QoveryComponentInFailureOneOf
      */
     'reason'?: string | null;
     /**
      * 
      * @type {string}
-     * @memberof QoveryPodInErrorComponentInFailure
+     * @memberof QoveryComponentInFailureOneOf
      */
-    'message'?: string | null;
+    'type': QoveryComponentInFailureOneOfTypeEnum;
 }
 
-export const QoveryPodInErrorComponentInFailureLevelEnum = {
-    ERROR: 'ERROR',
-    WARNING: 'WARNING'
+export const QoveryComponentInFailureOneOfTypeEnum = {
+    POD_IN_ERROR: 'POD_IN_ERROR',
+    MISSING_COMPONENT: 'MISSING_COMPONENT'
 } as const;
 
-export type QoveryPodInErrorComponentInFailureLevelEnum = typeof QoveryPodInErrorComponentInFailureLevelEnum[keyof typeof QoveryPodInErrorComponentInFailureLevelEnum];
+export type QoveryComponentInFailureOneOfTypeEnum = typeof QoveryComponentInFailureOneOfTypeEnum[keyof typeof QoveryComponentInFailureOneOfTypeEnum];
 
+/**
+ * 
+ * @export
+ * @interface QoveryComponentInFailureOneOf1
+ */
+export interface QoveryComponentInFailureOneOf1 {
+    /**
+     * 
+     * @type {string}
+     * @memberof QoveryComponentInFailureOneOf1
+     */
+    'component_name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof QoveryComponentInFailureOneOf1
+     */
+    'type': QoveryComponentInFailureOneOf1TypeEnum;
+}
+
+export const QoveryComponentInFailureOneOf1TypeEnum = {
+    MISSING_COMPONENT: 'MISSING_COMPONENT'
+} as const;
+
+export type QoveryComponentInFailureOneOf1TypeEnum = typeof QoveryComponentInFailureOneOf1TypeEnum[keyof typeof QoveryComponentInFailureOneOf1TypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface QoveryNodeFailure
+ */
+export interface QoveryNodeFailure {
+    /**
+     * 
+     * @type {string}
+     * @memberof QoveryNodeFailure
+     */
+    'message': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof QoveryNodeFailure
+     */
+    'reason': string;
+}
 /**
  * 
  * @export
@@ -1082,6 +1224,115 @@ export const UnitDto = {
 } as const;
 
 export type UnitDto = typeof UnitDto[keyof typeof UnitDto];
+
+
+
+/**
+ * ClusterListNodesApi - axios parameter creator
+ * @export
+ */
+export const ClusterListNodesApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {string} organization 
+         * @param {string} cluster 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        handleClusterListNodesRequest: async (organization: string, cluster: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organization' is not null or undefined
+            assertParamExists('handleClusterListNodesRequest', 'organization', organization)
+            // verify required parameter 'cluster' is not null or undefined
+            assertParamExists('handleClusterListNodesRequest', 'cluster', cluster)
+            const localVarPath = `/cluster/node`
+                .replace(`{${"organization"}}`, encodeURIComponent(String(organization)))
+                .replace(`{${"cluster"}}`, encodeURIComponent(String(cluster)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * ClusterListNodesApi - functional programming interface
+ * @export
+ */
+export const ClusterListNodesApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = ClusterListNodesApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {string} organization 
+         * @param {string} cluster 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async handleClusterListNodesRequest(organization: string, cluster: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterListNodesResponseDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.handleClusterListNodesRequest(organization, cluster, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * ClusterListNodesApi - factory interface
+ * @export
+ */
+export const ClusterListNodesApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = ClusterListNodesApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {string} organization 
+         * @param {string} cluster 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        handleClusterListNodesRequest(organization: string, cluster: string, options?: any): AxiosPromise<ClusterListNodesResponseDto> {
+            return localVarFp.handleClusterListNodesRequest(organization, cluster, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * ClusterListNodesApi - object-oriented interface
+ * @export
+ * @class ClusterListNodesApi
+ * @extends {BaseAPI}
+ */
+export class ClusterListNodesApi extends BaseAPI {
+    /**
+     * 
+     * @param {string} organization 
+     * @param {string} cluster 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ClusterListNodesApi
+     */
+    public handleClusterListNodesRequest(organization: string, cluster: string, options?: AxiosRequestConfig) {
+        return ClusterListNodesApiFp(this.configuration).handleClusterListNodesRequest(organization, cluster, options).then((request) => request(this.axios, this.basePath));
+    }
+}
 
 
 
