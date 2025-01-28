@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * websocket-gateway
- * Describe the weboscket endpoints
+ * Describe the websocket endpoints of Qovery
  *
  * The version of the OpenAPI document: 0.1.0
  * Contact: erebe@erebe.eu
