@@ -75,29 +75,29 @@ export interface CertificateStatusDto {
      */
     'failed_issuance_attempt_count': number;
     /**
-     * Unix timestamp with millisecond precision
+     * 
      * @type {number}
      * @memberof CertificateStatusDto
      */
-    'last_failure_issuance_time'?: number | null;
+    'last_failure_issuance_time': number;
     /**
-     * Unix timestamp with millisecond precision
+     * 
      * @type {number}
      * @memberof CertificateStatusDto
      */
-    'not_after'?: number | null;
+    'not_after': number;
     /**
-     * Unix timestamp with millisecond precision
+     * 
      * @type {number}
      * @memberof CertificateStatusDto
      */
-    'not_before'?: number | null;
+    'not_before': number;
     /**
-     * Unix timestamp with millisecond precision
+     * 
      * @type {number}
      * @memberof CertificateStatusDto
      */
-    'renewal_time'?: number | null;
+    'renewal_time': number;
     /**
      * 
      * @type {ServiceStateDto}
@@ -136,13 +136,13 @@ export interface ClusterComputedStatusDto {
      * @type {QoveryClusterKubeVersionStatus}
      * @memberof ClusterComputedStatusDto
      */
-    'kube_version_status': QoveryClusterKubeVersionStatus;
+    'kube_version_status': QoveryClusterKubeVersionStatus | null;
     /**
      * 
-     * @type {{ [key: string]: Array<QoveryNodeFailure>; }}
+     * @type {{ [key: string]: any; }}
      * @memberof ClusterComputedStatusDto
      */
-    'node_warnings': { [key: string]: Array<QoveryNodeFailure>; };
+    'node_warnings': { [key: string]: any; };
     /**
      * 
      * @type {Array<QoveryComponentInFailure>}
@@ -297,11 +297,11 @@ export type ClusterStatusGlobalStatus = typeof ClusterStatusGlobalStatus[keyof t
  */
 export interface ContainerStateDto {
     /**
-     * Unix timestamp with millisecond precision
+     * 
      * @type {number}
      * @memberof ContainerStateDto
      */
-    'started_at'?: number | null;
+    'started_at': number;
     /**
      * 
      * @type {ServiceStateDto}
@@ -342,11 +342,11 @@ export interface ContainerStateTerminatedDto {
      */
     'exit_code_message': string;
     /**
-     * Unix timestamp with millisecond precision
+     * 
      * @type {number}
      * @memberof ContainerStateTerminatedDto
      */
-    'finished_at'?: number | null;
+    'finished_at': number;
     /**
      * 
      * @type {string}
@@ -366,11 +366,11 @@ export interface ContainerStateTerminatedDto {
      */
     'signal': number;
     /**
-     * Unix timestamp with millisecond precision
+     * 
      * @type {number}
      * @memberof ContainerStateTerminatedDto
      */
-    'started_at'?: number | null;
+    'started_at': number;
 }
 /**
  * 
@@ -450,10 +450,10 @@ export interface EnvironmentStatusDto {
     'applications': Array<ApplicationStatusDto>;
     /**
      * 
-     * @type {Array<ApplicationStatusDto>}
+     * @type {any}
      * @memberof EnvironmentStatusDto
      */
-    'containers': Array<ApplicationStatusDto>;
+    'containers': any;
     /**
      * 
      * @type {Array<DatabaseStatusDto>}
@@ -462,10 +462,10 @@ export interface EnvironmentStatusDto {
     'databases': Array<DatabaseStatusDto>;
     /**
      * 
-     * @type {Array<ApplicationStatusDto>}
+     * @type {any}
      * @memberof EnvironmentStatusDto
      */
-    'helms': Array<ApplicationStatusDto>;
+    'helms': any;
     /**
      * 
      * @type {string}
@@ -474,10 +474,10 @@ export interface EnvironmentStatusDto {
     'id': string;
     /**
      * 
-     * @type {Array<ApplicationStatusDto>}
+     * @type {any}
      * @memberof EnvironmentStatusDto
      */
-    'jobs': Array<ApplicationStatusDto>;
+    'jobs': any;
     /**
      * 
      * @type {string}
@@ -564,17 +564,17 @@ export interface NodeAddressDto {
  */
 export interface NodeConditionDto {
     /**
-     * Unix timestamp with millisecond precision
+     * 
      * @type {number}
      * @memberof NodeConditionDto
      */
-    'last_heartbeat_time'?: number | null;
+    'last_heartbeat_time': number;
     /**
-     * Unix timestamp with millisecond precision
+     * 
      * @type {number}
      * @memberof NodeConditionDto
      */
-    'last_transition_time'?: number | null;
+    'last_transition_time': number;
     /**
      * 
      * @type {string}
@@ -786,11 +786,11 @@ export interface PodStatusDto {
      */
     'service_version': string;
     /**
-     * Unix timestamp with millisecond precision
+     * 
      * @type {number}
      * @memberof PodStatusDto
      */
-    'started_at'?: number | null;
+    'started_at': number;
     /**
      * 
      * @type {ServiceStateDto}
@@ -813,91 +813,12 @@ export interface PodStatusDto {
 
 
 /**
- * @type QoveryClusterKubeVersionStatus
- * @export
- */
-export type QoveryClusterKubeVersionStatus = QoveryClusterKubeVersionStatusOneOf | QoveryClusterKubeVersionStatusOneOf1 | QoveryClusterKubeVersionStatusOneOf2;
-
-/**
  * 
  * @export
- * @interface QoveryClusterKubeVersionStatusOneOf
+ * @interface QoveryClusterKubeVersionStatus
  */
-export interface QoveryClusterKubeVersionStatusOneOf {
-    /**
-     * 
-     * @type {string}
-     * @memberof QoveryClusterKubeVersionStatusOneOf
-     */
-    'kube_version': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof QoveryClusterKubeVersionStatusOneOf
-     */
-    'type': QoveryClusterKubeVersionStatusOneOfTypeEnum;
+export interface QoveryClusterKubeVersionStatus {
 }
-
-export const QoveryClusterKubeVersionStatusOneOfTypeEnum = {
-    OK: 'Ok',
-    DRIFT: 'Drift',
-    UNKNOWN: 'Unknown'
-} as const;
-
-export type QoveryClusterKubeVersionStatusOneOfTypeEnum = typeof QoveryClusterKubeVersionStatusOneOfTypeEnum[keyof typeof QoveryClusterKubeVersionStatusOneOfTypeEnum];
-
-/**
- * 
- * @export
- * @interface QoveryClusterKubeVersionStatusOneOf1
- */
-export interface QoveryClusterKubeVersionStatusOneOf1 {
-    /**
-     * 
-     * @type {string}
-     * @memberof QoveryClusterKubeVersionStatusOneOf1
-     */
-    'expected_kube_version': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof QoveryClusterKubeVersionStatusOneOf1
-     */
-    'kube_version': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof QoveryClusterKubeVersionStatusOneOf1
-     */
-    'type': QoveryClusterKubeVersionStatusOneOf1TypeEnum;
-}
-
-export const QoveryClusterKubeVersionStatusOneOf1TypeEnum = {
-    DRIFT: 'Drift'
-} as const;
-
-export type QoveryClusterKubeVersionStatusOneOf1TypeEnum = typeof QoveryClusterKubeVersionStatusOneOf1TypeEnum[keyof typeof QoveryClusterKubeVersionStatusOneOf1TypeEnum];
-
-/**
- * 
- * @export
- * @interface QoveryClusterKubeVersionStatusOneOf2
- */
-export interface QoveryClusterKubeVersionStatusOneOf2 {
-    /**
-     * 
-     * @type {string}
-     * @memberof QoveryClusterKubeVersionStatusOneOf2
-     */
-    'type': QoveryClusterKubeVersionStatusOneOf2TypeEnum;
-}
-
-export const QoveryClusterKubeVersionStatusOneOf2TypeEnum = {
-    UNKNOWN: 'Unknown'
-} as const;
-
-export type QoveryClusterKubeVersionStatusOneOf2TypeEnum = typeof QoveryClusterKubeVersionStatusOneOf2TypeEnum[keyof typeof QoveryClusterKubeVersionStatusOneOf2TypeEnum];
-
 /**
  * 
  * @export
@@ -940,94 +861,12 @@ export type QoveryComponentContainerStatusLevel = typeof QoveryComponentContaine
 
 
 /**
- * @type QoveryComponentInFailure
- * @export
- */
-export type QoveryComponentInFailure = QoveryComponentInFailureOneOf | QoveryComponentInFailureOneOf1;
-
-/**
  * 
  * @export
- * @interface QoveryComponentInFailureOneOf
+ * @interface QoveryComponentInFailure
  */
-export interface QoveryComponentInFailureOneOf {
-    /**
-     * 
-     * @type {string}
-     * @memberof QoveryComponentInFailureOneOf
-     */
-    'component_name': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof QoveryComponentInFailureOneOf
-     */
-    'container_name': string;
-    /**
-     * 
-     * @type {QoveryComponentContainerStatusLevel}
-     * @memberof QoveryComponentInFailureOneOf
-     */
-    'level': QoveryComponentContainerStatusLevel;
-    /**
-     * 
-     * @type {string}
-     * @memberof QoveryComponentInFailureOneOf
-     */
-    'message'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof QoveryComponentInFailureOneOf
-     */
-    'pod_name': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof QoveryComponentInFailureOneOf
-     */
-    'reason'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof QoveryComponentInFailureOneOf
-     */
-    'type': QoveryComponentInFailureOneOfTypeEnum;
+export interface QoveryComponentInFailure {
 }
-
-export const QoveryComponentInFailureOneOfTypeEnum = {
-    POD_IN_ERROR: 'POD_IN_ERROR',
-    MISSING_COMPONENT: 'MISSING_COMPONENT'
-} as const;
-
-export type QoveryComponentInFailureOneOfTypeEnum = typeof QoveryComponentInFailureOneOfTypeEnum[keyof typeof QoveryComponentInFailureOneOfTypeEnum];
-
-/**
- * 
- * @export
- * @interface QoveryComponentInFailureOneOf1
- */
-export interface QoveryComponentInFailureOneOf1 {
-    /**
-     * 
-     * @type {string}
-     * @memberof QoveryComponentInFailureOneOf1
-     */
-    'component_name': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof QoveryComponentInFailureOneOf1
-     */
-    'type': QoveryComponentInFailureOneOf1TypeEnum;
-}
-
-export const QoveryComponentInFailureOneOf1TypeEnum = {
-    MISSING_COMPONENT: 'MISSING_COMPONENT'
-} as const;
-
-export type QoveryComponentInFailureOneOf1TypeEnum = typeof QoveryComponentInFailureOneOf1TypeEnum[keyof typeof QoveryComponentInFailureOneOf1TypeEnum];
-
 /**
  * 
  * @export
@@ -1069,7 +908,7 @@ export type ResourceStatusDto = typeof ResourceStatusDto[keyof typeof ResourceSt
  */
 export interface ServiceInfraLogResponseDto {
     /**
-     * Unix timestamp with millisecond precision
+     * 
      * @type {number}
      * @memberof ServiceInfraLogResponseDto
      */
@@ -1107,7 +946,7 @@ export interface ServiceLogResponseDto {
      */
     'container_name': string;
     /**
-     * Unix timestamp with millisecond precision
+     * 
      * @type {number}
      * @memberof ServiceLogResponseDto
      */
