@@ -439,6 +439,20 @@ export interface DatabaseStatusDto {
 /**
  * 
  * @export
+ * @enum {string}
+ */
+
+export const DebugFlavor = {
+    REGULAR_PRIVILEGE: 'REGULAR_PRIVILEGE',
+    FULL_PRIVILEGE: 'FULL_PRIVILEGE'
+} as const;
+
+export type DebugFlavor = typeof DebugFlavor[keyof typeof DebugFlavor];
+
+
+/**
+ * 
+ * @export
  * @interface EnvironmentStatusDto
  */
 export interface EnvironmentStatusDto {
@@ -1735,6 +1749,143 @@ export class LogsApi extends BaseAPI {
      */
     public handleServiceLogsRequest(organization: string, cluster: string, project: string, environment: string, service: string, podName: string | null, options?: AxiosRequestConfig) {
         return LogsApiFp(this.configuration).handleServiceLogsRequest(organization, cluster, project, environment, service, podName, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * RemoteDebugApi - axios parameter creator
+ * @export
+ */
+export const RemoteDebugApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {string} organization 
+         * @param {string} cluster 
+         * @param {DebugFlavor} flavor 
+         * @param {number} ttyWidth 
+         * @param {number} ttyHeight 
+         * @param {string | null} nodeSelector 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        handleShellRemoteDebug: async (organization: string, cluster: string, flavor: DebugFlavor, ttyWidth: number, ttyHeight: number, nodeSelector: string | null, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organization' is not null or undefined
+            assertParamExists('handleShellRemoteDebug', 'organization', organization)
+            // verify required parameter 'cluster' is not null or undefined
+            assertParamExists('handleShellRemoteDebug', 'cluster', cluster)
+            // verify required parameter 'flavor' is not null or undefined
+            assertParamExists('handleShellRemoteDebug', 'flavor', flavor)
+            // verify required parameter 'ttyWidth' is not null or undefined
+            assertParamExists('handleShellRemoteDebug', 'ttyWidth', ttyWidth)
+            // verify required parameter 'ttyHeight' is not null or undefined
+            assertParamExists('handleShellRemoteDebug', 'ttyHeight', ttyHeight)
+            // verify required parameter 'nodeSelector' is not null or undefined
+            assertParamExists('handleShellRemoteDebug', 'nodeSelector', nodeSelector)
+            const localVarPath = `/shell/debug`
+                .replace(`{${"organization"}}`, encodeURIComponent(String(organization)))
+                .replace(`{${"cluster"}}`, encodeURIComponent(String(cluster)))
+                .replace(`{${"flavor"}}`, encodeURIComponent(String(flavor)))
+                .replace(`{${"tty_width"}}`, encodeURIComponent(String(ttyWidth)))
+                .replace(`{${"tty_height"}}`, encodeURIComponent(String(ttyHeight)))
+                .replace(`{${"node_selector"}}`, encodeURIComponent(String(nodeSelector)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * RemoteDebugApi - functional programming interface
+ * @export
+ */
+export const RemoteDebugApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = RemoteDebugApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {string} organization 
+         * @param {string} cluster 
+         * @param {DebugFlavor} flavor 
+         * @param {number} ttyWidth 
+         * @param {number} ttyHeight 
+         * @param {string | null} nodeSelector 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async handleShellRemoteDebug(organization: string, cluster: string, flavor: DebugFlavor, ttyWidth: number, ttyHeight: number, nodeSelector: string | null, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.handleShellRemoteDebug(organization, cluster, flavor, ttyWidth, ttyHeight, nodeSelector, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * RemoteDebugApi - factory interface
+ * @export
+ */
+export const RemoteDebugApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = RemoteDebugApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {string} organization 
+         * @param {string} cluster 
+         * @param {DebugFlavor} flavor 
+         * @param {number} ttyWidth 
+         * @param {number} ttyHeight 
+         * @param {string | null} nodeSelector 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        handleShellRemoteDebug(organization: string, cluster: string, flavor: DebugFlavor, ttyWidth: number, ttyHeight: number, nodeSelector: string | null, options?: any): AxiosPromise<string> {
+            return localVarFp.handleShellRemoteDebug(organization, cluster, flavor, ttyWidth, ttyHeight, nodeSelector, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * RemoteDebugApi - object-oriented interface
+ * @export
+ * @class RemoteDebugApi
+ * @extends {BaseAPI}
+ */
+export class RemoteDebugApi extends BaseAPI {
+    /**
+     * 
+     * @param {string} organization 
+     * @param {string} cluster 
+     * @param {DebugFlavor} flavor 
+     * @param {number} ttyWidth 
+     * @param {number} ttyHeight 
+     * @param {string | null} nodeSelector 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RemoteDebugApi
+     */
+    public handleShellRemoteDebug(organization: string, cluster: string, flavor: DebugFlavor, ttyWidth: number, ttyHeight: number, nodeSelector: string | null, options?: AxiosRequestConfig) {
+        return RemoteDebugApiFp(this.configuration).handleShellRemoteDebug(organization, cluster, flavor, ttyWidth, ttyHeight, nodeSelector, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
