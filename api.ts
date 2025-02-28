@@ -1062,10 +1062,16 @@ export interface PvcInfoDto {
 /**
  * 
  * @export
- * @interface QoveryClusterKubeVersionStatus
+ * @enum {string}
  */
-export interface QoveryClusterKubeVersionStatus {
-}
+
+export const QoveryClusterKubeVersionStatus = {
+    UNKNOWN: 'Unknown'
+} as const;
+
+export type QoveryClusterKubeVersionStatus = typeof QoveryClusterKubeVersionStatus[keyof typeof QoveryClusterKubeVersionStatus];
+
+
 /**
  * 
  * @export
