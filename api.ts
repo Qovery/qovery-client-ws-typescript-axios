@@ -136,7 +136,7 @@ export interface ClusterComputedStatusDto {
      * @type {QoveryClusterKubeVersionStatus}
      * @memberof ClusterComputedStatusDto
      */
-    'kube_version_status': QoveryClusterKubeVersionStatus | null;
+    'kube_version_status': QoveryClusterKubeVersionStatus;
     /**
      * 
      * @type {{ [key: string]: any; }}
@@ -540,6 +540,63 @@ export interface EnvironmentStatusDto {
 /**
  * 
  * @export
+ * @interface KubeVersionStatusDriftValue
+ */
+export interface KubeVersionStatusDriftValue {
+    /**
+     * 
+     * @type {string}
+     * @memberof KubeVersionStatusDriftValue
+     */
+    'expected_kube_version': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof KubeVersionStatusDriftValue
+     */
+    'kube_version': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof KubeVersionStatusDriftValue
+     */
+    'type': string;
+}
+/**
+ * 
+ * @export
+ * @interface KubeVersionStatusOkValue
+ */
+export interface KubeVersionStatusOkValue {
+    /**
+     * 
+     * @type {string}
+     * @memberof KubeVersionStatusOkValue
+     */
+    'kube_version': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof KubeVersionStatusOkValue
+     */
+    'type': string;
+}
+/**
+ * 
+ * @export
+ * @interface KubeVersionStatusUnknownValue
+ */
+export interface KubeVersionStatusUnknownValue {
+    /**
+     * 
+     * @type {string}
+     * @memberof KubeVersionStatusUnknownValue
+     */
+    'type': string;
+}
+/**
+ * 
+ * @export
  * @interface MetricDto
  */
 export interface MetricDto {
@@ -636,6 +693,25 @@ export interface MetricsUsageDto {
      * @memberof MetricsUsageDto
      */
     'memory_percent_working_set_usage'?: number | null;
+}
+/**
+ * 
+ * @export
+ * @interface MissingComponentValue
+ */
+export interface MissingComponentValue {
+    /**
+     * 
+     * @type {string}
+     * @memberof MissingComponentValue
+     */
+    'component_name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MissingComponentValue
+     */
+    'type': string;
 }
 /**
  * 
@@ -913,6 +989,57 @@ export interface PodDto {
 /**
  * 
  * @export
+ * @interface PodInErrorValue
+ */
+export interface PodInErrorValue {
+    /**
+     * 
+     * @type {string}
+     * @memberof PodInErrorValue
+     */
+    'component_name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PodInErrorValue
+     */
+    'container_name': string;
+    /**
+     * 
+     * @type {QoveryComponentContainerStatusLevel}
+     * @memberof PodInErrorValue
+     */
+    'level': QoveryComponentContainerStatusLevel;
+    /**
+     * 
+     * @type {string}
+     * @memberof PodInErrorValue
+     */
+    'message'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PodInErrorValue
+     */
+    'pod_name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PodInErrorValue
+     */
+    'reason'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PodInErrorValue
+     */
+    'type': string;
+}
+
+
+/**
+ * 
+ * @export
  * @interface PodQoveryServiceInfoDto
  */
 export interface PodQoveryServiceInfoDto {
@@ -1060,17 +1187,10 @@ export interface PvcInfoDto {
     'qovery_service_info'?: PodQoveryServiceInfoDto | null;
 }
 /**
- * 
+ * @type QoveryClusterKubeVersionStatus
  * @export
- * @enum {string}
  */
-
-export const QoveryClusterKubeVersionStatus = {
-    UNKNOWN: 'Unknown'
-} as const;
-
-export type QoveryClusterKubeVersionStatus = typeof QoveryClusterKubeVersionStatus[keyof typeof QoveryClusterKubeVersionStatus];
-
+export type QoveryClusterKubeVersionStatus = { type: 'DRIFT' } & KubeVersionStatusDriftValue | { type: 'OK' } & KubeVersionStatusOkValue | { type: 'UNKNOWN' } & KubeVersionStatusUnknownValue;
 
 /**
  * 
@@ -1114,12 +1234,11 @@ export type QoveryComponentContainerStatusLevel = typeof QoveryComponentContaine
 
 
 /**
- * 
+ * @type QoveryComponentInFailure
  * @export
- * @interface QoveryComponentInFailure
  */
-export interface QoveryComponentInFailure {
-}
+export type QoveryComponentInFailure = { type: 'MISSING_COMPONENT' } & MissingComponentValue | { type: 'POD_IN_ERROR' } & PodInErrorValue;
+
 /**
  * 
  * @export
