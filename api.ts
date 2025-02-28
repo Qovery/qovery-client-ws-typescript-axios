@@ -197,6 +197,18 @@ export interface ClusterNodeDto {
     'conditions': Array<NodeConditionDto>;
     /**
      * 
+     * @type {number}
+     * @memberof ClusterNodeDto
+     */
+    'created_at': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterNodeDto
+     */
+    'instance_type'?: string | null;
+    /**
+     * 
      * @type {string}
      * @memberof ClusterNodeDto
      */
@@ -213,6 +225,12 @@ export interface ClusterNodeDto {
      * @memberof ClusterNodeDto
      */
     'labels': { [key: string]: string; };
+    /**
+     * 
+     * @type {MetricsUsageDto}
+     * @memberof ClusterNodeDto
+     */
+    'metrics_usage': MetricsUsageDto;
     /**
      * 
      * @type {string}
@@ -245,6 +263,12 @@ export interface ClusterNodeDto {
     'resources_allocatable': NodeResourceDto;
     /**
      * 
+     * @type {NodeResourceAllocatedDto}
+     * @memberof ClusterNodeDto
+     */
+    'resources_allocated': NodeResourceAllocatedDto;
+    /**
+     * 
      * @type {Array<NodeTaintDto>}
      * @memberof ClusterNodeDto
      */
@@ -274,6 +298,12 @@ export interface ClusterStatusDto {
      * @memberof ClusterStatusDto
      */
     'nodes': Array<ClusterNodeDto>;
+    /**
+     * 
+     * @type {Array<PvcInfoDto>}
+     * @memberof ClusterStatusDto
+     */
+    'pvcs': Array<PvcInfoDto>;
 }
 /**
  * 
@@ -555,6 +585,61 @@ export interface MetricDto {
 /**
  * 
  * @export
+ * @interface MetricsUsageDto
+ */
+export interface MetricsUsageDto {
+    /**
+     * 
+     * @type {number}
+     * @memberof MetricsUsageDto
+     */
+    'cpu_milli_usage'?: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof MetricsUsageDto
+     */
+    'cpu_percent_usage'?: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof MetricsUsageDto
+     */
+    'disk_mib_usage'?: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof MetricsUsageDto
+     */
+    'disk_percent_usage'?: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof MetricsUsageDto
+     */
+    'memory_mib_rss_usage'?: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof MetricsUsageDto
+     */
+    'memory_mib_working_set_usage'?: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof MetricsUsageDto
+     */
+    'memory_percent_rss_usage'?: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof MetricsUsageDto
+     */
+    'memory_percent_working_set_usage'?: number | null;
+}
+/**
+ * 
+ * @export
  * @interface NodeAddressDto
  */
 export interface NodeAddressDto {
@@ -630,6 +715,31 @@ export interface NodeDto {
 /**
  * 
  * @export
+ * @interface NodePodErrorStatusDto
+ */
+export interface NodePodErrorStatusDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof NodePodErrorStatusDto
+     */
+    'container_name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NodePodErrorStatusDto
+     */
+    'message'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof NodePodErrorStatusDto
+     */
+    'reason'?: string | null;
+}
+/**
+ * 
+ * @export
  * @interface NodePodInfoDto
  */
 export interface NodePodInfoDto {
@@ -647,10 +757,16 @@ export interface NodePodInfoDto {
     'cpu_milli_request'?: number | null;
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof NodePodInfoDto
      */
-    'environment_id'?: string | null;
+    'created_at': number;
+    /**
+     * 
+     * @type {Array<NodePodErrorStatusDto>}
+     * @memberof NodePodInfoDto
+     */
+    'error_container_statuses': Array<NodePodErrorStatusDto>;
     /**
      * 
      * @type {{ [key: string]: string; }}
@@ -671,6 +787,12 @@ export interface NodePodInfoDto {
     'memory_mib_request'?: number | null;
     /**
      * 
+     * @type {MetricsUsageDto}
+     * @memberof NodePodInfoDto
+     */
+    'metrics_usage': MetricsUsageDto;
+    /**
+     * 
      * @type {string}
      * @memberof NodePodInfoDto
      */
@@ -683,16 +805,35 @@ export interface NodePodInfoDto {
     'namespace': string;
     /**
      * 
-     * @type {string}
+     * @type {PodQoveryServiceInfoDto}
      * @memberof NodePodInfoDto
      */
-    'project_id'?: string | null;
+    'qovery_service_info'?: PodQoveryServiceInfoDto | null;
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof NodePodInfoDto
      */
-    'service_id'?: string | null;
+    'restart_count': number;
+}
+/**
+ * 
+ * @export
+ * @interface NodeResourceAllocatedDto
+ */
+export interface NodeResourceAllocatedDto {
+    /**
+     * 
+     * @type {number}
+     * @memberof NodeResourceAllocatedDto
+     */
+    'cpu_milli': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof NodeResourceAllocatedDto
+     */
+    'memory_mib': number;
 }
 /**
  * 
@@ -711,7 +852,7 @@ export interface NodeResourceDto {
      * @type {number}
      * @memberof NodeResourceDto
      */
-    'ephemeral_storage_gib': number;
+    'ephemeral_storage_mib': number;
     /**
      * 
      * @type {number}
@@ -772,6 +913,49 @@ export interface PodDto {
 /**
  * 
  * @export
+ * @interface PodQoveryServiceInfoDto
+ */
+export interface PodQoveryServiceInfoDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof PodQoveryServiceInfoDto
+     */
+    'environment_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PodQoveryServiceInfoDto
+     */
+    'environment_name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PodQoveryServiceInfoDto
+     */
+    'project_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PodQoveryServiceInfoDto
+     */
+    'project_name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PodQoveryServiceInfoDto
+     */
+    'service_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PodQoveryServiceInfoDto
+     */
+    'service_name': string;
+}
+/**
+ * 
+ * @export
  * @interface PodStatusDto
  */
 export interface PodStatusDto {
@@ -826,6 +1010,55 @@ export interface PodStatusDto {
 }
 
 
+/**
+ * 
+ * @export
+ * @interface PvcInfoDto
+ */
+export interface PvcInfoDto {
+    /**
+     * 
+     * @type {number}
+     * @memberof PvcInfoDto
+     */
+    'disk_mib_capacity': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PvcInfoDto
+     */
+    'disk_mib_usage': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PvcInfoDto
+     */
+    'disk_percent_usage': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof PvcInfoDto
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PvcInfoDto
+     */
+    'namespace': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PvcInfoDto
+     */
+    'pod_name': string;
+    /**
+     * 
+     * @type {PodQoveryServiceInfoDto}
+     * @memberof PvcInfoDto
+     */
+    'qovery_service_info'?: PodQoveryServiceInfoDto | null;
+}
 /**
  * 
  * @export
