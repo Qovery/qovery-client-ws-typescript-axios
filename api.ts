@@ -1148,6 +1148,12 @@ export interface PvcInfoDto {
      * @type {number}
      * @memberof PvcInfoDto
      */
+    'created_at': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PvcInfoDto
+     */
     'disk_mib_capacity': number;
     /**
      * 
@@ -1185,6 +1191,12 @@ export interface PvcInfoDto {
      * @memberof PvcInfoDto
      */
     'qovery_service_info'?: PodQoveryServiceInfoDto | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PvcInfoDto
+     */
+    'status'?: string | null;
 }
 /**
  * @type QoveryClusterKubeVersionStatus
