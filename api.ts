@@ -1040,6 +1040,79 @@ export interface PodInErrorValue {
 /**
  * 
  * @export
+ * @interface PodInfoDto
+ */
+export interface PodInfoDto {
+    /**
+     * 
+     * @type {number}
+     * @memberof PodInfoDto
+     */
+    'cpu_milli_limit'?: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof PodInfoDto
+     */
+    'cpu_milli_request'?: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof PodInfoDto
+     */
+    'created_at': number;
+    /**
+     * 
+     * @type {Array<NodePodErrorStatusDto>}
+     * @memberof PodInfoDto
+     */
+    'error_container_statuses': Array<NodePodErrorStatusDto>;
+    /**
+     * 
+     * @type {{ [key: string]: string; }}
+     * @memberof PodInfoDto
+     */
+    'images_version': { [key: string]: string; };
+    /**
+     * 
+     * @type {number}
+     * @memberof PodInfoDto
+     */
+    'memory_mib_limit'?: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof PodInfoDto
+     */
+    'memory_mib_request'?: number | null;
+    /**
+     * 
+     * @type {MetricsUsageDto}
+     * @memberof PodInfoDto
+     */
+    'metrics_usage': MetricsUsageDto;
+    /**
+     * 
+     * @type {string}
+     * @memberof PodInfoDto
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PodInfoDto
+     */
+    'namespace': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof PodInfoDto
+     */
+    'restart_count': number;
+}
+/**
+ * 
+ * @export
  * @interface PodQoveryServiceInfoDto
  */
 export interface PodQoveryServiceInfoDto {
@@ -1384,6 +1457,25 @@ export interface ServiceMetricsDto {
      * @memberof ServiceMetricsDto
      */
     'storages': Array<MetricDto>;
+}
+/**
+ * 
+ * @export
+ * @interface ServiceMetricsV2Dto
+ */
+export interface ServiceMetricsV2Dto {
+    /**
+     * 
+     * @type {Array<PodInfoDto>}
+     * @memberof ServiceMetricsV2Dto
+     */
+    'pods': Array<PodInfoDto>;
+    /**
+     * 
+     * @type {Array<PvcInfoDto>}
+     * @memberof ServiceMetricsV2Dto
+     */
+    'pvcs': Array<PvcInfoDto>;
 }
 /**
  * 
