@@ -294,6 +294,12 @@ export interface ClusterStatusDto {
     'computed_status': ClusterComputedStatusDto;
     /**
      * 
+     * @type {Array<NodePoolInfoDto>}
+     * @memberof ClusterStatusDto
+     */
+    'node_pools': Array<NodePoolInfoDto>;
+    /**
+     * 
      * @type {Array<ClusterNodeDto>}
      * @memberof ClusterStatusDto
      */
@@ -891,6 +897,49 @@ export interface NodePodInfoDto {
      * @memberof NodePodInfoDto
      */
     'restart_count': number;
+}
+/**
+ * 
+ * @export
+ * @interface NodePoolInfoDto
+ */
+export interface NodePoolInfoDto {
+    /**
+     * 
+     * @type {number}
+     * @memberof NodePoolInfoDto
+     */
+    'cpu_milli': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof NodePoolInfoDto
+     */
+    'cpu_milli_limit'?: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof NodePoolInfoDto
+     */
+    'memory_mib': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof NodePoolInfoDto
+     */
+    'memory_mib_limit'?: number | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof NodePoolInfoDto
+     */
+    'name': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof NodePoolInfoDto
+     */
+    'nodes_count': number;
 }
 /**
  * 
