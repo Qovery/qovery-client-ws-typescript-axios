@@ -1162,6 +1162,37 @@ export interface PodInfoDto {
 /**
  * 
  * @export
+ * @interface PodKubernetesEventDto
+ */
+export interface PodKubernetesEventDto {
+    /**
+     * 
+     * @type {number}
+     * @memberof PodKubernetesEventDto
+     */
+    'created_at': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof PodKubernetesEventDto
+     */
+    'message': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PodKubernetesEventDto
+     */
+    'reason': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PodKubernetesEventDto
+     */
+    'type': string;
+}
+/**
+ * 
+ * @export
  * @interface PodQoveryServiceInfoDto
  */
 export interface PodQoveryServiceInfoDto {
@@ -1214,6 +1245,12 @@ export interface PodStatusDto {
      * @memberof PodStatusDto
      */
     'containers': Array<ContainerStatusDto>;
+    /**
+     * 
+     * @type {Array<PodKubernetesEventDto>}
+     * @memberof PodStatusDto
+     */
+    'last_events': Array<PodKubernetesEventDto>;
     /**
      * 
      * @type {string}
