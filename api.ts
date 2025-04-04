@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * websocket-gateway
- * Describe the weboscket endpoints
+ * Describe the websocket endpoints of Qovery
  *
  * The version of the OpenAPI document: 0.1.0
  * Contact: erebe@erebe.eu
@@ -75,29 +75,29 @@ export interface CertificateStatusDto {
      */
     'failed_issuance_attempt_count': number;
     /**
-     * Unix timestamp with millisecond precision
+     * 
      * @type {number}
      * @memberof CertificateStatusDto
      */
-    'last_failure_issuance_time'?: number | null;
+    'last_failure_issuance_time': number;
     /**
-     * Unix timestamp with millisecond precision
+     * 
      * @type {number}
      * @memberof CertificateStatusDto
      */
-    'not_after'?: number | null;
+    'not_after': number;
     /**
-     * Unix timestamp with millisecond precision
+     * 
      * @type {number}
      * @memberof CertificateStatusDto
      */
-    'not_before'?: number | null;
+    'not_before': number;
     /**
-     * Unix timestamp with millisecond precision
+     * 
      * @type {number}
      * @memberof CertificateStatusDto
      */
-    'renewal_time'?: number | null;
+    'renewal_time': number;
     /**
      * 
      * @type {ServiceStateDto}
@@ -116,15 +116,228 @@ export interface CertificateStatusDto {
 /**
  * 
  * @export
+ * @interface ClusterComputedStatusDto
+ */
+export interface ClusterComputedStatusDto {
+    /**
+     * 
+     * @type {ClusterStatusGlobalStatus}
+     * @memberof ClusterComputedStatusDto
+     */
+    'global_status': ClusterStatusGlobalStatus;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ClusterComputedStatusDto
+     */
+    'is_max_nodes_size_reached': boolean;
+    /**
+     * 
+     * @type {QoveryClusterKubeVersionStatus}
+     * @memberof ClusterComputedStatusDto
+     */
+    'kube_version_status': QoveryClusterKubeVersionStatus;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof ClusterComputedStatusDto
+     */
+    'node_warnings': { [key: string]: any; };
+    /**
+     * 
+     * @type {Array<QoveryComponentInFailure>}
+     * @memberof ClusterComputedStatusDto
+     */
+    'qovery_components_in_failure': Array<QoveryComponentInFailure>;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface ClusterListNodesResponseDto
+ */
+export interface ClusterListNodesResponseDto {
+    /**
+     * 
+     * @type {Array<NodeDto>}
+     * @memberof ClusterListNodesResponseDto
+     */
+    'nodes': Array<NodeDto>;
+}
+/**
+ * 
+ * @export
+ * @interface ClusterNodeDto
+ */
+export interface ClusterNodeDto {
+    /**
+     * 
+     * @type {Array<NodeAddressDto>}
+     * @memberof ClusterNodeDto
+     */
+    'addresses': Array<NodeAddressDto>;
+    /**
+     * 
+     * @type {{ [key: string]: string; }}
+     * @memberof ClusterNodeDto
+     */
+    'annotations': { [key: string]: string; };
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterNodeDto
+     */
+    'architecture': string;
+    /**
+     * 
+     * @type {Array<NodeConditionDto>}
+     * @memberof ClusterNodeDto
+     */
+    'conditions': Array<NodeConditionDto>;
+    /**
+     * 
+     * @type {number}
+     * @memberof ClusterNodeDto
+     */
+    'created_at': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterNodeDto
+     */
+    'instance_type'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterNodeDto
+     */
+    'kernel_version': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterNodeDto
+     */
+    'kubelet_version': string;
+    /**
+     * 
+     * @type {{ [key: string]: string; }}
+     * @memberof ClusterNodeDto
+     */
+    'labels': { [key: string]: string; };
+    /**
+     * 
+     * @type {MetricsUsageDto}
+     * @memberof ClusterNodeDto
+     */
+    'metrics_usage': MetricsUsageDto;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterNodeDto
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterNodeDto
+     */
+    'operating_system': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterNodeDto
+     */
+    'os_image': string;
+    /**
+     * 
+     * @type {Array<NodePodInfoDto>}
+     * @memberof ClusterNodeDto
+     */
+    'pods': Array<NodePodInfoDto>;
+    /**
+     * 
+     * @type {NodeResourceDto}
+     * @memberof ClusterNodeDto
+     */
+    'resources_allocatable': NodeResourceDto;
+    /**
+     * 
+     * @type {NodeResourceAllocatedDto}
+     * @memberof ClusterNodeDto
+     */
+    'resources_allocated': NodeResourceAllocatedDto;
+    /**
+     * 
+     * @type {Array<NodeTaintDto>}
+     * @memberof ClusterNodeDto
+     */
+    'taints': Array<NodeTaintDto>;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ClusterNodeDto
+     */
+    'unschedulable': boolean;
+}
+/**
+ * 
+ * @export
+ * @interface ClusterStatusDto
+ */
+export interface ClusterStatusDto {
+    /**
+     * 
+     * @type {ClusterComputedStatusDto}
+     * @memberof ClusterStatusDto
+     */
+    'computed_status': ClusterComputedStatusDto;
+    /**
+     * 
+     * @type {Array<NodePoolInfoDto>}
+     * @memberof ClusterStatusDto
+     */
+    'node_pools': Array<NodePoolInfoDto>;
+    /**
+     * 
+     * @type {Array<ClusterNodeDto>}
+     * @memberof ClusterStatusDto
+     */
+    'nodes': Array<ClusterNodeDto>;
+    /**
+     * 
+     * @type {Array<PvcInfoDto>}
+     * @memberof ClusterStatusDto
+     */
+    'pvcs': Array<PvcInfoDto>;
+}
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const ClusterStatusGlobalStatus = {
+    RUNNING: 'RUNNING',
+    WARNING: 'WARNING',
+    ERROR: 'ERROR'
+} as const;
+
+export type ClusterStatusGlobalStatus = typeof ClusterStatusGlobalStatus[keyof typeof ClusterStatusGlobalStatus];
+
+
+/**
+ * 
+ * @export
  * @interface ContainerStateDto
  */
 export interface ContainerStateDto {
     /**
-     * Unix timestamp with millisecond precision
+     * 
      * @type {number}
      * @memberof ContainerStateDto
      */
-    'started_at'?: number | null;
+    'started_at': number;
     /**
      * 
      * @type {ServiceStateDto}
@@ -165,11 +378,11 @@ export interface ContainerStateTerminatedDto {
      */
     'exit_code_message': string;
     /**
-     * Unix timestamp with millisecond precision
+     * 
      * @type {number}
      * @memberof ContainerStateTerminatedDto
      */
-    'finished_at'?: number | null;
+    'finished_at': number;
     /**
      * 
      * @type {string}
@@ -189,11 +402,11 @@ export interface ContainerStateTerminatedDto {
      */
     'signal': number;
     /**
-     * Unix timestamp with millisecond precision
+     * 
      * @type {number}
      * @memberof ContainerStateTerminatedDto
      */
-    'started_at'?: number | null;
+    'started_at': number;
 }
 /**
  * 
@@ -262,6 +475,20 @@ export interface DatabaseStatusDto {
 /**
  * 
  * @export
+ * @enum {string}
+ */
+
+export const DebugFlavor = {
+    REGULAR_PRIVILEGE: 'REGULAR_PRIVILEGE',
+    FULL_PRIVILEGE: 'FULL_PRIVILEGE'
+} as const;
+
+export type DebugFlavor = typeof DebugFlavor[keyof typeof DebugFlavor];
+
+
+/**
+ * 
+ * @export
  * @interface EnvironmentStatusDto
  */
 export interface EnvironmentStatusDto {
@@ -273,10 +500,10 @@ export interface EnvironmentStatusDto {
     'applications': Array<ApplicationStatusDto>;
     /**
      * 
-     * @type {Array<ApplicationStatusDto>}
+     * @type {any}
      * @memberof EnvironmentStatusDto
      */
-    'containers': Array<ApplicationStatusDto>;
+    'containers': any;
     /**
      * 
      * @type {Array<DatabaseStatusDto>}
@@ -285,10 +512,10 @@ export interface EnvironmentStatusDto {
     'databases': Array<DatabaseStatusDto>;
     /**
      * 
-     * @type {Array<ApplicationStatusDto>}
+     * @type {any}
      * @memberof EnvironmentStatusDto
      */
-    'helms': Array<ApplicationStatusDto>;
+    'helms': any;
     /**
      * 
      * @type {string}
@@ -297,10 +524,10 @@ export interface EnvironmentStatusDto {
     'id': string;
     /**
      * 
-     * @type {Array<ApplicationStatusDto>}
+     * @type {any}
      * @memberof EnvironmentStatusDto
      */
-    'jobs': Array<ApplicationStatusDto>;
+    'jobs': any;
     /**
      * 
      * @type {string}
@@ -316,6 +543,63 @@ export interface EnvironmentStatusDto {
 }
 
 
+/**
+ * 
+ * @export
+ * @interface KubeVersionStatusDriftValue
+ */
+export interface KubeVersionStatusDriftValue {
+    /**
+     * 
+     * @type {string}
+     * @memberof KubeVersionStatusDriftValue
+     */
+    'expected_kube_version': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof KubeVersionStatusDriftValue
+     */
+    'kube_version': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof KubeVersionStatusDriftValue
+     */
+    'type': string;
+}
+/**
+ * 
+ * @export
+ * @interface KubeVersionStatusOkValue
+ */
+export interface KubeVersionStatusOkValue {
+    /**
+     * 
+     * @type {string}
+     * @memberof KubeVersionStatusOkValue
+     */
+    'kube_version': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof KubeVersionStatusOkValue
+     */
+    'type': string;
+}
+/**
+ * 
+ * @export
+ * @interface KubeVersionStatusUnknownValue
+ */
+export interface KubeVersionStatusUnknownValue {
+    /**
+     * 
+     * @type {string}
+     * @memberof KubeVersionStatusUnknownValue
+     */
+    'type': string;
+}
 /**
  * 
  * @export
@@ -364,6 +648,594 @@ export interface MetricDto {
 /**
  * 
  * @export
+ * @interface MetricsUsageDto
+ */
+export interface MetricsUsageDto {
+    /**
+     * 
+     * @type {number}
+     * @memberof MetricsUsageDto
+     */
+    'cpu_milli_usage'?: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof MetricsUsageDto
+     */
+    'cpu_percent_usage'?: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof MetricsUsageDto
+     */
+    'disk_mib_usage'?: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof MetricsUsageDto
+     */
+    'disk_percent_usage'?: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof MetricsUsageDto
+     */
+    'memory_mib_rss_usage'?: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof MetricsUsageDto
+     */
+    'memory_mib_working_set_usage'?: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof MetricsUsageDto
+     */
+    'memory_percent_rss_usage'?: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof MetricsUsageDto
+     */
+    'memory_percent_working_set_usage'?: number | null;
+}
+/**
+ * 
+ * @export
+ * @interface MissingComponentValue
+ */
+export interface MissingComponentValue {
+    /**
+     * 
+     * @type {string}
+     * @memberof MissingComponentValue
+     */
+    'component_name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MissingComponentValue
+     */
+    'type': string;
+}
+/**
+ * 
+ * @export
+ * @interface NodeAddressDto
+ */
+export interface NodeAddressDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof NodeAddressDto
+     */
+    'address': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NodeAddressDto
+     */
+    'type': string;
+}
+/**
+ * 
+ * @export
+ * @interface NodeConditionDto
+ */
+export interface NodeConditionDto {
+    /**
+     * 
+     * @type {number}
+     * @memberof NodeConditionDto
+     */
+    'last_heartbeat_time': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof NodeConditionDto
+     */
+    'last_transition_time': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof NodeConditionDto
+     */
+    'message': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NodeConditionDto
+     */
+    'reason': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NodeConditionDto
+     */
+    'status': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NodeConditionDto
+     */
+    'type': string;
+}
+/**
+ * 
+ * @export
+ * @interface NodeDto
+ */
+export interface NodeDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof NodeDto
+     */
+    'name': string;
+}
+/**
+ * 
+ * @export
+ * @interface NodePodErrorStatusDto
+ */
+export interface NodePodErrorStatusDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof NodePodErrorStatusDto
+     */
+    'container_name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NodePodErrorStatusDto
+     */
+    'message'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof NodePodErrorStatusDto
+     */
+    'reason'?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface NodePodInfoDto
+ */
+export interface NodePodInfoDto {
+    /**
+     * 
+     * @type {number}
+     * @memberof NodePodInfoDto
+     */
+    'cpu_milli_limit'?: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof NodePodInfoDto
+     */
+    'cpu_milli_request'?: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof NodePodInfoDto
+     */
+    'created_at': number;
+    /**
+     * 
+     * @type {Array<NodePodErrorStatusDto>}
+     * @memberof NodePodInfoDto
+     */
+    'error_container_statuses': Array<NodePodErrorStatusDto>;
+    /**
+     * 
+     * @type {{ [key: string]: string; }}
+     * @memberof NodePodInfoDto
+     */
+    'images_version': { [key: string]: string; };
+    /**
+     * 
+     * @type {number}
+     * @memberof NodePodInfoDto
+     */
+    'memory_mib_limit'?: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof NodePodInfoDto
+     */
+    'memory_mib_request'?: number | null;
+    /**
+     * 
+     * @type {MetricsUsageDto}
+     * @memberof NodePodInfoDto
+     */
+    'metrics_usage': MetricsUsageDto;
+    /**
+     * 
+     * @type {string}
+     * @memberof NodePodInfoDto
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NodePodInfoDto
+     */
+    'namespace': string;
+    /**
+     * 
+     * @type {PodQoveryServiceInfoDto}
+     * @memberof NodePodInfoDto
+     */
+    'qovery_service_info'?: PodQoveryServiceInfoDto | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof NodePodInfoDto
+     */
+    'restart_count': number;
+}
+/**
+ * 
+ * @export
+ * @interface NodePoolInfoDto
+ */
+export interface NodePoolInfoDto {
+    /**
+     * 
+     * @type {number}
+     * @memberof NodePoolInfoDto
+     */
+    'cpu_milli': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof NodePoolInfoDto
+     */
+    'cpu_milli_limit'?: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof NodePoolInfoDto
+     */
+    'memory_mib': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof NodePoolInfoDto
+     */
+    'memory_mib_limit'?: number | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof NodePoolInfoDto
+     */
+    'name': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof NodePoolInfoDto
+     */
+    'nodes_count': number;
+}
+/**
+ * 
+ * @export
+ * @interface NodeResourceAllocatedDto
+ */
+export interface NodeResourceAllocatedDto {
+    /**
+     * 
+     * @type {number}
+     * @memberof NodeResourceAllocatedDto
+     */
+    'cpu_milli': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof NodeResourceAllocatedDto
+     */
+    'memory_mib': number;
+}
+/**
+ * 
+ * @export
+ * @interface NodeResourceDto
+ */
+export interface NodeResourceDto {
+    /**
+     * 
+     * @type {number}
+     * @memberof NodeResourceDto
+     */
+    'cpu_milli': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof NodeResourceDto
+     */
+    'ephemeral_storage_mib': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof NodeResourceDto
+     */
+    'memory_mib': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof NodeResourceDto
+     */
+    'pods': number;
+}
+/**
+ * 
+ * @export
+ * @interface NodeTaintDto
+ */
+export interface NodeTaintDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof NodeTaintDto
+     */
+    'effect': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NodeTaintDto
+     */
+    'key': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NodeTaintDto
+     */
+    'value': string;
+}
+/**
+ * 
+ * @export
+ * @interface PodDto
+ */
+export interface PodDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof PodDto
+     */
+    'name': string;
+    /**
+     * 
+     * @type {Array<number>}
+     * @memberof PodDto
+     */
+    'ports': Array<number>;
+}
+/**
+ * 
+ * @export
+ * @interface PodInErrorValue
+ */
+export interface PodInErrorValue {
+    /**
+     * 
+     * @type {string}
+     * @memberof PodInErrorValue
+     */
+    'component_name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PodInErrorValue
+     */
+    'container_name': string;
+    /**
+     * 
+     * @type {QoveryComponentContainerStatusLevel}
+     * @memberof PodInErrorValue
+     */
+    'level': QoveryComponentContainerStatusLevel;
+    /**
+     * 
+     * @type {string}
+     * @memberof PodInErrorValue
+     */
+    'message'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PodInErrorValue
+     */
+    'pod_name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PodInErrorValue
+     */
+    'reason'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PodInErrorValue
+     */
+    'type': string;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface PodInfoDto
+ */
+export interface PodInfoDto {
+    /**
+     * 
+     * @type {number}
+     * @memberof PodInfoDto
+     */
+    'cpu_milli_limit'?: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof PodInfoDto
+     */
+    'cpu_milli_request'?: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof PodInfoDto
+     */
+    'created_at': number;
+    /**
+     * 
+     * @type {Array<NodePodErrorStatusDto>}
+     * @memberof PodInfoDto
+     */
+    'error_container_statuses': Array<NodePodErrorStatusDto>;
+    /**
+     * 
+     * @type {{ [key: string]: string; }}
+     * @memberof PodInfoDto
+     */
+    'images_version': { [key: string]: string; };
+    /**
+     * 
+     * @type {number}
+     * @memberof PodInfoDto
+     */
+    'memory_mib_limit'?: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof PodInfoDto
+     */
+    'memory_mib_request'?: number | null;
+    /**
+     * 
+     * @type {MetricsUsageDto}
+     * @memberof PodInfoDto
+     */
+    'metrics_usage': MetricsUsageDto;
+    /**
+     * 
+     * @type {string}
+     * @memberof PodInfoDto
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PodInfoDto
+     */
+    'namespace': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof PodInfoDto
+     */
+    'restart_count': number;
+}
+/**
+ * 
+ * @export
+ * @interface PodKubernetesEventDto
+ */
+export interface PodKubernetesEventDto {
+    /**
+     * 
+     * @type {number}
+     * @memberof PodKubernetesEventDto
+     */
+    'created_at': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof PodKubernetesEventDto
+     */
+    'message': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PodKubernetesEventDto
+     */
+    'reason': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PodKubernetesEventDto
+     */
+    'type': string;
+}
+/**
+ * 
+ * @export
+ * @interface PodQoveryServiceInfoDto
+ */
+export interface PodQoveryServiceInfoDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof PodQoveryServiceInfoDto
+     */
+    'environment_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PodQoveryServiceInfoDto
+     */
+    'environment_name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PodQoveryServiceInfoDto
+     */
+    'project_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PodQoveryServiceInfoDto
+     */
+    'project_name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PodQoveryServiceInfoDto
+     */
+    'service_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PodQoveryServiceInfoDto
+     */
+    'service_name': string;
+}
+/**
+ * 
+ * @export
  * @interface PodStatusDto
  */
 export interface PodStatusDto {
@@ -373,6 +1245,12 @@ export interface PodStatusDto {
      * @memberof PodStatusDto
      */
     'containers': Array<ContainerStatusDto>;
+    /**
+     * 
+     * @type {Array<PodKubernetesEventDto>}
+     * @memberof PodStatusDto
+     */
+    'last_events': Array<PodKubernetesEventDto>;
     /**
      * 
      * @type {string}
@@ -392,11 +1270,11 @@ export interface PodStatusDto {
      */
     'service_version': string;
     /**
-     * Unix timestamp with millisecond precision
+     * 
      * @type {number}
      * @memberof PodStatusDto
      */
-    'started_at'?: number | null;
+    'started_at': number;
     /**
      * 
      * @type {ServiceStateDto}
@@ -421,6 +1299,139 @@ export interface PodStatusDto {
 /**
  * 
  * @export
+ * @interface PvcInfoDto
+ */
+export interface PvcInfoDto {
+    /**
+     * 
+     * @type {number}
+     * @memberof PvcInfoDto
+     */
+    'created_at': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PvcInfoDto
+     */
+    'disk_mib_capacity': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PvcInfoDto
+     */
+    'disk_mib_usage': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PvcInfoDto
+     */
+    'disk_percent_usage': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof PvcInfoDto
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PvcInfoDto
+     */
+    'namespace': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PvcInfoDto
+     */
+    'pod_name': string;
+    /**
+     * 
+     * @type {PodQoveryServiceInfoDto}
+     * @memberof PvcInfoDto
+     */
+    'qovery_service_info'?: PodQoveryServiceInfoDto | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PvcInfoDto
+     */
+    'status'?: string | null;
+}
+/**
+ * @type QoveryClusterKubeVersionStatus
+ * @export
+ */
+export type QoveryClusterKubeVersionStatus = { type: 'DRIFT' } & KubeVersionStatusDriftValue | { type: 'OK' } & KubeVersionStatusOkValue | { type: 'UNKNOWN' } & KubeVersionStatusUnknownValue;
+
+/**
+ * 
+ * @export
+ * @interface QoveryComponentContainerStatusIssue
+ */
+export interface QoveryComponentContainerStatusIssue {
+    /**
+     * 
+     * @type {QoveryComponentContainerStatusLevel}
+     * @memberof QoveryComponentContainerStatusIssue
+     */
+    'level': QoveryComponentContainerStatusLevel;
+    /**
+     * 
+     * @type {string}
+     * @memberof QoveryComponentContainerStatusIssue
+     */
+    'message'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof QoveryComponentContainerStatusIssue
+     */
+    'reason'?: string | null;
+}
+
+
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const QoveryComponentContainerStatusLevel = {
+    ERROR: 'ERROR',
+    WARNING: 'WARNING'
+} as const;
+
+export type QoveryComponentContainerStatusLevel = typeof QoveryComponentContainerStatusLevel[keyof typeof QoveryComponentContainerStatusLevel];
+
+
+/**
+ * @type QoveryComponentInFailure
+ * @export
+ */
+export type QoveryComponentInFailure = { type: 'MISSING_COMPONENT' } & MissingComponentValue | { type: 'POD_IN_ERROR' } & PodInErrorValue;
+
+/**
+ * 
+ * @export
+ * @interface QoveryNodeFailure
+ */
+export interface QoveryNodeFailure {
+    /**
+     * 
+     * @type {string}
+     * @memberof QoveryNodeFailure
+     */
+    'message': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof QoveryNodeFailure
+     */
+    'reason': string;
+}
+/**
+ * 
+ * @export
  * @enum {string}
  */
 
@@ -440,7 +1451,7 @@ export type ResourceStatusDto = typeof ResourceStatusDto[keyof typeof ResourceSt
  */
 export interface ServiceInfraLogResponseDto {
     /**
-     * Unix timestamp with millisecond precision
+     * 
      * @type {number}
      * @memberof ServiceInfraLogResponseDto
      */
@@ -455,11 +1466,30 @@ export interface ServiceInfraLogResponseDto {
 /**
  * 
  * @export
+ * @interface ServiceListPodsResponseDto
+ */
+export interface ServiceListPodsResponseDto {
+    /**
+     * 
+     * @type {Array<PodDto>}
+     * @memberof ServiceListPodsResponseDto
+     */
+    'pods': Array<PodDto>;
+}
+/**
+ * 
+ * @export
  * @interface ServiceLogResponseDto
  */
 export interface ServiceLogResponseDto {
     /**
-     * Unix timestamp with millisecond precision
+     * 
+     * @type {string}
+     * @memberof ServiceLogResponseDto
+     */
+    'container_name': string;
+    /**
+     * 
      * @type {number}
      * @memberof ServiceLogResponseDto
      */
@@ -513,6 +1543,25 @@ export interface ServiceMetricsDto {
      * @memberof ServiceMetricsDto
      */
     'storages': Array<MetricDto>;
+}
+/**
+ * 
+ * @export
+ * @interface ServiceMetricsV2Dto
+ */
+export interface ServiceMetricsV2Dto {
+    /**
+     * 
+     * @type {Array<PodInfoDto>}
+     * @memberof ServiceMetricsV2Dto
+     */
+    'pods': Array<PodInfoDto>;
+    /**
+     * 
+     * @type {Array<PvcInfoDto>}
+     * @memberof ServiceMetricsV2Dto
+     */
+    'pvcs': Array<PvcInfoDto>;
 }
 /**
  * 
@@ -576,6 +1625,224 @@ export const UnitDto = {
 } as const;
 
 export type UnitDto = typeof UnitDto[keyof typeof UnitDto];
+
+
+
+/**
+ * ClusterListNodesApi - axios parameter creator
+ * @export
+ */
+export const ClusterListNodesApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {string} organization 
+         * @param {string} cluster 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        handleClusterListNodesRequest: async (organization: string, cluster: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organization' is not null or undefined
+            assertParamExists('handleClusterListNodesRequest', 'organization', organization)
+            // verify required parameter 'cluster' is not null or undefined
+            assertParamExists('handleClusterListNodesRequest', 'cluster', cluster)
+            const localVarPath = `/cluster/node`
+                .replace(`{${"organization"}}`, encodeURIComponent(String(organization)))
+                .replace(`{${"cluster"}}`, encodeURIComponent(String(cluster)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * ClusterListNodesApi - functional programming interface
+ * @export
+ */
+export const ClusterListNodesApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = ClusterListNodesApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {string} organization 
+         * @param {string} cluster 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async handleClusterListNodesRequest(organization: string, cluster: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterListNodesResponseDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.handleClusterListNodesRequest(organization, cluster, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * ClusterListNodesApi - factory interface
+ * @export
+ */
+export const ClusterListNodesApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = ClusterListNodesApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {string} organization 
+         * @param {string} cluster 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        handleClusterListNodesRequest(organization: string, cluster: string, options?: any): AxiosPromise<ClusterListNodesResponseDto> {
+            return localVarFp.handleClusterListNodesRequest(organization, cluster, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * ClusterListNodesApi - object-oriented interface
+ * @export
+ * @class ClusterListNodesApi
+ * @extends {BaseAPI}
+ */
+export class ClusterListNodesApi extends BaseAPI {
+    /**
+     * 
+     * @param {string} organization 
+     * @param {string} cluster 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ClusterListNodesApi
+     */
+    public handleClusterListNodesRequest(organization: string, cluster: string, options?: AxiosRequestConfig) {
+        return ClusterListNodesApiFp(this.configuration).handleClusterListNodesRequest(organization, cluster, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * ClusterStatusApi - axios parameter creator
+ * @export
+ */
+export const ClusterStatusApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {string} organization 
+         * @param {string} cluster 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        handleClusterStatusRequest: async (organization: string, cluster: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organization' is not null or undefined
+            assertParamExists('handleClusterStatusRequest', 'organization', organization)
+            // verify required parameter 'cluster' is not null or undefined
+            assertParamExists('handleClusterStatusRequest', 'cluster', cluster)
+            const localVarPath = `/cluster/status`
+                .replace(`{${"organization"}}`, encodeURIComponent(String(organization)))
+                .replace(`{${"cluster"}}`, encodeURIComponent(String(cluster)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * ClusterStatusApi - functional programming interface
+ * @export
+ */
+export const ClusterStatusApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = ClusterStatusApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {string} organization 
+         * @param {string} cluster 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async handleClusterStatusRequest(organization: string, cluster: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterStatusDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.handleClusterStatusRequest(organization, cluster, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * ClusterStatusApi - factory interface
+ * @export
+ */
+export const ClusterStatusApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = ClusterStatusApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {string} organization 
+         * @param {string} cluster 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        handleClusterStatusRequest(organization: string, cluster: string, options?: any): AxiosPromise<ClusterStatusDto> {
+            return localVarFp.handleClusterStatusRequest(organization, cluster, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * ClusterStatusApi - object-oriented interface
+ * @export
+ * @class ClusterStatusApi
+ * @extends {BaseAPI}
+ */
+export class ClusterStatusApi extends BaseAPI {
+    /**
+     * 
+     * @param {string} organization 
+     * @param {string} cluster 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ClusterStatusApi
+     */
+    public handleClusterStatusRequest(organization: string, cluster: string, options?: AxiosRequestConfig) {
+        return ClusterStatusApiFp(this.configuration).handleClusterStatusRequest(organization, cluster, options).then((request) => request(this.axios, this.basePath));
+    }
+}
 
 
 
@@ -866,10 +2133,11 @@ export const LogsApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {string} project 
          * @param {string} environment 
          * @param {string} service 
+         * @param {string | null} podName 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        handleServiceLogsRequest: async (organization: string, cluster: string, project: string, environment: string, service: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        handleServiceLogsRequest: async (organization: string, cluster: string, project: string, environment: string, service: string, podName: string | null, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'organization' is not null or undefined
             assertParamExists('handleServiceLogsRequest', 'organization', organization)
             // verify required parameter 'cluster' is not null or undefined
@@ -880,12 +2148,15 @@ export const LogsApiAxiosParamCreator = function (configuration?: Configuration)
             assertParamExists('handleServiceLogsRequest', 'environment', environment)
             // verify required parameter 'service' is not null or undefined
             assertParamExists('handleServiceLogsRequest', 'service', service)
+            // verify required parameter 'podName' is not null or undefined
+            assertParamExists('handleServiceLogsRequest', 'podName', podName)
             const localVarPath = `/service/logs`
                 .replace(`{${"organization"}}`, encodeURIComponent(String(organization)))
                 .replace(`{${"cluster"}}`, encodeURIComponent(String(cluster)))
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)))
                 .replace(`{${"environment"}}`, encodeURIComponent(String(environment)))
-                .replace(`{${"service"}}`, encodeURIComponent(String(service)));
+                .replace(`{${"service"}}`, encodeURIComponent(String(service)))
+                .replace(`{${"pod_name"}}`, encodeURIComponent(String(podName)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -940,11 +2211,12 @@ export const LogsApiFp = function(configuration?: Configuration) {
          * @param {string} project 
          * @param {string} environment 
          * @param {string} service 
+         * @param {string | null} podName 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async handleServiceLogsRequest(organization: string, cluster: string, project: string, environment: string, service: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ServiceLogResponseDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.handleServiceLogsRequest(organization, cluster, project, environment, service, options);
+        async handleServiceLogsRequest(organization: string, cluster: string, project: string, environment: string, service: string, podName: string | null, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ServiceLogResponseDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.handleServiceLogsRequest(organization, cluster, project, environment, service, podName, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -978,11 +2250,12 @@ export const LogsApiFactory = function (configuration?: Configuration, basePath?
          * @param {string} project 
          * @param {string} environment 
          * @param {string} service 
+         * @param {string | null} podName 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        handleServiceLogsRequest(organization: string, cluster: string, project: string, environment: string, service: string, options?: any): AxiosPromise<ServiceLogResponseDto> {
-            return localVarFp.handleServiceLogsRequest(organization, cluster, project, environment, service, options).then((request) => request(axios, basePath));
+        handleServiceLogsRequest(organization: string, cluster: string, project: string, environment: string, service: string, podName: string | null, options?: any): AxiosPromise<ServiceLogResponseDto> {
+            return localVarFp.handleServiceLogsRequest(organization, cluster, project, environment, service, podName, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1017,12 +2290,280 @@ export class LogsApi extends BaseAPI {
      * @param {string} project 
      * @param {string} environment 
      * @param {string} service 
+     * @param {string | null} podName 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof LogsApi
      */
-    public handleServiceLogsRequest(organization: string, cluster: string, project: string, environment: string, service: string, options?: AxiosRequestConfig) {
-        return LogsApiFp(this.configuration).handleServiceLogsRequest(organization, cluster, project, environment, service, options).then((request) => request(this.axios, this.basePath));
+    public handleServiceLogsRequest(organization: string, cluster: string, project: string, environment: string, service: string, podName: string | null, options?: AxiosRequestConfig) {
+        return LogsApiFp(this.configuration).handleServiceLogsRequest(organization, cluster, project, environment, service, podName, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * RemoteDebugApi - axios parameter creator
+ * @export
+ */
+export const RemoteDebugApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {string} organization 
+         * @param {string} cluster 
+         * @param {DebugFlavor} flavor 
+         * @param {number} ttyWidth 
+         * @param {number} ttyHeight 
+         * @param {string | null} nodeSelector 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        handleShellRemoteDebug: async (organization: string, cluster: string, flavor: DebugFlavor, ttyWidth: number, ttyHeight: number, nodeSelector: string | null, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organization' is not null or undefined
+            assertParamExists('handleShellRemoteDebug', 'organization', organization)
+            // verify required parameter 'cluster' is not null or undefined
+            assertParamExists('handleShellRemoteDebug', 'cluster', cluster)
+            // verify required parameter 'flavor' is not null or undefined
+            assertParamExists('handleShellRemoteDebug', 'flavor', flavor)
+            // verify required parameter 'ttyWidth' is not null or undefined
+            assertParamExists('handleShellRemoteDebug', 'ttyWidth', ttyWidth)
+            // verify required parameter 'ttyHeight' is not null or undefined
+            assertParamExists('handleShellRemoteDebug', 'ttyHeight', ttyHeight)
+            // verify required parameter 'nodeSelector' is not null or undefined
+            assertParamExists('handleShellRemoteDebug', 'nodeSelector', nodeSelector)
+            const localVarPath = `/shell/debug`
+                .replace(`{${"organization"}}`, encodeURIComponent(String(organization)))
+                .replace(`{${"cluster"}}`, encodeURIComponent(String(cluster)))
+                .replace(`{${"flavor"}}`, encodeURIComponent(String(flavor)))
+                .replace(`{${"tty_width"}}`, encodeURIComponent(String(ttyWidth)))
+                .replace(`{${"tty_height"}}`, encodeURIComponent(String(ttyHeight)))
+                .replace(`{${"node_selector"}}`, encodeURIComponent(String(nodeSelector)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * RemoteDebugApi - functional programming interface
+ * @export
+ */
+export const RemoteDebugApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = RemoteDebugApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {string} organization 
+         * @param {string} cluster 
+         * @param {DebugFlavor} flavor 
+         * @param {number} ttyWidth 
+         * @param {number} ttyHeight 
+         * @param {string | null} nodeSelector 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async handleShellRemoteDebug(organization: string, cluster: string, flavor: DebugFlavor, ttyWidth: number, ttyHeight: number, nodeSelector: string | null, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.handleShellRemoteDebug(organization, cluster, flavor, ttyWidth, ttyHeight, nodeSelector, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * RemoteDebugApi - factory interface
+ * @export
+ */
+export const RemoteDebugApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = RemoteDebugApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {string} organization 
+         * @param {string} cluster 
+         * @param {DebugFlavor} flavor 
+         * @param {number} ttyWidth 
+         * @param {number} ttyHeight 
+         * @param {string | null} nodeSelector 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        handleShellRemoteDebug(organization: string, cluster: string, flavor: DebugFlavor, ttyWidth: number, ttyHeight: number, nodeSelector: string | null, options?: any): AxiosPromise<string> {
+            return localVarFp.handleShellRemoteDebug(organization, cluster, flavor, ttyWidth, ttyHeight, nodeSelector, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * RemoteDebugApi - object-oriented interface
+ * @export
+ * @class RemoteDebugApi
+ * @extends {BaseAPI}
+ */
+export class RemoteDebugApi extends BaseAPI {
+    /**
+     * 
+     * @param {string} organization 
+     * @param {string} cluster 
+     * @param {DebugFlavor} flavor 
+     * @param {number} ttyWidth 
+     * @param {number} ttyHeight 
+     * @param {string | null} nodeSelector 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RemoteDebugApi
+     */
+    public handleShellRemoteDebug(organization: string, cluster: string, flavor: DebugFlavor, ttyWidth: number, ttyHeight: number, nodeSelector: string | null, options?: AxiosRequestConfig) {
+        return RemoteDebugApiFp(this.configuration).handleShellRemoteDebug(organization, cluster, flavor, ttyWidth, ttyHeight, nodeSelector, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * ServiceListPodsApi - axios parameter creator
+ * @export
+ */
+export const ServiceListPodsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {string} organization 
+         * @param {string} cluster 
+         * @param {string} project 
+         * @param {string} environment 
+         * @param {string} service 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        handleServiceListPodsRequest: async (organization: string, cluster: string, project: string, environment: string, service: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organization' is not null or undefined
+            assertParamExists('handleServiceListPodsRequest', 'organization', organization)
+            // verify required parameter 'cluster' is not null or undefined
+            assertParamExists('handleServiceListPodsRequest', 'cluster', cluster)
+            // verify required parameter 'project' is not null or undefined
+            assertParamExists('handleServiceListPodsRequest', 'project', project)
+            // verify required parameter 'environment' is not null or undefined
+            assertParamExists('handleServiceListPodsRequest', 'environment', environment)
+            // verify required parameter 'service' is not null or undefined
+            assertParamExists('handleServiceListPodsRequest', 'service', service)
+            const localVarPath = `/service/pods`
+                .replace(`{${"organization"}}`, encodeURIComponent(String(organization)))
+                .replace(`{${"cluster"}}`, encodeURIComponent(String(cluster)))
+                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
+                .replace(`{${"environment"}}`, encodeURIComponent(String(environment)))
+                .replace(`{${"service"}}`, encodeURIComponent(String(service)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * ServiceListPodsApi - functional programming interface
+ * @export
+ */
+export const ServiceListPodsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = ServiceListPodsApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {string} organization 
+         * @param {string} cluster 
+         * @param {string} project 
+         * @param {string} environment 
+         * @param {string} service 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async handleServiceListPodsRequest(organization: string, cluster: string, project: string, environment: string, service: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ServiceListPodsResponseDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.handleServiceListPodsRequest(organization, cluster, project, environment, service, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * ServiceListPodsApi - factory interface
+ * @export
+ */
+export const ServiceListPodsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = ServiceListPodsApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {string} organization 
+         * @param {string} cluster 
+         * @param {string} project 
+         * @param {string} environment 
+         * @param {string} service 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        handleServiceListPodsRequest(organization: string, cluster: string, project: string, environment: string, service: string, options?: any): AxiosPromise<ServiceListPodsResponseDto> {
+            return localVarFp.handleServiceListPodsRequest(organization, cluster, project, environment, service, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * ServiceListPodsApi - object-oriented interface
+ * @export
+ * @class ServiceListPodsApi
+ * @extends {BaseAPI}
+ */
+export class ServiceListPodsApi extends BaseAPI {
+    /**
+     * 
+     * @param {string} organization 
+     * @param {string} cluster 
+     * @param {string} project 
+     * @param {string} environment 
+     * @param {string} service 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ServiceListPodsApi
+     */
+    public handleServiceListPodsRequest(organization: string, cluster: string, project: string, environment: string, service: string, options?: AxiosRequestConfig) {
+        return ServiceListPodsApiFp(this.configuration).handleServiceListPodsRequest(organization, cluster, project, environment, service, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -1283,6 +2824,171 @@ export class ServiceStatusApi extends BaseAPI {
      */
     public handleServiceStatusRequest(organization: string, cluster: string, project: string | null, environment: string | null, options?: AxiosRequestConfig) {
         return ServiceStatusApiFp(this.configuration).handleServiceStatusRequest(organization, cluster, project, environment, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * ShellApi - axios parameter creator
+ * @export
+ */
+export const ShellApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {string} organization 
+         * @param {string} cluster 
+         * @param {string} project 
+         * @param {string} environment 
+         * @param {string} service 
+         * @param {string | null} podName 
+         * @param {string | null} containerName 
+         * @param {Array<string>} command 
+         * @param {number} ttyWidth 
+         * @param {number} ttyHeight 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        handleShellExec: async (organization: string, cluster: string, project: string, environment: string, service: string, podName: string | null, containerName: string | null, command: Array<string>, ttyWidth: number, ttyHeight: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organization' is not null or undefined
+            assertParamExists('handleShellExec', 'organization', organization)
+            // verify required parameter 'cluster' is not null or undefined
+            assertParamExists('handleShellExec', 'cluster', cluster)
+            // verify required parameter 'project' is not null or undefined
+            assertParamExists('handleShellExec', 'project', project)
+            // verify required parameter 'environment' is not null or undefined
+            assertParamExists('handleShellExec', 'environment', environment)
+            // verify required parameter 'service' is not null or undefined
+            assertParamExists('handleShellExec', 'service', service)
+            // verify required parameter 'podName' is not null or undefined
+            assertParamExists('handleShellExec', 'podName', podName)
+            // verify required parameter 'containerName' is not null or undefined
+            assertParamExists('handleShellExec', 'containerName', containerName)
+            // verify required parameter 'command' is not null or undefined
+            assertParamExists('handleShellExec', 'command', command)
+            // verify required parameter 'ttyWidth' is not null or undefined
+            assertParamExists('handleShellExec', 'ttyWidth', ttyWidth)
+            // verify required parameter 'ttyHeight' is not null or undefined
+            assertParamExists('handleShellExec', 'ttyHeight', ttyHeight)
+            const localVarPath = `/shell/exec`
+                .replace(`{${"organization"}}`, encodeURIComponent(String(organization)))
+                .replace(`{${"cluster"}}`, encodeURIComponent(String(cluster)))
+                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
+                .replace(`{${"environment"}}`, encodeURIComponent(String(environment)))
+                .replace(`{${"service"}}`, encodeURIComponent(String(service)))
+                .replace(`{${"pod_name"}}`, encodeURIComponent(String(podName)))
+                .replace(`{${"container_name"}}`, encodeURIComponent(String(containerName)))
+                .replace(`{${"command"}}`, encodeURIComponent(String(command)))
+                .replace(`{${"tty_width"}}`, encodeURIComponent(String(ttyWidth)))
+                .replace(`{${"tty_height"}}`, encodeURIComponent(String(ttyHeight)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * ShellApi - functional programming interface
+ * @export
+ */
+export const ShellApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = ShellApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {string} organization 
+         * @param {string} cluster 
+         * @param {string} project 
+         * @param {string} environment 
+         * @param {string} service 
+         * @param {string | null} podName 
+         * @param {string | null} containerName 
+         * @param {Array<string>} command 
+         * @param {number} ttyWidth 
+         * @param {number} ttyHeight 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async handleShellExec(organization: string, cluster: string, project: string, environment: string, service: string, podName: string | null, containerName: string | null, command: Array<string>, ttyWidth: number, ttyHeight: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.handleShellExec(organization, cluster, project, environment, service, podName, containerName, command, ttyWidth, ttyHeight, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * ShellApi - factory interface
+ * @export
+ */
+export const ShellApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = ShellApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {string} organization 
+         * @param {string} cluster 
+         * @param {string} project 
+         * @param {string} environment 
+         * @param {string} service 
+         * @param {string | null} podName 
+         * @param {string | null} containerName 
+         * @param {Array<string>} command 
+         * @param {number} ttyWidth 
+         * @param {number} ttyHeight 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        handleShellExec(organization: string, cluster: string, project: string, environment: string, service: string, podName: string | null, containerName: string | null, command: Array<string>, ttyWidth: number, ttyHeight: number, options?: any): AxiosPromise<string> {
+            return localVarFp.handleShellExec(organization, cluster, project, environment, service, podName, containerName, command, ttyWidth, ttyHeight, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * ShellApi - object-oriented interface
+ * @export
+ * @class ShellApi
+ * @extends {BaseAPI}
+ */
+export class ShellApi extends BaseAPI {
+    /**
+     * 
+     * @param {string} organization 
+     * @param {string} cluster 
+     * @param {string} project 
+     * @param {string} environment 
+     * @param {string} service 
+     * @param {string | null} podName 
+     * @param {string | null} containerName 
+     * @param {Array<string>} command 
+     * @param {number} ttyWidth 
+     * @param {number} ttyHeight 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ShellApi
+     */
+    public handleShellExec(organization: string, cluster: string, project: string, environment: string, service: string, podName: string | null, containerName: string | null, command: Array<string>, ttyWidth: number, ttyHeight: number, options?: AxiosRequestConfig) {
+        return ShellApiFp(this.configuration).handleShellExec(organization, cluster, project, environment, service, podName, containerName, command, ttyWidth, ttyHeight, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
