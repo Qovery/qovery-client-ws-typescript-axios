@@ -310,6 +310,12 @@ export interface ClusterStatusDto {
      * @memberof ClusterStatusDto
      */
     'pvcs': Array<PvcInfoDto>;
+    /**
+     * 
+     * @type {CertificateStatusDto}
+     * @memberof ClusterStatusDto
+     */
+    'tls_certificate'?: CertificateStatusDto | null;
 }
 /**
  * 
