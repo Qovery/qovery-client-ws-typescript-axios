@@ -145,6 +145,12 @@ export interface ClusterComputedStatusDto {
     'node_warnings': { [key: string]: Array<QoveryNodeFailure>; };
     /**
      * 
+     * @type {Array<QoveryComponentDto>}
+     * @memberof ClusterComputedStatusDto
+     */
+    'qovery_components': Array<QoveryComponentDto>;
+    /**
+     * 
      * @type {Array<QoveryComponentInFailure>}
      * @memberof ClusterComputedStatusDto
      */
@@ -1411,10 +1417,63 @@ export type QoveryComponentContainerStatusLevel = typeof QoveryComponentContaine
 
 
 /**
+ * 
+ * @export
+ * @interface QoveryComponentDto
+ */
+export interface QoveryComponentDto {
+    /**
+     * 
+     * @type {Array<QoveryComponentInFailure>}
+     * @memberof QoveryComponentDto
+     */
+    'error_detail': Array<QoveryComponentInFailure>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof QoveryComponentDto
+     */
+    'images_version': Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof QoveryComponentDto
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof QoveryComponentDto
+     */
+    'namespace': string;
+    /**
+     * 
+     * @type {QoveryComponentStatus}
+     * @memberof QoveryComponentDto
+     */
+    'status': QoveryComponentStatus;
+}
+
+
+/**
  * @type QoveryComponentInFailure
  * @export
  */
 export type QoveryComponentInFailure = { type: 'MISSING_COMPONENT' } & MissingComponentValue | { type: 'POD_IN_ERROR' } & PodInErrorValue;
+
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const QoveryComponentStatus = {
+    RUNNING: 'RUNNING',
+    ERROR: 'ERROR'
+} as const;
+
+export type QoveryComponentStatus = typeof QoveryComponentStatus[keyof typeof QoveryComponentStatus];
+
 
 /**
  * 
