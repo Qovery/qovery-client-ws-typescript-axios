@@ -275,6 +275,12 @@ export interface ClusterNodeDto {
     'resources_allocated': NodeResourceAllocatedDto;
     /**
      * 
+     * @type {NodeResourceDto}
+     * @memberof ClusterNodeDto
+     */
+    'resources_capacity': NodeResourceDto;
+    /**
+     * 
      * @type {Array<NodeTaintDto>}
      * @memberof ClusterNodeDto
      */
@@ -964,13 +970,25 @@ export interface NodeResourceAllocatedDto {
      * @type {number}
      * @memberof NodeResourceAllocatedDto
      */
-    'cpu_milli': number;
+    'limit_cpu_milli': number;
     /**
      * 
      * @type {number}
      * @memberof NodeResourceAllocatedDto
      */
-    'memory_mib': number;
+    'limit_memory_mib': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof NodeResourceAllocatedDto
+     */
+    'request_cpu_milli': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof NodeResourceAllocatedDto
+     */
+    'request_memory_mib': number;
 }
 /**
  * 
