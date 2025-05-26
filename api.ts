@@ -1496,6 +1496,19 @@ export type QoveryComponentStatus = typeof QoveryComponentStatus[keyof typeof Qo
 /**
  * 
  * @export
+ * @interface QoveryNodeAttributes
+ */
+export interface QoveryNodeAttributes {
+    /**
+     * 
+     * @type {string}
+     * @memberof QoveryNodeAttributes
+     */
+    'node_pool_name'?: string | null;
+}
+/**
+ * 
+ * @export
  * @interface QoveryNodeFailure
  */
 export interface QoveryNodeFailure {
@@ -1507,10 +1520,22 @@ export interface QoveryNodeFailure {
     'message': string;
     /**
      * 
+     * @type {QoveryNodeAttributes}
+     * @memberof QoveryNodeFailure
+     */
+    'node_attributes': QoveryNodeAttributes;
+    /**
+     * 
      * @type {string}
      * @memberof QoveryNodeFailure
      */
     'reason': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof QoveryNodeFailure
+     */
+    'type': string;
 }
 /**
  * 
