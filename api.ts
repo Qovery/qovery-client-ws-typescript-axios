@@ -174,6 +174,31 @@ export interface ClusterListNodesResponseDto {
 /**
  * 
  * @export
+ * @interface ClusterMetricsDto
+ */
+export interface ClusterMetricsDto {
+    /**
+     * 
+     * @type {Array<NodePoolInfoDto>}
+     * @memberof ClusterMetricsDto
+     */
+    'node_pools': Array<NodePoolInfoDto>;
+    /**
+     * 
+     * @type {Array<ClusterNodeDto>}
+     * @memberof ClusterMetricsDto
+     */
+    'nodes': Array<ClusterNodeDto>;
+    /**
+     * 
+     * @type {Array<PvcInfoDto>}
+     * @memberof ClusterMetricsDto
+     */
+    'pvcs': Array<PvcInfoDto>;
+}
+/**
+ * 
+ * @export
  * @interface ClusterNodeDto
  */
 export interface ClusterNodeDto {
@@ -304,24 +329,6 @@ export interface ClusterStatusDto {
      * @memberof ClusterStatusDto
      */
     'computed_status': ClusterComputedStatusDto;
-    /**
-     * 
-     * @type {Array<NodePoolInfoDto>}
-     * @memberof ClusterStatusDto
-     */
-    'node_pools': Array<NodePoolInfoDto>;
-    /**
-     * 
-     * @type {Array<ClusterNodeDto>}
-     * @memberof ClusterStatusDto
-     */
-    'nodes': Array<ClusterNodeDto>;
-    /**
-     * 
-     * @type {Array<PvcInfoDto>}
-     * @memberof ClusterStatusDto
-     */
-    'pvcs': Array<PvcInfoDto>;
     /**
      * 
      * @type {CertificateStatusDto}
@@ -1520,10 +1527,22 @@ export interface QoveryNodeFailure {
     'message': string;
     /**
      * 
+     * @type {QoveryNodeAttributes}
+     * @memberof QoveryNodeFailure
+     */
+    'node_attributes': QoveryNodeAttributes;
+    /**
+     * 
      * @type {string}
      * @memberof QoveryNodeFailure
      */
     'reason': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof QoveryNodeFailure
+     */
+    'type': string;
 }
 /**
  * 
@@ -1895,7 +1914,7 @@ export const ClusterMetricsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async handleClusterMetricsRequest(organization: string, cluster: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterStatusDto>> {
+        async handleClusterMetricsRequest(organization: string, cluster: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterMetricsDto>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.handleClusterMetricsRequest(organization, cluster, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ClusterMetricsApi.handleClusterMetricsRequest']?.[localVarOperationServerIndex]?.url;
@@ -1918,7 +1937,7 @@ export const ClusterMetricsApiFactory = function (configuration?: Configuration,
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        handleClusterMetricsRequest(organization: string, cluster: string, options?: RawAxiosRequestConfig): AxiosPromise<ClusterStatusDto> {
+        handleClusterMetricsRequest(organization: string, cluster: string, options?: RawAxiosRequestConfig): AxiosPromise<ClusterMetricsDto> {
             return localVarFp.handleClusterMetricsRequest(organization, cluster, options).then((request) => request(axios, basePath));
         },
     };
