@@ -79,7 +79,7 @@ export interface CertificateStatusDto {
      * @type {number}
      * @memberof CertificateStatusDto
      */
-    'last_failure_issuance_time': number;
+    'last_failure_issuance_time'?: number | null;
     /**
      * 
      * @type {number}
@@ -970,13 +970,13 @@ export interface NodeResourceAllocatedDto {
      * @type {number}
      * @memberof NodeResourceAllocatedDto
      */
-    'limit_cpu_milli': number;
+    'limit_cpu_milli'?: number | null;
     /**
      * 
      * @type {number}
      * @memberof NodeResourceAllocatedDto
      */
-    'limit_memory_mib': number;
+    'limit_memory_mib'?: number | null;
     /**
      * 
      * @type {number}
