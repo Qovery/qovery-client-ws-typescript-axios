@@ -565,6 +565,12 @@ export interface EnvironmentStatusDto {
      * @memberof EnvironmentStatusDto
      */
     'state': ServiceStateDto;
+    /**
+     * 
+     * @type {Array<ApplicationStatusDto>}
+     * @memberof EnvironmentStatusDto
+     */
+    'terraform': Array<ApplicationStatusDto>;
 }
 
 
@@ -1374,13 +1380,13 @@ export interface PvcInfoDto {
      * @type {string}
      * @memberof PvcInfoDto
      */
-    'namespace': string;
+    'namespace'?: string | null;
     /**
      * 
      * @type {string}
      * @memberof PvcInfoDto
      */
-    'pod_name': string;
+    'pod_name'?: string | null;
     /**
      * 
      * @type {PodQoveryServiceInfoDto}
