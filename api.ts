@@ -699,13 +699,13 @@ export interface MetricsUsageDto {
      * @type {number}
      * @memberof MetricsUsageDto
      */
-    'disk_mib_usage'?: number | null;
+    'ephemeral_storage_percent_usage'?: number | null;
     /**
      * 
      * @type {number}
      * @memberof MetricsUsageDto
      */
-    'disk_percent_usage'?: number | null;
+    'ephemeral_storage_usage'?: number | null;
     /**
      * 
      * @type {number}
@@ -874,6 +874,18 @@ export interface NodePodInfoDto {
      * @memberof NodePodInfoDto
      */
     'created_at': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof NodePodInfoDto
+     */
+    'ephemeral_storage_mib_limit'?: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof NodePodInfoDto
+     */
+    'ephemeral_storage_mib_request'?: number | null;
     /**
      * 
      * @type {Array<NodePodErrorStatusDto>}
