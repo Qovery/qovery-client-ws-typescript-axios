@@ -940,7 +940,15 @@ export interface NodePodInfoDto {
      * @memberof NodePodInfoDto
      */
     'restart_count': number;
+    /**
+     * 
+     * @type {PodStatusPhase}
+     * @memberof NodePodInfoDto
+     */
+    'status_phase': PodStatusPhase;
 }
+
+
 /**
  * 
  * @export
@@ -1349,6 +1357,23 @@ export interface PodStatusDto {
      */
     'state_reason': string;
 }
+
+
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const PodStatusPhase = {
+    PENDING: 'PENDING',
+    RUNNING: 'RUNNING',
+    SUCCEEDED: 'SUCCEEDED',
+    FAILED: 'FAILED',
+    UNKNOWN: 'UNKNOWN'
+} as const;
+
+export type PodStatusPhase = typeof PodStatusPhase[keyof typeof PodStatusPhase];
 
 
 /**
