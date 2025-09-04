@@ -1446,33 +1446,6 @@ export type QoveryClusterKubeVersionStatus = { type: 'DRIFT' } & KubeVersionStat
 /**
  * 
  * @export
- * @interface QoveryComponentContainerStatusIssue
- */
-export interface QoveryComponentContainerStatusIssue {
-    /**
-     * 
-     * @type {QoveryComponentContainerStatusLevel}
-     * @memberof QoveryComponentContainerStatusIssue
-     */
-    'level': QoveryComponentContainerStatusLevel;
-    /**
-     * 
-     * @type {string}
-     * @memberof QoveryComponentContainerStatusIssue
-     */
-    'message'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof QoveryComponentContainerStatusIssue
-     */
-    'reason'?: string | null;
-}
-
-
-/**
- * 
- * @export
  * @enum {string}
  */
 
@@ -1654,6 +1627,12 @@ export interface ServiceLogResponseDto {
     'created_at': number;
     /**
      * 
+     * @type {{ [key: string]: string; }}
+     * @memberof ServiceLogResponseDto
+     */
+    'labels': { [key: string]: string; };
+    /**
+     * 
      * @type {string}
      * @memberof ServiceLogResponseDto
      */
@@ -1664,6 +1643,12 @@ export interface ServiceLogResponseDto {
      * @memberof ServiceLogResponseDto
      */
     'pod_name': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ServiceLogResponseDto
+     */
+    'severity_text': number;
     /**
      * 
      * @type {string}
@@ -2413,10 +2398,12 @@ export const LogsApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {string} service 
          * @param {string | null} podName 
          * @param {string | null} deploymentId 
+         * @param {string | null} query 
+         * @param {string | null} start 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        handleServiceLogsRequest: async (organization: string, cluster: string, project: string, environment: string, service: string, podName: string | null, deploymentId: string | null, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        handleServiceLogsRequest: async (organization: string, cluster: string, project: string, environment: string, service: string, podName: string | null, deploymentId: string | null, query: string | null, start: string | null, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'organization' is not null or undefined
             assertParamExists('handleServiceLogsRequest', 'organization', organization)
             // verify required parameter 'cluster' is not null or undefined
@@ -2431,6 +2418,10 @@ export const LogsApiAxiosParamCreator = function (configuration?: Configuration)
             assertParamExists('handleServiceLogsRequest', 'podName', podName)
             // verify required parameter 'deploymentId' is not null or undefined
             assertParamExists('handleServiceLogsRequest', 'deploymentId', deploymentId)
+            // verify required parameter 'query' is not null or undefined
+            assertParamExists('handleServiceLogsRequest', 'query', query)
+            // verify required parameter 'start' is not null or undefined
+            assertParamExists('handleServiceLogsRequest', 'start', start)
             const localVarPath = `/service/logs`
                 .replace(`{${"organization"}}`, encodeURIComponent(String(organization)))
                 .replace(`{${"cluster"}}`, encodeURIComponent(String(cluster)))
@@ -2438,7 +2429,9 @@ export const LogsApiAxiosParamCreator = function (configuration?: Configuration)
                 .replace(`{${"environment"}}`, encodeURIComponent(String(environment)))
                 .replace(`{${"service"}}`, encodeURIComponent(String(service)))
                 .replace(`{${"pod_name"}}`, encodeURIComponent(String(podName)))
-                .replace(`{${"deployment_id"}}`, encodeURIComponent(String(deploymentId)));
+                .replace(`{${"deployment_id"}}`, encodeURIComponent(String(deploymentId)))
+                .replace(`{${"query"}}`, encodeURIComponent(String(query)))
+                .replace(`{${"start"}}`, encodeURIComponent(String(start)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -2497,11 +2490,13 @@ export const LogsApiFp = function(configuration?: Configuration) {
          * @param {string} service 
          * @param {string | null} podName 
          * @param {string | null} deploymentId 
+         * @param {string | null} query 
+         * @param {string | null} start 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async handleServiceLogsRequest(organization: string, cluster: string, project: string, environment: string, service: string, podName: string | null, deploymentId: string | null, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ServiceLogResponseDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.handleServiceLogsRequest(organization, cluster, project, environment, service, podName, deploymentId, options);
+        async handleServiceLogsRequest(organization: string, cluster: string, project: string, environment: string, service: string, podName: string | null, deploymentId: string | null, query: string | null, start: string | null, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ServiceLogResponseDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.handleServiceLogsRequest(organization, cluster, project, environment, service, podName, deploymentId, query, start, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['LogsApi.handleServiceLogsRequest']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -2539,11 +2534,13 @@ export const LogsApiFactory = function (configuration?: Configuration, basePath?
          * @param {string} service 
          * @param {string | null} podName 
          * @param {string | null} deploymentId 
+         * @param {string | null} query 
+         * @param {string | null} start 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        handleServiceLogsRequest(organization: string, cluster: string, project: string, environment: string, service: string, podName: string | null, deploymentId: string | null, options?: RawAxiosRequestConfig): AxiosPromise<ServiceLogResponseDto> {
-            return localVarFp.handleServiceLogsRequest(organization, cluster, project, environment, service, podName, deploymentId, options).then((request) => request(axios, basePath));
+        handleServiceLogsRequest(organization: string, cluster: string, project: string, environment: string, service: string, podName: string | null, deploymentId: string | null, query: string | null, start: string | null, options?: RawAxiosRequestConfig): AxiosPromise<ServiceLogResponseDto> {
+            return localVarFp.handleServiceLogsRequest(organization, cluster, project, environment, service, podName, deploymentId, query, start, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -2580,12 +2577,14 @@ export class LogsApi extends BaseAPI {
      * @param {string} service 
      * @param {string | null} podName 
      * @param {string | null} deploymentId 
+     * @param {string | null} query 
+     * @param {string | null} start 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof LogsApi
      */
-    public handleServiceLogsRequest(organization: string, cluster: string, project: string, environment: string, service: string, podName: string | null, deploymentId: string | null, options?: RawAxiosRequestConfig) {
-        return LogsApiFp(this.configuration).handleServiceLogsRequest(organization, cluster, project, environment, service, podName, deploymentId, options).then((request) => request(this.axios, this.basePath));
+    public handleServiceLogsRequest(organization: string, cluster: string, project: string, environment: string, service: string, podName: string | null, deploymentId: string | null, query: string | null, start: string | null, options?: RawAxiosRequestConfig) {
+        return LogsApiFp(this.configuration).handleServiceLogsRequest(organization, cluster, project, environment, service, podName, deploymentId, query, start, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
