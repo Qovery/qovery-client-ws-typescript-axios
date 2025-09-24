@@ -1645,10 +1645,10 @@ export interface ServiceLogResponseDto {
     'pod_name': string;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof ServiceLogResponseDto
      */
-    'severity_text': number;
+    'severity_text': string;
     /**
      * 
      * @type {string}
