@@ -1627,6 +1627,12 @@ export interface ServiceLogResponseDto {
     'created_at': number;
     /**
      * 
+     * @type {boolean}
+     * @memberof ServiceLogResponseDto
+     */
+    'from_kube': boolean;
+    /**
+     * 
      * @type {{ [key: string]: string; }}
      * @memberof ServiceLogResponseDto
      */
