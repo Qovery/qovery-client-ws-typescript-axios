@@ -567,10 +567,10 @@ export interface EnvironmentStatusDto {
     'state': ServiceStateDto;
     /**
      * 
-     * @type {Array<ApplicationStatusDto>}
+     * @type {Array<TerraformStatusDto>}
      * @memberof EnvironmentStatusDto
      */
-    'terraform': Array<ApplicationStatusDto>;
+    'terraform': Array<TerraformStatusDto>;
 }
 
 
@@ -1578,6 +1578,44 @@ export type ResourceStatusDto = typeof ResourceStatusDto[keyof typeof ResourceSt
 /**
  * 
  * @export
+ * @interface ServiceActionDetailsDto
+ */
+export interface ServiceActionDetailsDto {
+    /**
+     * 
+     * @type {ServiceActionDto}
+     * @memberof ServiceActionDetailsDto
+     */
+    'action': ServiceActionDto;
+    /**
+     * 
+     * @type {ServiceSubActionDto}
+     * @memberof ServiceActionDetailsDto
+     */
+    'sub_action': ServiceSubActionDto;
+}
+
+
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const ServiceActionDto = {
+    DEPLOY: 'DEPLOY',
+    RESTART: 'RESTART',
+    STOP: 'STOP',
+    DELETE: 'DELETE',
+    DELETE_RESOURCES_ONLY: 'DELETE_RESOURCES_ONLY'
+} as const;
+
+export type ServiceActionDto = typeof ServiceActionDto[keyof typeof ServiceActionDto];
+
+
+/**
+ * 
+ * @export
  * @interface ServiceInfraLogResponseDto
  */
 export interface ServiceInfraLogResponseDto {
@@ -1750,6 +1788,24 @@ export interface ServiceStatusDto {
  * @enum {string}
  */
 
+export const ServiceSubActionDto = {
+    NONE: 'NONE',
+    TERRAFORM_PLAN_ONLY: 'TERRAFORM_PLAN_ONLY',
+    TERRAFORM_PLAN_AND_APPLY: 'TERRAFORM_PLAN_AND_APPLY',
+    TERRAFORM_DESTROY: 'TERRAFORM_DESTROY',
+    TERRAFORM_FORCE_UNLOCK_STATE: 'TERRAFORM_FORCE_UNLOCK_STATE',
+    TERRAFORM_MIGRATE_STATE: 'TERRAFORM_MIGRATE_STATE'
+} as const;
+
+export type ServiceSubActionDto = typeof ServiceSubActionDto[keyof typeof ServiceSubActionDto];
+
+
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
 export const ServiceType = {
     APPLICATION: 'APPLICATION',
     CONTAINER: 'CONTAINER',
@@ -1760,6 +1816,39 @@ export const ServiceType = {
 } as const;
 
 export type ServiceType = typeof ServiceType[keyof typeof ServiceType];
+
+
+/**
+ * 
+ * @export
+ * @interface TerraformStatusDto
+ */
+export interface TerraformStatusDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof TerraformStatusDto
+     */
+    'id': string;
+    /**
+     * 
+     * @type {Array<PodStatusDto>}
+     * @memberof TerraformStatusDto
+     */
+    'pods': Array<PodStatusDto>;
+    /**
+     * 
+     * @type {ServiceStateDto}
+     * @memberof TerraformStatusDto
+     */
+    'state': ServiceStateDto;
+    /**
+     * 
+     * @type {ServiceActionDetailsDto}
+     * @memberof TerraformStatusDto
+     */
+    'triggered_action': ServiceActionDetailsDto;
+}
 
 
 /**
