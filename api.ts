@@ -49,6 +49,12 @@ export interface ApplicationStatusDto {
     'pods': Array<PodStatusDto>;
     /**
      * 
+     * @type {ScaledObjectStatusDto}
+     * @memberof ApplicationStatusDto
+     */
+    'scaled_object'?: ScaledObjectStatusDto | null;
+    /**
+     * 
      * @type {ServiceStateDto}
      * @memberof ApplicationStatusDto
      */
@@ -1575,6 +1581,178 @@ export const ResourceStatusDto = {
 export type ResourceStatusDto = typeof ResourceStatusDto[keyof typeof ResourceStatusDto];
 
 
+/**
+ * 
+ * @export
+ * @interface ScaleTargetGvkrDto
+ */
+export interface ScaleTargetGvkrDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof ScaleTargetGvkrDto
+     */
+    'group': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ScaleTargetGvkrDto
+     */
+    'kind': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ScaleTargetGvkrDto
+     */
+    'resource': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ScaleTargetGvkrDto
+     */
+    'version': string;
+}
+/**
+ * 
+ * @export
+ * @interface ScaledObjectConditionDto
+ */
+export interface ScaledObjectConditionDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof ScaledObjectConditionDto
+     */
+    'message'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ScaledObjectConditionDto
+     */
+    'reason'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ScaledObjectConditionDto
+     */
+    'status': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ScaledObjectConditionDto
+     */
+    'type': string;
+}
+/**
+ * 
+ * @export
+ * @interface ScaledObjectHealthDto
+ */
+export interface ScaledObjectHealthDto {
+    /**
+     * 
+     * @type {number}
+     * @memberof ScaledObjectHealthDto
+     */
+    'number_of_failures'?: number | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ScaledObjectHealthDto
+     */
+    'status': string;
+}
+/**
+ * 
+ * @export
+ * @interface ScaledObjectStatusDto
+ */
+export interface ScaledObjectStatusDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof ScaledObjectStatusDto
+     */
+    'authentications_types'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ScaledObjectStatusDto
+     */
+    'composite_scaler_name'?: string | null;
+    /**
+     * 
+     * @type {Array<ScaledObjectConditionDto>}
+     * @memberof ScaledObjectStatusDto
+     */
+    'conditions': Array<ScaledObjectConditionDto>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ScaledObjectStatusDto
+     */
+    'external_metric_names': Array<string>;
+    /**
+     * 
+     * @type {{ [key: string]: ScaledObjectHealthDto; }}
+     * @memberof ScaledObjectStatusDto
+     */
+    'health': { [key: string]: ScaledObjectHealthDto; };
+    /**
+     * 
+     * @type {string}
+     * @memberof ScaledObjectStatusDto
+     */
+    'hpa_name'?: string | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof ScaledObjectStatusDto
+     */
+    'last_active_time': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ScaledObjectStatusDto
+     */
+    'name': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ScaledObjectStatusDto
+     */
+    'original_replica_count'?: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof ScaledObjectStatusDto
+     */
+    'paused_replica_count'?: number | null;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ScaledObjectStatusDto
+     */
+    'resource_metric_names': Array<string>;
+    /**
+     * 
+     * @type {ScaleTargetGvkrDto}
+     * @memberof ScaledObjectStatusDto
+     */
+    'scale_target_gvkr'?: ScaleTargetGvkrDto | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ScaledObjectStatusDto
+     */
+    'scale_target_kind'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ScaledObjectStatusDto
+     */
+    'triggers_types'?: string | null;
+}
 /**
  * 
  * @export
