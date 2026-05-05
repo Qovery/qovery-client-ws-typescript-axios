@@ -1990,7 +1990,8 @@ export const ServiceType = {
     DATABASE: 'DATABASE',
     JOB: 'JOB',
     HELM: 'HELM',
-    TERRAFORM: 'TERRAFORM'
+    TERRAFORM: 'TERRAFORM',
+    ARGOCD_APP: 'ARGOCD_APP'
 } as const;
 
 export type ServiceType = typeof ServiceType[keyof typeof ServiceType];
