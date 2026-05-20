@@ -65,6 +65,33 @@ export interface ApplicationStatusDto {
 /**
  * 
  * @export
+ * @interface ArgoCdAppStatusDto
+ */
+export interface ArgoCdAppStatusDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof ArgoCdAppStatusDto
+     */
+    'id': string;
+    /**
+     * 
+     * @type {Array<PodStatusDto>}
+     * @memberof ArgoCdAppStatusDto
+     */
+    'pods': Array<PodStatusDto>;
+    /**
+     * 
+     * @type {ServiceStateDto}
+     * @memberof ArgoCdAppStatusDto
+     */
+    'state': ServiceStateDto;
+}
+
+
+/**
+ * 
+ * @export
  * @interface CertificateStatusDto
  */
 export interface CertificateStatusDto {
@@ -529,6 +556,12 @@ export interface EnvironmentStatusDto {
      * @memberof EnvironmentStatusDto
      */
     'applications': Array<ApplicationStatusDto>;
+    /**
+     * 
+     * @type {Array<ArgoCdAppStatusDto>}
+     * @memberof EnvironmentStatusDto
+     */
+    'argocd_apps': Array<ArgoCdAppStatusDto>;
     /**
      * 
      * @type {Array<ApplicationStatusDto>}
