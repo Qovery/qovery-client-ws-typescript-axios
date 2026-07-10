@@ -2080,6 +2080,249 @@ export type UnitDto = typeof UnitDto[keyof typeof UnitDto];
 
 
 /**
+ * BlueprintPreviewApi - axios parameter creator
+ * @export
+ */
+export const BlueprintPreviewApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {string} organization Organization id — for permission scoping. Frontend already has it.
+         * @param {string} cluster Cluster id — for permission scoping. Frontend already has it.
+         * @param {string} previewId Preview id — the UUIDv7 q-core returned from &#x60;POST /api/blueprint/{id}/update/preview&#x60;. Doubles as the Pub/Sub channel suffix: &#x60;core.blueprint.preview.{preview_id}&#x60;.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        handleBlueprintPreviewRequest: async (organization: string, cluster: string, previewId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organization' is not null or undefined
+            assertParamExists('handleBlueprintPreviewRequest', 'organization', organization)
+            // verify required parameter 'cluster' is not null or undefined
+            assertParamExists('handleBlueprintPreviewRequest', 'cluster', cluster)
+            // verify required parameter 'previewId' is not null or undefined
+            assertParamExists('handleBlueprintPreviewRequest', 'previewId', previewId)
+            const localVarPath = `/blueprint/preview`
+                .replace(`{${"organization"}}`, encodeURIComponent(String(organization)))
+                .replace(`{${"cluster"}}`, encodeURIComponent(String(cluster)))
+                .replace(`{${"preview_id"}}`, encodeURIComponent(String(previewId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * BlueprintPreviewApi - functional programming interface
+ * @export
+ */
+export const BlueprintPreviewApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = BlueprintPreviewApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {string} organization Organization id — for permission scoping. Frontend already has it.
+         * @param {string} cluster Cluster id — for permission scoping. Frontend already has it.
+         * @param {string} previewId Preview id — the UUIDv7 q-core returned from &#x60;POST /api/blueprint/{id}/update/preview&#x60;. Doubles as the Pub/Sub channel suffix: &#x60;core.blueprint.preview.{preview_id}&#x60;.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async handleBlueprintPreviewRequest(organization: string, cluster: string, previewId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.handleBlueprintPreviewRequest(organization, cluster, previewId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BlueprintPreviewApi.handleBlueprintPreviewRequest']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * BlueprintPreviewApi - factory interface
+ * @export
+ */
+export const BlueprintPreviewApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = BlueprintPreviewApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {string} organization Organization id — for permission scoping. Frontend already has it.
+         * @param {string} cluster Cluster id — for permission scoping. Frontend already has it.
+         * @param {string} previewId Preview id — the UUIDv7 q-core returned from &#x60;POST /api/blueprint/{id}/update/preview&#x60;. Doubles as the Pub/Sub channel suffix: &#x60;core.blueprint.preview.{preview_id}&#x60;.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        handleBlueprintPreviewRequest(organization: string, cluster: string, previewId: string, options?: RawAxiosRequestConfig): AxiosPromise<string> {
+            return localVarFp.handleBlueprintPreviewRequest(organization, cluster, previewId, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * BlueprintPreviewApi - object-oriented interface
+ * @export
+ * @class BlueprintPreviewApi
+ * @extends {BaseAPI}
+ */
+export class BlueprintPreviewApi extends BaseAPI {
+    /**
+     * 
+     * @param {string} organization Organization id — for permission scoping. Frontend already has it.
+     * @param {string} cluster Cluster id — for permission scoping. Frontend already has it.
+     * @param {string} previewId Preview id — the UUIDv7 q-core returned from &#x60;POST /api/blueprint/{id}/update/preview&#x60;. Doubles as the Pub/Sub channel suffix: &#x60;core.blueprint.preview.{preview_id}&#x60;.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BlueprintPreviewApi
+     */
+    public handleBlueprintPreviewRequest(organization: string, cluster: string, previewId: string, options?: RawAxiosRequestConfig) {
+        return BlueprintPreviewApiFp(this.configuration).handleBlueprintPreviewRequest(organization, cluster, previewId, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * BlueprintServiceApi - axios parameter creator
+ * @export
+ */
+export const BlueprintServiceApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {string} organization 
+         * @param {string | null} cluster 
+         * @param {string} project 
+         * @param {string} environment 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        handleBlueprintServiceCreatedRequest: async (organization: string, cluster: string | null, project: string, environment: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organization' is not null or undefined
+            assertParamExists('handleBlueprintServiceCreatedRequest', 'organization', organization)
+            // verify required parameter 'cluster' is not null or undefined
+            assertParamExists('handleBlueprintServiceCreatedRequest', 'cluster', cluster)
+            // verify required parameter 'project' is not null or undefined
+            assertParamExists('handleBlueprintServiceCreatedRequest', 'project', project)
+            // verify required parameter 'environment' is not null or undefined
+            assertParamExists('handleBlueprintServiceCreatedRequest', 'environment', environment)
+            const localVarPath = `/blueprint/service-created`
+                .replace(`{${"organization"}}`, encodeURIComponent(String(organization)))
+                .replace(`{${"cluster"}}`, encodeURIComponent(String(cluster)))
+                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
+                .replace(`{${"environment"}}`, encodeURIComponent(String(environment)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * BlueprintServiceApi - functional programming interface
+ * @export
+ */
+export const BlueprintServiceApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = BlueprintServiceApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {string} organization 
+         * @param {string | null} cluster 
+         * @param {string} project 
+         * @param {string} environment 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async handleBlueprintServiceCreatedRequest(organization: string, cluster: string | null, project: string, environment: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.handleBlueprintServiceCreatedRequest(organization, cluster, project, environment, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BlueprintServiceApi.handleBlueprintServiceCreatedRequest']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * BlueprintServiceApi - factory interface
+ * @export
+ */
+export const BlueprintServiceApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = BlueprintServiceApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {string} organization 
+         * @param {string | null} cluster 
+         * @param {string} project 
+         * @param {string} environment 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        handleBlueprintServiceCreatedRequest(organization: string, cluster: string | null, project: string, environment: string, options?: RawAxiosRequestConfig): AxiosPromise<string> {
+            return localVarFp.handleBlueprintServiceCreatedRequest(organization, cluster, project, environment, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * BlueprintServiceApi - object-oriented interface
+ * @export
+ * @class BlueprintServiceApi
+ * @extends {BaseAPI}
+ */
+export class BlueprintServiceApi extends BaseAPI {
+    /**
+     * 
+     * @param {string} organization 
+     * @param {string | null} cluster 
+     * @param {string} project 
+     * @param {string} environment 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BlueprintServiceApi
+     */
+    public handleBlueprintServiceCreatedRequest(organization: string, cluster: string | null, project: string, environment: string, options?: RawAxiosRequestConfig) {
+        return BlueprintServiceApiFp(this.configuration).handleBlueprintServiceCreatedRequest(organization, cluster, project, environment, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
  * ClusterListNodesApi - axios parameter creator
  * @export
  */
