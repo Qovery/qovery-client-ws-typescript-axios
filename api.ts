@@ -90,6 +90,124 @@ export interface ArgoCdAppStatusDto {
 
 
 /**
+ * @type BlueprintPreviewResult
+ * Final result of a blueprint update preview. Exactly one frame is sent, then the connection closes. The `type` field selects the variant.
+ * @export
+ */
+export type BlueprintPreviewResult = BlueprintPreviewResultOneOf | BlueprintPreviewResultOneOf1 | BlueprintPreviewResultOneOf2 | BlueprintPreviewResultOneOf3;
+
+/**
+ * The preview succeeded. `payload` is the human-readable list of changes; `service_type` e.g. \"TERRAFORM\".
+ * @export
+ * @interface BlueprintPreviewResultOneOf
+ */
+export interface BlueprintPreviewResultOneOf {
+    /**
+     * 
+     * @type {string}
+     * @memberof BlueprintPreviewResultOneOf
+     */
+    'payload': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BlueprintPreviewResultOneOf
+     */
+    'service_type': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BlueprintPreviewResultOneOf
+     */
+    'type': BlueprintPreviewResultOneOfTypeEnum;
+}
+
+export const BlueprintPreviewResultOneOfTypeEnum = {
+    DIFF: 'diff'
+} as const;
+
+export type BlueprintPreviewResultOneOfTypeEnum = typeof BlueprintPreviewResultOneOfTypeEnum[keyof typeof BlueprintPreviewResultOneOfTypeEnum];
+
+/**
+ * The preview failed. `message` explains why.
+ * @export
+ * @interface BlueprintPreviewResultOneOf1
+ */
+export interface BlueprintPreviewResultOneOf1 {
+    /**
+     * 
+     * @type {string}
+     * @memberof BlueprintPreviewResultOneOf1
+     */
+    'message': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BlueprintPreviewResultOneOf1
+     */
+    'type': BlueprintPreviewResultOneOf1TypeEnum;
+}
+
+export const BlueprintPreviewResultOneOf1TypeEnum = {
+    ERROR: 'error'
+} as const;
+
+export type BlueprintPreviewResultOneOf1TypeEnum = typeof BlueprintPreviewResultOneOf1TypeEnum[keyof typeof BlueprintPreviewResultOneOf1TypeEnum];
+
+/**
+ * The preview was cancelled.
+ * @export
+ * @interface BlueprintPreviewResultOneOf2
+ */
+export interface BlueprintPreviewResultOneOf2 {
+    /**
+     * 
+     * @type {string}
+     * @memberof BlueprintPreviewResultOneOf2
+     */
+    'type': BlueprintPreviewResultOneOf2TypeEnum;
+}
+
+export const BlueprintPreviewResultOneOf2TypeEnum = {
+    CANCELLED: 'cancelled'
+} as const;
+
+export type BlueprintPreviewResultOneOf2TypeEnum = typeof BlueprintPreviewResultOneOf2TypeEnum[keyof typeof BlueprintPreviewResultOneOf2TypeEnum];
+
+/**
+ * The preview did not complete in time.
+ * @export
+ * @interface BlueprintPreviewResultOneOf3
+ */
+export interface BlueprintPreviewResultOneOf3 {
+    /**
+     * 
+     * @type {string}
+     * @memberof BlueprintPreviewResultOneOf3
+     */
+    'type': BlueprintPreviewResultOneOf3TypeEnum;
+}
+
+export const BlueprintPreviewResultOneOf3TypeEnum = {
+    TIMEOUT: 'timeout'
+} as const;
+
+export type BlueprintPreviewResultOneOf3TypeEnum = typeof BlueprintPreviewResultOneOf3TypeEnum[keyof typeof BlueprintPreviewResultOneOf3TypeEnum];
+
+/**
+ * One blueprint service-created event. The stream emits these until the connection closes.
+ * @export
+ * @interface BlueprintServiceCreatedEvent
+ */
+export interface BlueprintServiceCreatedEvent {
+    /**
+     * Id of the blueprint whose service was created.
+     * @type {string}
+     * @memberof BlueprintServiceCreatedEvent
+     */
+    'blueprint_id': string;
+}
+/**
  * 
  * @export
  * @interface CertificateStatusDto
@@ -2144,7 +2262,7 @@ export const BlueprintPreviewApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async handleBlueprintPreviewRequest(organization: string, cluster: string, previewId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+        async handleBlueprintPreviewRequest(organization: string, cluster: string, previewId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BlueprintPreviewResult>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.handleBlueprintPreviewRequest(organization, cluster, previewId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BlueprintPreviewApi.handleBlueprintPreviewRequest']?.[localVarOperationServerIndex]?.url;
@@ -2168,7 +2286,7 @@ export const BlueprintPreviewApiFactory = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        handleBlueprintPreviewRequest(organization: string, cluster: string, previewId: string, options?: RawAxiosRequestConfig): AxiosPromise<string> {
+        handleBlueprintPreviewRequest(organization: string, cluster: string, previewId: string, options?: RawAxiosRequestConfig): AxiosPromise<BlueprintPreviewResult> {
             return localVarFp.handleBlueprintPreviewRequest(organization, cluster, previewId, options).then((request) => request(axios, basePath));
         },
     };
@@ -2267,7 +2385,7 @@ export const BlueprintServiceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async handleBlueprintServiceCreatedRequest(organization: string, cluster: string | null, project: string, environment: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+        async handleBlueprintServiceCreatedRequest(organization: string, cluster: string | null, project: string, environment: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BlueprintServiceCreatedEvent>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.handleBlueprintServiceCreatedRequest(organization, cluster, project, environment, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BlueprintServiceApi.handleBlueprintServiceCreatedRequest']?.[localVarOperationServerIndex]?.url;
@@ -2292,7 +2410,7 @@ export const BlueprintServiceApiFactory = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        handleBlueprintServiceCreatedRequest(organization: string, cluster: string | null, project: string, environment: string, options?: RawAxiosRequestConfig): AxiosPromise<string> {
+        handleBlueprintServiceCreatedRequest(organization: string, cluster: string | null, project: string, environment: string, options?: RawAxiosRequestConfig): AxiosPromise<BlueprintServiceCreatedEvent> {
             return localVarFp.handleBlueprintServiceCreatedRequest(organization, cluster, project, environment, options).then((request) => request(axios, basePath));
         },
     };
