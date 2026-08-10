@@ -673,6 +673,12 @@ export interface EnvironmentStatusDto {
      * @type {Array<ApplicationStatusDto>}
      * @memberof EnvironmentStatusDto
      */
+    'agentic_workflows': Array<ApplicationStatusDto>;
+    /**
+     * 
+     * @type {Array<ApplicationStatusDto>}
+     * @memberof EnvironmentStatusDto
+     */
     'applications': Array<ApplicationStatusDto>;
     /**
      * 
