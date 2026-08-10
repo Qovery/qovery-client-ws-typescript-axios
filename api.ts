@@ -2148,7 +2148,8 @@ export const ServiceType = {
     JOB: 'JOB',
     HELM: 'HELM',
     TERRAFORM: 'TERRAFORM',
-    ARGOCD_APP: 'ARGOCD_APP'
+    ARGOCD_APP: 'ARGOCD_APP',
+    AGENTIC_WORKFLOW: 'AGENTIC_WORKFLOW'
 } as const;
 
 export type ServiceType = typeof ServiceType[keyof typeof ServiceType];
