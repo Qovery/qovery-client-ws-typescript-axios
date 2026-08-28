@@ -175,11 +175,17 @@ export const BlueprintPreviewResultOneOf2TypeEnum = {
 export type BlueprintPreviewResultOneOf2TypeEnum = typeof BlueprintPreviewResultOneOf2TypeEnum[keyof typeof BlueprintPreviewResultOneOf2TypeEnum];
 
 /**
- * The preview did not complete in time.
+ * The preview did not complete in time. `message` names the step that ran out of time and after how long, when the engine got far enough to report it; it is absent when nothing did — the engine went quiet, or the gateway stopped waiting first.
  * @export
  * @interface BlueprintPreviewResultOneOf3
  */
 export interface BlueprintPreviewResultOneOf3 {
+    /**
+     * 
+     * @type {string}
+     * @memberof BlueprintPreviewResultOneOf3
+     */
+    'message'?: string | null;
     /**
      * 
      * @type {string}
