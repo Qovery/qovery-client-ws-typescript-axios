@@ -65,25 +65,25 @@ export interface ApplicationStatusDto {
 /**
  * 
  * @export
- * @interface ArgoCdAppStatusDto
+ * @interface ArgocdAppStatusDto
  */
-export interface ArgoCdAppStatusDto {
+export interface ArgocdAppStatusDto {
     /**
      * 
      * @type {string}
-     * @memberof ArgoCdAppStatusDto
+     * @memberof ArgocdAppStatusDto
      */
     'id': string;
     /**
      * 
      * @type {Array<PodStatusDto>}
-     * @memberof ArgoCdAppStatusDto
+     * @memberof ArgocdAppStatusDto
      */
     'pods': Array<PodStatusDto>;
     /**
      * 
      * @type {ServiceStateDto}
-     * @memberof ArgoCdAppStatusDto
+     * @memberof ArgocdAppStatusDto
      */
     'state': ServiceStateDto;
 }
@@ -175,7 +175,7 @@ export const BlueprintPreviewResultOneOf2TypeEnum = {
 export type BlueprintPreviewResultOneOf2TypeEnum = typeof BlueprintPreviewResultOneOf2TypeEnum[keyof typeof BlueprintPreviewResultOneOf2TypeEnum];
 
 /**
- * The preview did not complete in time. `message` names the step that ran out of time and after how long, when the engine got far enough to report it; it is absent when nothing did — the engine went quiet, or the gateway stopped waiting first.
+ * The preview did not complete in time. `message` names the step that ran out, and is absent when nothing reported one — the engine went quiet, or this gateway stopped waiting first.
  * @export
  * @interface BlueprintPreviewResultOneOf3
  */
@@ -312,6 +312,12 @@ export interface ClusterComputedStatusDto {
      * @memberof ClusterComputedStatusDto
      */
     'qovery_components_in_failure': Array<QoveryComponentInFailure>;
+    /**
+     * 
+     * @type {ClusterQuotaWarningDto}
+     * @memberof ClusterComputedStatusDto
+     */
+    'quota_warning'?: ClusterQuotaWarningDto | null;
 }
 
 
@@ -473,6 +479,79 @@ export interface ClusterNodeDto {
      * @memberof ClusterNodeDto
      */
     'unschedulable': boolean;
+}
+/**
+ * 
+ * @export
+ * @interface ClusterQuotaWarningDto
+ */
+export interface ClusterQuotaWarningDto {
+    /**
+     * 
+     * @type {number}
+     * @memberof ClusterQuotaWarningDto
+     */
+    'detected_at': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ClusterQuotaWarningDto
+     */
+    'last_seen_at': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterQuotaWarningDto
+     */
+    'message': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterQuotaWarningDto
+     */
+    'provider': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterQuotaWarningDto
+     */
+    'quota_code': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterQuotaWarningDto
+     */
+    'quota_name'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterQuotaWarningDto
+     */
+    'region'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterQuotaWarningDto
+     */
+    'resource'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterQuotaWarningDto
+     */
+    'source': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterQuotaWarningDto
+     */
+    'status': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterQuotaWarningDto
+     */
+    'suggested_action': string;
 }
 /**
  * 
@@ -688,10 +767,10 @@ export interface EnvironmentStatusDto {
     'applications': Array<ApplicationStatusDto>;
     /**
      * 
-     * @type {Array<ArgoCdAppStatusDto>}
+     * @type {Array<ArgocdAppStatusDto>}
      * @memberof EnvironmentStatusDto
      */
-    'argocd_apps': Array<ArgoCdAppStatusDto>;
+    'argocd_apps': Array<ArgocdAppStatusDto>;
     /**
      * 
      * @type {Array<ApplicationStatusDto>}
@@ -987,6 +1066,12 @@ export interface NodeConditionDto {
  * @interface NodeDto
  */
 export interface NodeDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof NodeDto
+     */
+    'kubelet_version': string;
     /**
      * 
      * @type {string}
@@ -2104,7 +2189,8 @@ export const ServiceStateDto = {
     STOPPING: 'STOPPING',
     STOPPED: 'STOPPED',
     COMPLETED: 'COMPLETED',
-    WARNING: 'WARNING'
+    WARNING: 'WARNING',
+    UNAVAILABLE: 'UNAVAILABLE'
 } as const;
 
 export type ServiceStateDto = typeof ServiceStateDto[keyof typeof ServiceStateDto];
@@ -3077,6 +3163,7 @@ export const LogsApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {string} project 
          * @param {string} environment 
          * @param {string} service 
+         * @param {ServiceType | null} serviceType 
          * @param {string | null} podName 
          * @param {string | null} deploymentId 
          * @param {string | null} query 
@@ -3085,7 +3172,7 @@ export const LogsApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        handleServiceLogsRequest: async (organization: string, cluster: string, project: string, environment: string, service: string, podName: string | null, deploymentId: string | null, query: string | null, start: string | null, limit: number | null, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        handleServiceLogsRequest: async (organization: string, cluster: string, project: string, environment: string, service: string, serviceType: ServiceType | null, podName: string | null, deploymentId: string | null, query: string | null, start: string | null, limit: number | null, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'organization' is not null or undefined
             assertParamExists('handleServiceLogsRequest', 'organization', organization)
             // verify required parameter 'cluster' is not null or undefined
@@ -3096,6 +3183,8 @@ export const LogsApiAxiosParamCreator = function (configuration?: Configuration)
             assertParamExists('handleServiceLogsRequest', 'environment', environment)
             // verify required parameter 'service' is not null or undefined
             assertParamExists('handleServiceLogsRequest', 'service', service)
+            // verify required parameter 'serviceType' is not null or undefined
+            assertParamExists('handleServiceLogsRequest', 'serviceType', serviceType)
             // verify required parameter 'podName' is not null or undefined
             assertParamExists('handleServiceLogsRequest', 'podName', podName)
             // verify required parameter 'deploymentId' is not null or undefined
@@ -3112,6 +3201,7 @@ export const LogsApiAxiosParamCreator = function (configuration?: Configuration)
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)))
                 .replace(`{${"environment"}}`, encodeURIComponent(String(environment)))
                 .replace(`{${"service"}}`, encodeURIComponent(String(service)))
+                .replace(`{${"service_type"}}`, encodeURIComponent(String(serviceType)))
                 .replace(`{${"pod_name"}}`, encodeURIComponent(String(podName)))
                 .replace(`{${"deployment_id"}}`, encodeURIComponent(String(deploymentId)))
                 .replace(`{${"query"}}`, encodeURIComponent(String(query)))
@@ -3173,6 +3263,7 @@ export const LogsApiFp = function(configuration?: Configuration) {
          * @param {string} project 
          * @param {string} environment 
          * @param {string} service 
+         * @param {ServiceType | null} serviceType 
          * @param {string | null} podName 
          * @param {string | null} deploymentId 
          * @param {string | null} query 
@@ -3181,8 +3272,8 @@ export const LogsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async handleServiceLogsRequest(organization: string, cluster: string, project: string, environment: string, service: string, podName: string | null, deploymentId: string | null, query: string | null, start: string | null, limit: number | null, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ServiceLogResponseDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.handleServiceLogsRequest(organization, cluster, project, environment, service, podName, deploymentId, query, start, limit, options);
+        async handleServiceLogsRequest(organization: string, cluster: string, project: string, environment: string, service: string, serviceType: ServiceType | null, podName: string | null, deploymentId: string | null, query: string | null, start: string | null, limit: number | null, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ServiceLogResponseDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.handleServiceLogsRequest(organization, cluster, project, environment, service, serviceType, podName, deploymentId, query, start, limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['LogsApi.handleServiceLogsRequest']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -3218,6 +3309,7 @@ export const LogsApiFactory = function (configuration?: Configuration, basePath?
          * @param {string} project 
          * @param {string} environment 
          * @param {string} service 
+         * @param {ServiceType | null} serviceType 
          * @param {string | null} podName 
          * @param {string | null} deploymentId 
          * @param {string | null} query 
@@ -3226,8 +3318,8 @@ export const LogsApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        handleServiceLogsRequest(organization: string, cluster: string, project: string, environment: string, service: string, podName: string | null, deploymentId: string | null, query: string | null, start: string | null, limit: number | null, options?: RawAxiosRequestConfig): AxiosPromise<ServiceLogResponseDto> {
-            return localVarFp.handleServiceLogsRequest(organization, cluster, project, environment, service, podName, deploymentId, query, start, limit, options).then((request) => request(axios, basePath));
+        handleServiceLogsRequest(organization: string, cluster: string, project: string, environment: string, service: string, serviceType: ServiceType | null, podName: string | null, deploymentId: string | null, query: string | null, start: string | null, limit: number | null, options?: RawAxiosRequestConfig): AxiosPromise<ServiceLogResponseDto> {
+            return localVarFp.handleServiceLogsRequest(organization, cluster, project, environment, service, serviceType, podName, deploymentId, query, start, limit, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -3262,6 +3354,7 @@ export class LogsApi extends BaseAPI {
      * @param {string} project 
      * @param {string} environment 
      * @param {string} service 
+     * @param {ServiceType | null} serviceType 
      * @param {string | null} podName 
      * @param {string | null} deploymentId 
      * @param {string | null} query 
@@ -3271,8 +3364,8 @@ export class LogsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof LogsApi
      */
-    public handleServiceLogsRequest(organization: string, cluster: string, project: string, environment: string, service: string, podName: string | null, deploymentId: string | null, query: string | null, start: string | null, limit: number | null, options?: RawAxiosRequestConfig) {
-        return LogsApiFp(this.configuration).handleServiceLogsRequest(organization, cluster, project, environment, service, podName, deploymentId, query, start, limit, options).then((request) => request(this.axios, this.basePath));
+    public handleServiceLogsRequest(organization: string, cluster: string, project: string, environment: string, service: string, serviceType: ServiceType | null, podName: string | null, deploymentId: string | null, query: string | null, start: string | null, limit: number | null, options?: RawAxiosRequestConfig) {
+        return LogsApiFp(this.configuration).handleServiceLogsRequest(organization, cluster, project, environment, service, serviceType, podName, deploymentId, query, start, limit, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -3831,10 +3924,11 @@ export const ShellApiAxiosParamCreator = function (configuration?: Configuration
          * @param {Array<string>} command 
          * @param {number} ttyWidth 
          * @param {number} ttyHeight 
+         * @param {ServiceType | null} serviceType 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        handleShellExec: async (organization: string, cluster: string, project: string, environment: string, service: string, podName: string | null, containerName: string | null, command: Array<string>, ttyWidth: number, ttyHeight: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        handleShellExec: async (organization: string, cluster: string, project: string, environment: string, service: string, podName: string | null, containerName: string | null, command: Array<string>, ttyWidth: number, ttyHeight: number, serviceType: ServiceType | null, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'organization' is not null or undefined
             assertParamExists('handleShellExec', 'organization', organization)
             // verify required parameter 'cluster' is not null or undefined
@@ -3855,6 +3949,8 @@ export const ShellApiAxiosParamCreator = function (configuration?: Configuration
             assertParamExists('handleShellExec', 'ttyWidth', ttyWidth)
             // verify required parameter 'ttyHeight' is not null or undefined
             assertParamExists('handleShellExec', 'ttyHeight', ttyHeight)
+            // verify required parameter 'serviceType' is not null or undefined
+            assertParamExists('handleShellExec', 'serviceType', serviceType)
             const localVarPath = `/shell/exec`
                 .replace(`{${"organization"}}`, encodeURIComponent(String(organization)))
                 .replace(`{${"cluster"}}`, encodeURIComponent(String(cluster)))
@@ -3865,7 +3961,8 @@ export const ShellApiAxiosParamCreator = function (configuration?: Configuration
                 .replace(`{${"container_name"}}`, encodeURIComponent(String(containerName)))
                 .replace(`{${"command"}}`, encodeURIComponent(String(command)))
                 .replace(`{${"tty_width"}}`, encodeURIComponent(String(ttyWidth)))
-                .replace(`{${"tty_height"}}`, encodeURIComponent(String(ttyHeight)));
+                .replace(`{${"tty_height"}}`, encodeURIComponent(String(ttyHeight)))
+                .replace(`{${"service_type"}}`, encodeURIComponent(String(serviceType)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -3910,11 +4007,12 @@ export const ShellApiFp = function(configuration?: Configuration) {
          * @param {Array<string>} command 
          * @param {number} ttyWidth 
          * @param {number} ttyHeight 
+         * @param {ServiceType | null} serviceType 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async handleShellExec(organization: string, cluster: string, project: string, environment: string, service: string, podName: string | null, containerName: string | null, command: Array<string>, ttyWidth: number, ttyHeight: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.handleShellExec(organization, cluster, project, environment, service, podName, containerName, command, ttyWidth, ttyHeight, options);
+        async handleShellExec(organization: string, cluster: string, project: string, environment: string, service: string, podName: string | null, containerName: string | null, command: Array<string>, ttyWidth: number, ttyHeight: number, serviceType: ServiceType | null, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.handleShellExec(organization, cluster, project, environment, service, podName, containerName, command, ttyWidth, ttyHeight, serviceType, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ShellApi.handleShellExec']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -3941,11 +4039,12 @@ export const ShellApiFactory = function (configuration?: Configuration, basePath
          * @param {Array<string>} command 
          * @param {number} ttyWidth 
          * @param {number} ttyHeight 
+         * @param {ServiceType | null} serviceType 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        handleShellExec(organization: string, cluster: string, project: string, environment: string, service: string, podName: string | null, containerName: string | null, command: Array<string>, ttyWidth: number, ttyHeight: number, options?: RawAxiosRequestConfig): AxiosPromise<string> {
-            return localVarFp.handleShellExec(organization, cluster, project, environment, service, podName, containerName, command, ttyWidth, ttyHeight, options).then((request) => request(axios, basePath));
+        handleShellExec(organization: string, cluster: string, project: string, environment: string, service: string, podName: string | null, containerName: string | null, command: Array<string>, ttyWidth: number, ttyHeight: number, serviceType: ServiceType | null, options?: RawAxiosRequestConfig): AxiosPromise<string> {
+            return localVarFp.handleShellExec(organization, cluster, project, environment, service, podName, containerName, command, ttyWidth, ttyHeight, serviceType, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -3969,12 +4068,13 @@ export class ShellApi extends BaseAPI {
      * @param {Array<string>} command 
      * @param {number} ttyWidth 
      * @param {number} ttyHeight 
+     * @param {ServiceType | null} serviceType 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ShellApi
      */
-    public handleShellExec(organization: string, cluster: string, project: string, environment: string, service: string, podName: string | null, containerName: string | null, command: Array<string>, ttyWidth: number, ttyHeight: number, options?: RawAxiosRequestConfig) {
-        return ShellApiFp(this.configuration).handleShellExec(organization, cluster, project, environment, service, podName, containerName, command, ttyWidth, ttyHeight, options).then((request) => request(this.axios, this.basePath));
+    public handleShellExec(organization: string, cluster: string, project: string, environment: string, service: string, podName: string | null, containerName: string | null, command: Array<string>, ttyWidth: number, ttyHeight: number, serviceType: ServiceType | null, options?: RawAxiosRequestConfig) {
+        return ShellApiFp(this.configuration).handleShellExec(organization, cluster, project, environment, service, podName, containerName, command, ttyWidth, ttyHeight, serviceType, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
