@@ -214,6 +214,56 @@ export interface BlueprintServiceCreatedEvent {
     'blueprint_id': string;
 }
 /**
+ * One build analysis progress event. Past events are replayed first, then new ones are sent as they come. The connection closes after the event with `terminal: true`.
+ * @export
+ * @interface BuildAnalysisEvent
+ */
+export interface BuildAnalysisEvent {
+    /**
+     * Details about the event, e.g. why the analysis failed.
+     * @type {string}
+     * @memberof BuildAnalysisEvent
+     */
+    'message'?: string | null;
+    /**
+     * 
+     * @type {BuildAnalysisStatus}
+     * @memberof BuildAnalysisEvent
+     */
+    'status': BuildAnalysisStatus;
+    /**
+     * Human-readable label of the current step.
+     * @type {string}
+     * @memberof BuildAnalysisEvent
+     */
+    'step': string;
+    /**
+     * True on the last event of the analysis (`DONE` or `FAILED`).
+     * @type {boolean}
+     * @memberof BuildAnalysisEvent
+     */
+    'terminal': boolean;
+}
+
+
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const BuildAnalysisStatus = {
+    PENDING: 'PENDING',
+    COLLECTING: 'COLLECTING',
+    ANALYSING: 'ANALYSING',
+    DONE: 'DONE',
+    FAILED: 'FAILED'
+} as const;
+
+export type BuildAnalysisStatus = typeof BuildAnalysisStatus[keyof typeof BuildAnalysisStatus];
+
+
+/**
  * 
  * @export
  * @interface CertificateStatusDto
@@ -2534,6 +2584,138 @@ export class BlueprintServiceApi extends BaseAPI {
      */
     public handleBlueprintServiceCreatedRequest(organization: string, cluster: string | null, project: string, environment: string, options?: RawAxiosRequestConfig) {
         return BlueprintServiceApiFp(this.configuration).handleBlueprintServiceCreatedRequest(organization, cluster, project, environment, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * BuildAnalysisApi - axios parameter creator
+ * @export
+ */
+export const BuildAnalysisApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {string} organization 
+         * @param {string} cluster 
+         * @param {string} project 
+         * @param {string} environment 
+         * @param {string} service Service whose build analysis progress is streamed.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        handleBuildAnalysisRequest: async (organization: string, cluster: string, project: string, environment: string, service: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organization' is not null or undefined
+            assertParamExists('handleBuildAnalysisRequest', 'organization', organization)
+            // verify required parameter 'cluster' is not null or undefined
+            assertParamExists('handleBuildAnalysisRequest', 'cluster', cluster)
+            // verify required parameter 'project' is not null or undefined
+            assertParamExists('handleBuildAnalysisRequest', 'project', project)
+            // verify required parameter 'environment' is not null or undefined
+            assertParamExists('handleBuildAnalysisRequest', 'environment', environment)
+            // verify required parameter 'service' is not null or undefined
+            assertParamExists('handleBuildAnalysisRequest', 'service', service)
+            const localVarPath = `/build/analysis`
+                .replace(`{${"organization"}}`, encodeURIComponent(String(organization)))
+                .replace(`{${"cluster"}}`, encodeURIComponent(String(cluster)))
+                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
+                .replace(`{${"environment"}}`, encodeURIComponent(String(environment)))
+                .replace(`{${"service"}}`, encodeURIComponent(String(service)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * BuildAnalysisApi - functional programming interface
+ * @export
+ */
+export const BuildAnalysisApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = BuildAnalysisApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {string} organization 
+         * @param {string} cluster 
+         * @param {string} project 
+         * @param {string} environment 
+         * @param {string} service Service whose build analysis progress is streamed.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async handleBuildAnalysisRequest(organization: string, cluster: string, project: string, environment: string, service: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BuildAnalysisEvent>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.handleBuildAnalysisRequest(organization, cluster, project, environment, service, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BuildAnalysisApi.handleBuildAnalysisRequest']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * BuildAnalysisApi - factory interface
+ * @export
+ */
+export const BuildAnalysisApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = BuildAnalysisApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {string} organization 
+         * @param {string} cluster 
+         * @param {string} project 
+         * @param {string} environment 
+         * @param {string} service Service whose build analysis progress is streamed.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        handleBuildAnalysisRequest(organization: string, cluster: string, project: string, environment: string, service: string, options?: RawAxiosRequestConfig): AxiosPromise<BuildAnalysisEvent> {
+            return localVarFp.handleBuildAnalysisRequest(organization, cluster, project, environment, service, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * BuildAnalysisApi - object-oriented interface
+ * @export
+ * @class BuildAnalysisApi
+ * @extends {BaseAPI}
+ */
+export class BuildAnalysisApi extends BaseAPI {
+    /**
+     * 
+     * @param {string} organization 
+     * @param {string} cluster 
+     * @param {string} project 
+     * @param {string} environment 
+     * @param {string} service Service whose build analysis progress is streamed.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BuildAnalysisApi
+     */
+    public handleBuildAnalysisRequest(organization: string, cluster: string, project: string, environment: string, service: string, options?: RawAxiosRequestConfig) {
+        return BuildAnalysisApiFp(this.configuration).handleBuildAnalysisRequest(organization, cluster, project, environment, service, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
